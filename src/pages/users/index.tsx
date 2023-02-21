@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Pagination from "@/components/Pagination";
 import Siderbar from "@/components/Siderbar";
 import {
   Box,
@@ -81,6 +82,7 @@ const UserList = () => {
               </Tr>
             </Tbody>
           </Table>
+          <Pagination />
         </Box>
       </Flex>
     </Box>
