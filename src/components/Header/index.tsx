@@ -10,13 +10,17 @@ const Header = () => {
   return (
     <Flex
       as="header"
-      width="100%"
       height="20"
       maxWidth={1480}
       marginX="auto"
       marginTop="4"
       paddingX="6"
+      justify="space-between"
       align="center"
+      w="100%"
+      my="6"
+      mx="auto"
+      px="6"
     >
       <Text
         fontSize={["2xl", "3xl"]}
@@ -55,29 +59,31 @@ const Header = () => {
         <Icon as={RiSearchLine} fontSize="20" />
       </Flex>
 
-      <HStack
-        spacing={["6", "8"]}
-        marginX={["6", "8"]}
-        paddingRight={["6", "8"]}
-        paddingY="1"
-        color="gray.300"
-        borderRightWidth={1}
-        borderColor="gray.700"
-      >
-        <Icon as={RiNotificationLine} fontSize="20" />
-        <Icon as={RiUserAddLine} fontSize="20" />
-      </HStack>
-      <Flex align="center">
-        {true && (
-          <Box marginRight="4" textAlign="right">
-            <Text>genilson</Text>
-            <Text color="gray.300" fontSize="small">
-              ddfdfdfd
-            </Text>
-          </Box>
-        )}
+      <Flex>
+        <HStack
+          spacing={["6", "8"]}
+          marginX={["6", "8"]}
+          paddingRight={["6", "8"]}
+          paddingY="1"
+          color="gray.300"
+          borderRightWidth={1}
+          borderColor="gray.700"
+        >
+          <Icon as={RiNotificationLine} fontSize="20" />
+          <Icon as={RiUserAddLine} fontSize="20" />
+        </HStack>
+        <Flex align="center">
+          {true && (
+            <Box marginRight="4" textAlign="right">
+              <Text>genilson</Text>
+              <Text color="gray.300" fontSize="small">
+                ddfdfdfd
+              </Text>
+            </Box>
+          )}
 
-        <Avatar size="md" name="ds" src="" />
+          <Avatar size="md" name="ds" src="" />
+        </Flex>
       </Flex>
     </Flex>
   );
