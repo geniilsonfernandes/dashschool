@@ -11,6 +11,7 @@ import {
   SimpleGrid,
   VStack
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 const CreteUser = () => {
   return (
@@ -40,7 +41,11 @@ const CreteUser = () => {
           </VStack>
           <Flex mt="8" justify="flex-end">
             <HStack spacing="4">
-              <Button colorScheme="whiteAlpha">cancelar</Button>
+              <Link href="/users" passHref>
+                <Button as="a" colorScheme="whiteAlpha">
+                  cancelar
+                </Button>
+              </Link>
               <Button colorScheme="pink">salvar</Button>
             </HStack>
           </Flex>

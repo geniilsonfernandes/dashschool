@@ -1,8 +1,74 @@
-import { Box, Link, Stack, Text, Icon } from "@chakra-ui/react";
+import {
+  Box,
+  Link as ChakraLink,
+  Stack,
+  Text,
+  Icon,
+  Drawer,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  DrawerBody,
+  useBreakpointValue
+} from "@chakra-ui/react";
+import Link from "next/link";
 import React from "react";
 import { RiContactsLine, RiDashboardLine } from "react-icons/ri";
+import { ActiveLink } from "../ActiveLink";
+import { useSidebarDrawer } from "../contexts/SidebarDrawerContext";
 
 const Siderbar = () => {
+  const { isOpen, onClose } = useSidebarDrawer();
+  const isDrawerSidebar = useBreakpointValue({
+    base: true,
+    lg: false
+  });
+
+  if (isDrawerSidebar) {
+    return (
+      <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
+        <DrawerOverlay>
+          <DrawerContent bg="gray.900" p="4">
+            <DrawerCloseButton mt="6" />
+            <DrawerHeader>
+              <Text fontWeight="bold" color="gray.400" fontSize="small">
+                Navegação
+              </Text>
+            </DrawerHeader>
+            <DrawerBody>
+              <Stack spacing="12" align="flex-start">
+                <Box fontWeight="bold" color="gray.400" fontSize="small">
+                  <Text fontWeight="bold" color="gray.400" fontSize="small">
+                    Geral
+                  </Text>
+                  <Stack spacing="4" mt="8" align="stretch">
+                    <ActiveLink href="/dashboard" passHref>
+                      <ChakraLink display="flex" alignItems="center">
+                        <Icon as={RiDashboardLine} />
+                        <Text ml="4" fontWeight="medium">
+                          Dashboard
+                        </Text>
+                      </ChakraLink>
+                    </ActiveLink>
+
+                    <ActiveLink href="/users" passHref shouldMatchExactHref>
+                      <ChakraLink display="flex" alignItems="center">
+                        <Icon as={RiContactsLine} />
+                        <Text ml="4" fontWeight="medium">
+                          usuários
+                        </Text>
+                      </ChakraLink>
+                    </ActiveLink>
+                  </Stack>
+                </Box>
+              </Stack>
+            </DrawerBody>
+          </DrawerContent>
+        </DrawerOverlay>
+      </Drawer>
+    );
+  }
   return (
     <Box as="aside" w="64" mr="8">
       <Stack spacing="12" align="flex-start">
@@ -11,18 +77,18 @@ const Siderbar = () => {
             Geral
           </Text>
           <Stack spacing="4" mt="8" align="stretch">
-            <Link display="flex" alignItems="center">
+            <ChakraLink display="flex" alignItems="center">
               <Icon as={RiDashboardLine} />
               <Text ml="4" fontWeight="medium">
                 Dashboard
               </Text>
-            </Link>
-            <Link display="flex" alignItems="center">
+            </ChakraLink>
+            <ChakraLink display="flex" alignItems="center">
               <Icon as={RiContactsLine} />
               <Text ml="4" fontWeight="medium">
                 usuários
               </Text>
-            </Link>
+            </ChakraLink>
           </Stack>
         </Box>
       </Stack>

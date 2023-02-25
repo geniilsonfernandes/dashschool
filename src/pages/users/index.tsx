@@ -14,47 +14,56 @@ import {
   Text,
   Th,
   Thead,
-  Tr
+  Tr,
+  useBreakpointValue
 } from "@chakra-ui/react";
+import Link from "next/link";
 import React from "react";
 import { RiAddLine, RiPencilLine } from "react-icons/ri";
 
 const UserList = () => {
+  const isDrawerSidebar = useBreakpointValue({
+    base: false,
+    lg: true
+  });
+
   return (
     <Box>
       <Header />
-      <Flex maxWidth={1480} w="100%" my="6" mx="auto" px="6">
+      <Flex maxWidth={1480} w="100%" my="6" mx="auto" px="4">
         <Siderbar />
-        <Box flex="1" borderRadius={8} bg="gray.800" p="8">
+        <Box flex="1" borderRadius={8} bg="gray.800" p={["4", "8"]}>
           <Flex mb="8" justify="space-between" align="center">
             <Heading size="lg" fontWeight="normal">
               Usuário
             </Heading>
-            <Button
-              as="a"
-              size="sm"
-              fontSize="sm"
-              colorScheme="pink"
-              leftIcon={<Icon as={RiAddLine} />}
-            >
-              Cria novo usuário
-            </Button>
+            <Link href="/users/create" passHref>
+              <Button
+                as="a"
+                size="sm"
+                fontSize="sm"
+                colorScheme="pink"
+                leftIcon={<Icon as={RiAddLine} />}
+              >
+                Cria novo usuário
+              </Button>
+            </Link>
           </Flex>
 
           <Table colorScheme="whiteAlpha">
             <Thead>
               <Tr>
-                <Th px="6" color="gray.300" width="8">
+                <Th px="2" color="gray.300" width="1">
                   <Checkbox colorScheme="pink" />
                 </Th>
                 <Th>Usuários</Th>
-                <Th>Data de cadastro</Th>
+                {isDrawerSidebar && <Th>Data de cadastro</Th>}
                 <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
               <Tr>
-                <Td px="6">
+                <Td px="2">
                   <Checkbox colorScheme="pink" />
                 </Td>
                 <Td>
@@ -65,7 +74,7 @@ const UserList = () => {
                     </Text>
                   </Box>
                 </Td>
-                <Td>04 de Abril, 2021</Td>
+                {isDrawerSidebar && <Td>04 de Abril, 2021</Td>}
                 <Td p="0">
                   <Flex justify="flex-end">
                     <Button
