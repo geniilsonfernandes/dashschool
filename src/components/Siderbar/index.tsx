@@ -1,19 +1,17 @@
 import {
   Box,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Icon,
   Link as ChakraLink,
   Stack,
   Text,
-  Icon,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  DrawerBody,
   useBreakpointValue
 } from "@chakra-ui/react";
-import Link from "next/link";
-import React from "react";
 import { RiContactsLine, RiDashboardLine } from "react-icons/ri";
 import { ActiveLink } from "../ActiveLink";
 import { useSidebarDrawer } from "../contexts/SidebarDrawerContext";
