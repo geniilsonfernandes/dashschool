@@ -1,19 +1,16 @@
 import {
   Box,
-  Link as ChakraLink,
-  Stack,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
   Text,
   Icon,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  DrawerBody,
   useBreakpointValue
 } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
 import { RiContactsLine, RiDashboardLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../contexts/SidebarDrawerContext";
 import MenuLink from "../MenuLink";
@@ -21,10 +18,15 @@ import MenuSection from "../MenuSection";
 
 const Siderbar = () => {
   const { isOpen, onClose } = useSidebarDrawer();
-  const isDrawerSidebar = useBreakpointValue({
-    base: true,
-    lg: false
-  });
+  const isDrawerSidebar = useBreakpointValue(
+    {
+      base: true,
+      lg: false
+    },
+    {
+      fallback: "lg"
+    }
+  );
 
   if (isDrawerSidebar) {
     return (
