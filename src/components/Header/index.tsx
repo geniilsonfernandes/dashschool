@@ -1,3 +1,4 @@
+import { stylesConstants } from "@/styles";
 import { Flex, useBreakpointValue, Icon } from "@chakra-ui/react";
 import { RiMenuLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
@@ -21,7 +22,7 @@ const Header = () => {
     <Flex
       as="header"
       height="20"
-      maxWidth={1480}
+      maxWidth={stylesConstants.APP_CONTENT_WIDTH}
       marginX="auto"
       marginTop="4"
       paddingX="6"
