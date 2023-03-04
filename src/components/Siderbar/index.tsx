@@ -15,8 +15,9 @@ import {
 import Link from "next/link";
 import React from "react";
 import { RiContactsLine, RiDashboardLine } from "react-icons/ri";
-import { ActiveLink } from "../ActiveLink";
 import { useSidebarDrawer } from "../contexts/SidebarDrawerContext";
+import MenuLink from "../MenuLink";
+import MenuSection from "../MenuSection";
 
 const Siderbar = () => {
   const { isOpen, onClose } = useSidebarDrawer();
@@ -37,32 +38,18 @@ const Siderbar = () => {
               </Text>
             </DrawerHeader>
             <DrawerBody>
-              <Stack spacing="12" align="flex-start">
-                <Box fontWeight="bold" color="gray.400" fontSize="small">
-                  <Text fontWeight="bold" color="gray.400" fontSize="small">
-                    Geral
-                  </Text>
-                  <Stack spacing="4" mt="8" align="stretch">
-                    <ActiveLink href="/dashboard" passHref>
-                      <ChakraLink display="flex" alignItems="center">
-                        <Icon as={RiDashboardLine} />
-                        <Text ml="4" fontWeight="medium">
-                          Dashboard
-                        </Text>
-                      </ChakraLink>
-                    </ActiveLink>
-
-                    <ActiveLink href="/users" passHref shouldMatchExactHref>
-                      <ChakraLink display="flex" alignItems="center">
-                        <Icon as={RiContactsLine} />
-                        <Text ml="4" fontWeight="medium">
-                          usuários
-                        </Text>
-                      </ChakraLink>
-                    </ActiveLink>
-                  </Stack>
-                </Box>
-              </Stack>
+              <MenuSection title="Geral">
+                <MenuLink
+                  href="/dashboard"
+                  icon={<Icon as={RiDashboardLine} />}
+                  name="Dashboard"
+                />
+                <MenuLink
+                  href="/users"
+                  icon={<Icon as={RiContactsLine} />}
+                  name="Usuários"
+                />
+              </MenuSection>
             </DrawerBody>
           </DrawerContent>
         </DrawerOverlay>
@@ -71,27 +58,18 @@ const Siderbar = () => {
   }
   return (
     <Box as="aside" w="64" mr="8">
-      <Stack spacing="12" align="flex-start">
-        <Box fontWeight="bold" color="gray.400" fontSize="small">
-          <Text fontWeight="bold" color="gray.400" fontSize="small">
-            Geral
-          </Text>
-          <Stack spacing="4" mt="8" align="stretch">
-            <ChakraLink display="flex" alignItems="center">
-              <Icon as={RiDashboardLine} />
-              <Text ml="4" fontWeight="medium">
-                Dashboard
-              </Text>
-            </ChakraLink>
-            <ChakraLink display="flex" alignItems="center">
-              <Icon as={RiContactsLine} />
-              <Text ml="4" fontWeight="medium">
-                usuários
-              </Text>
-            </ChakraLink>
-          </Stack>
-        </Box>
-      </Stack>
+      <MenuSection title="Geral">
+        <MenuLink
+          href="/dashboard"
+          icon={<Icon as={RiDashboardLine} />}
+          name="Dashboard"
+        />
+        <MenuLink
+          href="/users"
+          icon={<Icon as={RiContactsLine} />}
+          name="Usuários"
+        />
+      </MenuSection>
     </Box>
   );
 };

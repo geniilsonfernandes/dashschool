@@ -31,10 +31,12 @@ const Header = () => {
         <Icon as={RiMenuLine} fontSize="24" onClick={onOpen} mr="2" />
       )}
       <Logo />
-      {isWideVersion && <Search />}
-      <Flex>
-        <Notification />
-        <Profile showProfileData={isWideVersion} />
+      <Flex justifyContent="space-between" flex="1">
+        {isWideVersion && <Search />}
+        <Flex>
+          <Notification />
+          <Profile showProfileData={isWideVersion} />
+        </Flex>
       </Flex>
     </Flex>
   );
