@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { RiContactsLine, RiDashboardLine } from "react-icons/ri";
-import { useSidebarDrawer } from "../contexts/SidebarDrawerContext";
+import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
 import MenuLink from "../MenuLink";
 import MenuSection from "../MenuSection";
 
