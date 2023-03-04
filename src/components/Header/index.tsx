@@ -8,10 +8,15 @@ import Search from "./Search";
 
 const Header = () => {
   const { onOpen } = useSidebarDrawer();
-  const isWideVersion = useBreakpointValue({
-    base: false,
-    lg: true
-  });
+  const isWideVersion = useBreakpointValue(
+    {
+      base: false,
+      lg: true
+    },
+    {
+      fallback: "lg"
+    }
+  );
   return (
     <Flex
       as="header"
@@ -28,10 +33,13 @@ const Header = () => {
       px="6"
     >
       {!isWideVersion && (
-        <Icon as={RiMenuLine} fontSize="24" onClick={onOpen} mr="2" />
+        <Icon as={RiMenuLine} fontSize="24" onClick={onOpen} mr="4" />
       )}
-      <Logo />
-      <Flex justifyContent="space-between" flex="1">
+      <Logo brandName="MyDash" />
+      <Flex
+        justifyContent={isWideVersion ? "space-between" : "flex-end"}
+        flex="1"
+      >
         {isWideVersion && <Search />}
         <Flex>
           <Notification />
