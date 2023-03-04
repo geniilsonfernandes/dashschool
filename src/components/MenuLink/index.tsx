@@ -9,7 +9,7 @@ type MenuLinkProps = {
 const MenuLink = ({ name, href, icon }: MenuLinkProps) => {
   return (
     <ActiveLink href={href} passHref>
-      <ChakraLink display="flex" alignItems="center">
+      <ChakraLink as={"span"} display="flex" alignItems="center">
         {icon}
         <Text ml="4" fontWeight="medium">
           {name}
