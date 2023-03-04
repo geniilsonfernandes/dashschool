@@ -1,6 +1,5 @@
-import Header from "@/components/Header";
 import Pagination from "@/components/Pagination";
-import Siderbar from "@/components/Siderbar";
+import UserRow, { UserRowProps } from "@/components/UserRow";
 import Base from "@/templates/Base";
 import {
   Box,
@@ -11,16 +10,20 @@ import {
   Icon,
   Table,
   Tbody,
-  Td,
-  Text,
   Th,
   Thead,
   Tr,
   useBreakpointValue
 } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
+import { RiAddLine } from "react-icons/ri";
+
+const mockUser: UserRowProps[] = Array.from({ length: 8 }, (_, index) => ({
+  id: index,
+  name: index + " Fernandes",
+  email: `fernandes${index}@gmail.com`,
+  createdAt: "04 de Abril, 2021"
+}));
 
 const UserList = () => {
   const isDrawerSidebar = useBreakpointValue(
@@ -64,33 +67,9 @@ const UserList = () => {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td px="2">
-                <Checkbox colorScheme="pink" />
-              </Td>
-              <Td>
-                <Box>
-                  <Text fontWeight="bold">ge Fernandes</Text>
-                  <Text fontSize="small" color="gray.300">
-                    genilson.@gmail.com
-                  </Text>
-                </Box>
-              </Td>
-              {isDrawerSidebar && <Td>04 de Abril, 2021</Td>}
-              <Td p="0">
-                <Flex justify="flex-end">
-                  <Button
-                    as="a"
-                    size="sm"
-                    fontSize="sm"
-                    colorScheme="purple"
-                    leftIcon={<Icon as={RiPencilLine} />}
-                  >
-                    Editar
-                  </Button>
-                </Flex>
-              </Td>
-            </Tr>
+            {mockUser.map((user) => (
+              <UserRow key={user.id} {...user} />
+            ))}
           </Tbody>
         </Table>
         <Pagination />
