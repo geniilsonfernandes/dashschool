@@ -1,7 +1,10 @@
 import { Text } from "@chakra-ui/react";
 import React from "react";
 
-const Logo = () => {
+type LogoProps = {
+  brandName: string;
+};
+const Logo = ({ brandName }: LogoProps) => {
   return (
     <Text
       fontSize={["2xl", "3xl"]}
@@ -9,7 +12,7 @@ const Logo = () => {
       letterSpacing="tight"
       width="64"
     >
-      dashgo
+      {brandName}
       <Text as="span" color="pink.500" marginLeft="1">
         .
       </Text>
