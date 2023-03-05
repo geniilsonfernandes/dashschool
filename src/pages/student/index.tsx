@@ -47,7 +47,7 @@ const UserList = () => {
             <Button
               size="sm"
               fontSize="sm"
-              colorScheme="pink"
+              colorScheme="facebook"
               leftIcon={<Icon as={RiAddLine} />}
             >
               Cria novo usuário
@@ -59,7 +59,7 @@ const UserList = () => {
           <Thead>
             <Tr>
               {/* <Th px="2" color="gray.300" width="1">
-                <Checkbox colorScheme="pink" />
+                <Checkbox colorScheme="facebook" />
               </Th> */}
               <Th>Usuários</Th>
               {isDrawerSidebar && <Th>Data de cadastro</Th>}

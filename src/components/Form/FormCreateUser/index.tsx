@@ -139,7 +139,7 @@ const Form = ({ onSubmit, initialValues, isLoading }: IFormProps) => {
               isDisabled={Object.keys(errors).length > 0}
               isLoading={isLoading}
               loadingText="Enviando"
-              colorScheme="pink"
+              colorScheme="facebook"
               onClick={handleSubmit(handleCreateUser)}
             >
               {hasInitialValues ? "Salvar" : "Criar"}

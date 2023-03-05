@@ -20,7 +20,7 @@ const Pagination = () => {
             size="sm"
             fontSize="xs"
             width="4"
-            colorScheme="pink"
+            colorScheme="facebook"
             bg="gray.500"
           >
             {page}

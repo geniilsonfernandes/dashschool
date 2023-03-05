@@ -13,7 +13,7 @@ const Logo = ({ brandName }: LogoProps) => {
       width="64"
     >
       {brandName}
-      <Text as="span" color="pink.500" marginLeft="1">
+      <Text as="span" color="facebook.500" marginLeft="1">
         .
       </Text>
     </Text>

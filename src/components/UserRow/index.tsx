@@ -33,7 +33,7 @@ const UserRow = ({ createdAt, email, id, name }: UserRowProps) => {
   return (
     <Tr>
       {/* <Td px="2">
-        <Checkbox colorScheme="pink" />
+        <Checkbox colorScheme="facebook" />
       </Td> */}
       <Td>
         <Box>

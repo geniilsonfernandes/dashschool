@@ -48,7 +48,7 @@ const Input = ({
               : type
           }
           borderColor={error ? "red.500" : "gray.900"}
-          focusBorderColor={error ? "red.500" : "pink.500"}
+          focusBorderColor={error ? "red.500" : "facebook.500"}
           bgColor="gray.900"
           variant={"filled"}
           placeholder={placeholder}
@@ -64,9 +64,13 @@ const Input = ({
               h="1.75rem"
               size="sm"
               onClick={handleClick}
-              colorScheme="whiteAlpha"
+              color="gray.500"
             >
-              {show ? <RiEyeFill /> : <RiEyeCloseFill />}
+              {show ? (
+                <RiEyeFill color="#494949" />
+              ) : (
+                <RiEyeCloseFill color="#494949" />
+              )}
             </Button>
           </InputRightElement>
         )}

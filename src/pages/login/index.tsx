@@ -1,13 +1,14 @@
 import { Input } from "@/components/Form/Input";
+import { stylesConstants } from "@/styles";
 import {
-  Flex,
   Button,
-  Stack,
-  Heading,
-  Link,
   Divider,
-  Center
+  Flex,
+  Heading,
+  Link as ChakraLink,
+  Stack
 } from "@chakra-ui/react";
+import Link from "next/link";
 
 export default function SignIn() {
   return (
@@ -20,25 +21,26 @@ export default function SignIn() {
         borderRadius={8}
         flexDir="column"
       >
-        <Heading mb="8">Login</Heading>
+        <Heading>Login</Heading>
+        <Divider borderColor="gray.600" my="6" />
         <Flex as="form" borderRadius={8} flexDir="column">
           <Stack spacing={4}>
             <Input label="Email" name="email" type="email" />
             <Input label="Senha" name="password" type="password" />
           </Stack>
-          <Button type="submit" mt="6" colorScheme="pink">
+          <Button
+            type="submit"
+            mt="6"
+            colorScheme={stylesConstants.COLOR_SCHEME}
+          >
             Entrar
           </Button>
         </Flex>
         <Flex mt="8" justifyContent="center">
-          <Link as="a" color="pink.400">
-            Cria conta
-          </Link>
-          <Center height="24px" mx="2">
-            <Divider orientation="vertical" />
-          </Center>
-          <Link as="a" color="pink.400">
-            Recuperar senha
+          <Link href="/signin">
+            <ChakraLink as="span" color={`${stylesConstants.COLOR_SCHEME}.400`}>
+              Cria conta
+            </ChakraLink>
           </Link>
         </Flex>
       </Flex>

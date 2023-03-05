@@ -17,7 +17,7 @@ export default function SignIn() {
           <Input label="Email" name="email" type="email" />
           <Input label="Senha" name="password" type="password" />
         </Stack>
-        <Button type="submit" mt="6" colorScheme="pink">
+        <Button type="submit" mt="6" colorScheme="facebook">
           Entrar
         </Button>
       </Flex>

@@ -13,6 +13,11 @@ const theme = extendTheme({
       "200": "#B3B5C6",
       "100": "#D1D2DC",
       "50": "#EEEEF2"
+    },
+    brand: {
+      100: "#f7fafc",
+      // ...
+      900: "#1a202c"
     }
   },
   fonts: {
