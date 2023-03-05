@@ -1,5 +1,4 @@
 import { Input } from "@/components/Form/Input";
-import Base from "@/templates/Base";
 import {
   Box,
   Button,
@@ -13,7 +12,7 @@ import {
 import Link from "next/link";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
@@ -43,7 +42,7 @@ const Form = ({ onSubmit, initialValues, isLoading }: IFormProps) => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors }
   } = useForm<IFormValues>({
     mode: "onSubmit",
     resolver: yupResolver(schema),
