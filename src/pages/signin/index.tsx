@@ -12,15 +12,14 @@ import {
   Text,
   useDisclosure
 } from "@chakra-ui/react";
-import { useEffect } from "react";
 
 import Link from "next/link";
 
-import OtpVerificate from "@/components/OtpVerificate";
+import { axiosInstance, Endpoints } from "@/api";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { axiosInstance, Endpoints } from "@/api";
+import { useNotification } from "@/contexts/AlertMessageContext";
 
 const schema = yup.object().shape({
   name: yup.string().required("Campo obrigatório"),
@@ -40,6 +39,7 @@ export type IFormCreateValues = {
 };
 
 export default function SignIn() {
+  const notification = useNotification();
   const { isOpen, onToggle, onOpen } = useDisclosure();
 
   const {
@@ -62,8 +62,19 @@ export default function SignIn() {
         email: values.email,
         password: values.password
       });
-    } catch (error) {
-      console.log(error);
+
+      notification.showAlert({
+        description: "Usuário criado com sucesso",
+        status: "success",
+        title: "Sucesso"
+      });
+    } catch (error: any) {
+      notification.showAlert({
+        description: error.response.data.errorMessage,
+        status: "error",
+        title: "Erro",
+        buttonTitle: "Tentar novamente"
+      });
     }
   };
 
@@ -94,13 +105,13 @@ export default function SignIn() {
                 control={control}
                 render={({ field: { value, onChange } }) => (
                   <Input
-                    name="email"
+                    name="name"
                     label="Nome"
                     type="text"
                     value={value}
                     onChange={onChange}
-                    error={errors.email ? true : false}
-                    helperText={errors.email?.message}
+                    error={errors.name ? true : false}
+                    helperText={errors.name?.message}
                   />
                 )}
               />
