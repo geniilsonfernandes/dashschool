@@ -20,10 +20,10 @@ import OtpVerificate from "@/components/OtpVerificate";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-
-import { signIn, useSession, signOut } from "next-auth/react";
+import { axiosInstance, Endpoints } from "@/api";
 
 const schema = yup.object().shape({
+  name: yup.string().required("Campo obrigatório"),
   email: yup.string().required("Campo obrigatório").email("Email inválido"),
   password: yup.string().required("Campo obrigatório"),
   confirmPassword: yup
@@ -33,13 +33,13 @@ const schema = yup.object().shape({
 });
 
 export type IFormCreateValues = {
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
 };
 
 export default function SignIn() {
-  const session = useSession();
   const { isOpen, onToggle, onOpen } = useDisclosure();
 
   const {
@@ -48,12 +48,7 @@ export default function SignIn() {
     formState: { errors, isSubmitting }
   } = useForm<IFormCreateValues>({
     mode: "onSubmit",
-    resolver: yupResolver(schema),
-    defaultValues: {
-      email: "genilson@gmail.com",
-      confirmPassword: "123456",
-      password: "123456"
-    }
+    resolver: yupResolver(schema)
   });
 
   // const handleVerify = (otpCode: any) => {
@@ -61,26 +56,16 @@ export default function SignIn() {
   // };
 
   const handleCreateUser = async (values: IFormCreateValues) => {
-    const auth = await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: false
-    });
-    console.log({ auth });
-
-    // onOpen();
+    try {
+      await axiosInstance.post(Endpoints.user.create(), {
+        name: values.name,
+        email: values.email,
+        password: values.password
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
-
-  const handleSignOut = async () => {
-    const auth = await signOut({
-      redirect: false
-    });
-    console.log({ auth });
-  };
-
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
 
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center">
@@ -105,12 +90,28 @@ export default function SignIn() {
           <Flex borderRadius={8} flexDir="column">
             <Stack spacing={4}>
               <Controller
+                name="name"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Input
+                    name="email"
+                    label="Nome"
+                    type="text"
+                    value={value}
+                    onChange={onChange}
+                    error={errors.email ? true : false}
+                    helperText={errors.email?.message}
+                  />
+                )}
+              />
+              <Controller
                 name="email"
                 control={control}
                 render={({ field: { value, onChange } }) => (
                   <Input
                     name="email"
                     label="Email"
+                    type="email"
                     value={value}
                     onChange={onChange}
                     error={errors.email ? true : false}
@@ -157,7 +158,7 @@ export default function SignIn() {
               {isSubmitting ? "Criando conta..." : "Criar conta"}
             </Button>
           </Flex>
-          <Button mt="2" variant="outline" onClick={handleSignOut}>
+          <Button mt="2" variant="outline">
             Verificar codigo
           </Button>
           <Flex mt="8" justifyContent="center">

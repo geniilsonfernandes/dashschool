@@ -48,32 +48,12 @@ export default NextAuth({
       return token;
     },
 
-    async session({ session, token, user }) {
-      console.log({ session, token, user });
+    async session({ session, token }) {
       const id = token.sub;
       session.user.id = id;
       return session;
-    },
-    async signIn({ user }) {
-      console.log("🕶️ user sign", user);
-      return true;
     }
   }
 
   // Configure outros recursos do NextAuth aqui
 });
-
-export function HarperDBAdapter() {
-  return {
-    async createUser(user: any) {
-      const userc = {
-        id: "1",
-        email: " ada",
-        perms: "member"
-      };
-      return {
-        ...userc
-      };
-    }
-  };
-}
