@@ -15,3 +15,16 @@ export async function createStudent({ email, name, password }: IStudent) {
     throw new Error("Não foi possível criar o estudante");
   }
 }
+
+export async function findStudentByEmail(email: string) {
+  try {
+    const student = await prisma.students.findFirst({
+      where: {
+        email
+      }
+    });
+    return student;
+  } catch (error) {
+    throw new Error("Não foi possível encontrar o estudante");
+  }
+}

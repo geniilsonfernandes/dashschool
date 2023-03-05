@@ -1,4 +1,4 @@
-import { createStudent, IStudent } from "@/services";
+import { createStudent, findStudentByEmail, IStudent } from "@/services";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 interface ISuccessResponse {
@@ -25,7 +25,16 @@ export default async function handler(
 
   try {
     const body = req.body as IStudent;
+
+    ///  fazer tratamento de daodos aqui antes de enviar para o service
+    /// encriptar senha
+    /// validar dados
+
+    const studentAlreadyExists = await findStudentByEmail(body.email);
+    if (studentAlreadyExists) throw new Error("Estudante já existe");
+
     const students = await createStudent(body);
+
     res.status(201).json({ error: 201, students });
   } catch (error: any) {
     console.log(error);
