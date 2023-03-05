@@ -4,7 +4,6 @@ import Base from "@/templates/Base";
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
   Heading,
   Icon,

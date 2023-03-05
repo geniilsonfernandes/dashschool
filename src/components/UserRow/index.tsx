@@ -1,16 +1,14 @@
 import {
   Box,
   Button,
-  Checkbox,
   Flex,
-  Td,
-  Tr,
-  Text,
   Icon,
+  Td,
+  Text,
+  Tr,
   useBreakpointValue
 } from "@chakra-ui/react";
 import Link from "next/link";
-import React from "react";
 import { RiPencilLine } from "react-icons/ri";
 
 export type UserRowProps = {
