@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// o que é o @unique? 
+// o que é o @default(autoincrement())?
+// o que é o primary key?
+model Students {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  name       String
+  password   String
+  created_at DateTime @default(now())
+
+  @@map("student")
+}
+
+model Users {
+  id         String   @id @default(uuid())
+  email      String   @unique
+  name       String
+  password   String
+  created_at DateTime @default(now())
+
+  @@map("user")
+}
+
+model Courses {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  duration    Int
+  created_at  DateTime @default(now())
+
+  teacher    Teachers? @relation(fields: [teacher_id], references: [id])
+  teacher_id String?   @unique
+
+  @@map("courses")
+}
+
+model Teachers {
+  id      String   @id @default(uuid())
+  name    String
+  Courses Courses?
+
+  @@map("teacher")
+}

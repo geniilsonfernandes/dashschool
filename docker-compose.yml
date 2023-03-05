@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+  mysql:
+    container_name: dash-db-container
+    image: mysql:5
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_SCHEMA}
+    ports:
+      - 3306:3306

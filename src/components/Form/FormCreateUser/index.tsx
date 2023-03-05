@@ -130,7 +130,7 @@ const Form = ({ onSubmit, initialValues, isLoading }: IFormProps) => {
         </VStack>
         <Flex mt="8" justify="flex-end">
           <HStack spacing="4">
-            <Link href="/users" passHref>
+            <Link href="/student" passHref>
               <Button colorScheme="whiteAlpha" disabled>
                 cancelar
               </Button>

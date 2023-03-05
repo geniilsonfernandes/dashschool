@@ -32,9 +32,9 @@ const UserRow = ({ createdAt, email, id, name }: UserRowProps) => {
   );
   return (
     <Tr>
-      <Td px="2">
+      {/* <Td px="2">
         <Checkbox colorScheme="pink" />
-      </Td>
+      </Td> */}
       <Td>
         <Box>
           <Text fontWeight="bold">{name}</Text>
@@ -46,7 +46,7 @@ const UserRow = ({ createdAt, email, id, name }: UserRowProps) => {
       {isDrawerSidebar && <Td>{createdAt}</Td>}
       <Td p="0">
         <Flex justify="flex-end">
-          <Link href={`/users/edit/${id}`}>
+          <Link href={`/student/edit/${id}`}>
             <Button
               size="sm"
               fontSize="sm"

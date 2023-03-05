@@ -18,7 +18,7 @@ import {
 import Link from "next/link";
 import { RiAddLine } from "react-icons/ri";
 
-const mockUser: UserRowProps[] = Array.from({ length: 8 }, (_, index) => ({
+const mockUser: UserRowProps[] = Array.from({ length: 10 }, (_, index) => ({
   id: index,
   name: index + " Fernandes",
   email: `fernandes${index}@gmail.com`,
@@ -43,7 +43,7 @@ const UserList = () => {
           <Heading size="lg" fontWeight="normal">
             Usuário
           </Heading>
-          <Link href="/users/create" passHref>
+          <Link href="/student/create" passHref>
             <Button
               size="sm"
               fontSize="sm"
@@ -58,9 +58,9 @@ const UserList = () => {
         <Table colorScheme="whiteAlpha">
           <Thead>
             <Tr>
-              <Th px="2" color="gray.300" width="1">
+              {/* <Th px="2" color="gray.300" width="1">
                 <Checkbox colorScheme="pink" />
-              </Th>
+              </Th> */}
               <Th>Usuários</Th>
               {isDrawerSidebar && <Th>Data de cadastro</Th>}
               <Th></Th>

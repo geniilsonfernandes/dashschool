@@ -6,13 +6,12 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
-  Text,
   Icon,
+  Text,
   useBreakpointValue
 } from "@chakra-ui/react";
-import Link from "next/link";
-import { RiContactsLine, RiDashboardLine } from "react-icons/ri";
-import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
+import { RiBookLine, RiContactsLine, RiDashboardLine } from "react-icons/ri";
+import { useSidebarDrawer } from "@/contexts/SidebarDrawerContext";
 import MenuLink from "../MenuLink";
 import MenuSection from "../MenuSection";
 
@@ -28,6 +27,30 @@ const Siderbar = () => {
     }
   );
 
+  const menus = [
+    {
+      id: "1",
+      title: "Geral",
+      links: [
+        {
+          name: "Dashboard",
+          href: "/dashboard",
+          icon: <Icon as={RiDashboardLine} />
+        },
+        {
+          name: "Alunos",
+          href: "/student",
+          icon: <Icon as={RiContactsLine} />
+        },
+        {
+          name: "Cursos",
+          href: "/courses",
+          icon: <Icon as={RiBookLine} />
+        }
+      ]
+    }
+  ];
+
   if (isDrawerSidebar) {
     return (
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
@@ -40,18 +63,18 @@ const Siderbar = () => {
               </Text>
             </DrawerHeader>
             <DrawerBody>
-              <MenuSection title="Geral">
-                <MenuLink
-                  href="/dashboard"
-                  icon={<Icon as={RiDashboardLine} />}
-                  name="Dashboard"
-                />
-                <MenuLink
-                  href="/users"
-                  icon={<Icon as={RiContactsLine} />}
-                  name="Usuários"
-                />
-              </MenuSection>
+              {menus.map((menu) => (
+                <MenuSection key={menu.id} title={menu.title}>
+                  {menu.links.map((link) => (
+                    <MenuLink
+                      key={link.name}
+                      href={link.href}
+                      icon={link.icon}
+                      name={link.name}
+                    />
+                  ))}
+                </MenuSection>
+              ))}
             </DrawerBody>
           </DrawerContent>
         </DrawerOverlay>
@@ -60,18 +83,18 @@ const Siderbar = () => {
   }
   return (
     <Box as="aside" w="64" mr="8">
-      <MenuSection title="Geral">
-        <MenuLink
-          href="/dashboard"
-          icon={<Icon as={RiDashboardLine} />}
-          name="Dashboard"
-        />
-        <MenuLink
-          href="/users"
-          icon={<Icon as={RiContactsLine} />}
-          name="Usuários"
-        />
-      </MenuSection>
+      {menus.map((menu) => (
+        <MenuSection key={menu.id} title={menu.title}>
+          {menu.links.map((link) => (
+            <MenuLink
+              key={link.name}
+              href={link.href}
+              icon={link.icon}
+              name={link.name}
+            />
+          ))}
+        </MenuSection>
+      ))}
     </Box>
   );
 };
