@@ -6,10 +6,7 @@ import {
   Divider,
   Flex,
   Heading,
-  HStack,
   Link as ChakraLink,
-  PinInput,
-  PinInputField,
   SlideFade,
   Stack,
   Text,
@@ -17,10 +14,10 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
+import OtpVerificate from "@/components/OtpVerificate";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-import OtpVerificate from "@/components/OtpVerificate";
 
 const schema = yup.object().shape({
   email: yup.string().required("Campo obrigatório").email("Email inválido"),
@@ -49,9 +46,9 @@ export default function SignIn() {
     resolver: yupResolver(schema)
   });
 
-  const handleVerify = (otpCode: any) => {
-    console.log(otpCode);
-  };
+  // const handleVerify = (otpCode: any) => {
+  //   console.log(otpCode);
+  // };
 
   const handleCreateUser = (values: IFormCreateValues) => {
     console.log(values);
