@@ -10,11 +10,7 @@ type BaseProps = {
 
 const Base = ({ children }: BaseProps) => {
   return (
-    <Flex
-      direction="column"
-      // h="100vh"
-      aria-label="conteudo do site"
-    >
+    <Flex direction="column" h="100vh" aria-label="conteudo do site">
       <Header />
       <Flex
         maxWidth={stylesConstants.APP_CONTENT_WIDTH}
