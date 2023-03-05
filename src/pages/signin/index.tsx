@@ -12,12 +12,16 @@ import {
   Text,
   useDisclosure
 } from "@chakra-ui/react";
+import { useEffect } from "react";
+
 import Link from "next/link";
 
 import OtpVerificate from "@/components/OtpVerificate";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
+
+import { signIn, useSession, signOut } from "next-auth/react";
 
 const schema = yup.object().shape({
   email: yup.string().required("Campo obrigatório").email("Email inválido"),
@@ -35,6 +39,7 @@ export type IFormCreateValues = {
 };
 
 export default function SignIn() {
+  const session = useSession();
   const { isOpen, onToggle, onOpen } = useDisclosure();
 
   const {
@@ -43,23 +48,45 @@ export default function SignIn() {
     formState: { errors, isSubmitting }
   } = useForm<IFormCreateValues>({
     mode: "onSubmit",
-    resolver: yupResolver(schema)
+    resolver: yupResolver(schema),
+    defaultValues: {
+      email: "genilson@gmail.com",
+      confirmPassword: "123456",
+      password: "123456"
+    }
   });
 
   // const handleVerify = (otpCode: any) => {
   //   console.log(otpCode);
   // };
 
-  const handleCreateUser = (values: IFormCreateValues) => {
-    console.log(values);
-    onOpen();
+  const handleCreateUser = async (values: IFormCreateValues) => {
+    const auth = await signIn("credentials", {
+      email: values.email,
+      password: values.password,
+      redirect: false
+    });
+    console.log({ auth });
+
+    // onOpen();
   };
+
+  const handleSignOut = async () => {
+    const auth = await signOut({
+      redirect: false
+    });
+    console.log({ auth });
+  };
+
+  useEffect(() => {
+    console.log(session);
+  }, [session]);
 
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center">
       <Box position={"relative"}>
         <SlideFade in={isOpen} offsetY="20px">
-          <OtpVerificate />
+          {/* <OtpVerificate /> */}
         </SlideFade>
 
         <Flex
@@ -75,7 +102,7 @@ export default function SignIn() {
         >
           <Heading>Sign In</Heading>
           <Divider borderColor="gray.600" my="6" />
-          <Flex as="form" borderRadius={8} flexDir="column">
+          <Flex borderRadius={8} flexDir="column">
             <Stack spacing={4}>
               <Controller
                 name="email"
@@ -113,7 +140,7 @@ export default function SignIn() {
                   <Input
                     name="password_confirmation"
                     type="password"
-                    label="Senha"
+                    label="Confirmar senha"
                     value={value}
                     onChange={onChange}
                     error={errors.confirmPassword ? true : false}
@@ -130,7 +157,7 @@ export default function SignIn() {
               {isSubmitting ? "Criando conta..." : "Criar conta"}
             </Button>
           </Flex>
-          <Button mt="2" variant="outline" onClick={onToggle}>
+          <Button mt="2" variant="outline" onClick={handleSignOut}>
             Verificar codigo
           </Button>
           <Flex mt="8" justifyContent="center">
