@@ -16,10 +16,12 @@ import {
 import Link from "next/link";
 
 import { axiosInstance, Endpoints } from "@/api";
+import { useNotification } from "@/contexts/AlertMessageContext";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { useNotification } from "@/contexts/AlertMessageContext";
+import OtpVerificate from "@/components/OtpVerificate";
 
 const schema = yup.object().shape({
   name: yup.string().required("Campo obrigatório"),
@@ -40,7 +42,8 @@ export type IFormCreateValues = {
 
 export default function SignIn() {
   const notification = useNotification();
-  const { isOpen, onToggle, onOpen } = useDisclosure();
+  const router = useRouter();
+  const { isOpen, onToggle } = useDisclosure();
 
   const {
     control,
@@ -66,7 +69,9 @@ export default function SignIn() {
       notification.showAlert({
         description: "Usuário criado com sucesso",
         status: "success",
-        title: "Sucesso"
+        title: "Sucesso",
+        buttonTitle: "Faça login",
+        onConfirm: () => router.push("/login")
       });
     } catch (error: any) {
       notification.showAlert({
@@ -82,7 +87,7 @@ export default function SignIn() {
     <Flex w="100vw" h="100vh" align="center" justify="center">
       <Box position={"relative"}>
         <SlideFade in={isOpen} offsetY="20px">
-          {/* <OtpVerificate /> */}
+          <OtpVerificate onClose={onToggle} />
         </SlideFade>
 
         <Flex
@@ -92,8 +97,8 @@ export default function SignIn() {
           p="8"
           borderRadius={8}
           flexDir="column"
-          opacity={isOpen ? 0.5 : 1}
-          filter={isOpen ? "blur(2px)" : "none"}
+          opacity={isOpen ? 0.2 : 1}
+          filter={isOpen ? "blur(4px)" : "none"}
           pointerEvents={isOpen ? "none" : "auto"}
         >
           <Heading>Sign In</Heading>
@@ -169,7 +174,7 @@ export default function SignIn() {
               {isSubmitting ? "Criando conta..." : "Criar conta"}
             </Button>
           </Flex>
-          <Button mt="2" variant="outline">
+          <Button mt="2" variant="outline" onClick={onToggle}>
             Verificar codigo
           </Button>
           <Flex mt="8" justifyContent="center">

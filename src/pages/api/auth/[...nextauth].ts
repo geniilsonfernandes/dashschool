@@ -30,8 +30,7 @@ export default NextAuth({
           return {
             id: user.id,
             email: user.email,
-            name: user.name,
-            myCustomProperty: "lxiro"
+            name: user.name
           };
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
