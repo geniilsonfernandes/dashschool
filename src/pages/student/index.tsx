@@ -14,6 +14,8 @@ import {
   Tr,
   useBreakpointValue
 } from "@chakra-ui/react";
+import { NextPageContext } from "next";
+import { getSession } from "next-auth/react";
 import Link from "next/link";
 import { RiAddLine } from "react-icons/ri";
 
@@ -78,3 +80,20 @@ const UserList = () => {
 };
 
 export default UserList;
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    };
+  }
+
+  return {
+    props: { session }
+  };
+}

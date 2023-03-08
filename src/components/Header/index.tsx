@@ -1,5 +1,6 @@
 import { stylesConstants } from "@/styles";
 import { Flex, useBreakpointValue, Icon } from "@chakra-ui/react";
+import { useSession, signOut } from "next-auth/react";
 import { RiMenuLine } from "react-icons/ri";
 import { useSidebarDrawer } from "../../contexts/SidebarDrawerContext";
 import Logo from "./Logo";
@@ -18,6 +19,13 @@ const Header = () => {
       fallback: "lg"
     }
   );
+
+  const { data: session } = useSession();
+
+  const handleSignOut = () => {
+    signOut();
+  };
+
   return (
     <Flex
       as="header"
@@ -44,7 +52,12 @@ const Header = () => {
         {isWideVersion && <Search />}
         <Flex>
           <Notification />
-          <Profile showProfileData={isWideVersion} />
+          <Profile
+            showProfileData={isWideVersion}
+            email={session?.user?.email}
+            name={session?.user?.name}
+            onSignOut={handleSignOut}
+          />
         </Flex>
       </Flex>
     </Flex>

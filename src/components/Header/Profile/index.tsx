@@ -1,24 +1,65 @@
-import { Avatar, Box, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import {
+  Avatar,
+  Box,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text
+} from "@chakra-ui/react";
 
 type ProfileProps = {
   showProfileData?: boolean;
+  name?: string;
+  email?: string;
+  onSignOut: () => void;
 };
 
-const Profile = ({ showProfileData = true }: ProfileProps) => {
+const Profile = ({
+  showProfileData = true,
+  name,
+  email,
+  onSignOut
+}: ProfileProps) => {
   return (
-    <Flex align="center">
-      {showProfileData && (
-        <Box marginRight="4" textAlign="right">
-          <Text>genilson</Text>
-          <Text color="gray.300" fontSize="small">
-            ddfdfdfd
-          </Text>
-        </Box>
-      )}
+    <Menu>
+      <MenuButton>
+        <div
+          style={{
+            display: "flex"
+          }}
+        >
+          {showProfileData && (
+            <Box marginRight="4" textAlign="right">
+              <Text>{name}</Text>
+              <Text color="gray.300" fontSize="small">
+                {email}
+              </Text>
+            </Box>
+          )}
+          <Avatar size="md" name={name} src="" />
+        </div>
+      </MenuButton>
 
-      <Avatar size="md" name="ds" src="" />
-    </Flex>
+      <MenuList bg="gray.900">
+        <MenuItem
+          as="button"
+          bg="gray.900"
+          borderColor="gray.100"
+          _hover={{
+            bg: "gray.700",
+            borderColor: "gray.100"
+          }}
+          _active={{
+            bg: "gray.700",
+            borderColor: "gray.100"
+          }}
+          onClick={onSignOut}
+        >
+          sair
+        </MenuItem>
+      </MenuList>
+    </Menu>
   );
 };
 
