@@ -2,6 +2,25 @@ import { useRouter } from "next/router";
 import React from "react";
 import Base from "@/templates/Base";
 import Form, { IFormValues } from "../../../components/Form/FormCreateUser";
+import { NextPageContext } from "next";
+import { getSession } from "next-auth/react";
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    };
+  }
+
+  return {
+    props: { session }
+  };
+}
 
 const Edit = () => {
   const router = useRouter();
