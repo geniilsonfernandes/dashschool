@@ -7,10 +7,13 @@ import {
   PinInputField,
   Text
 } from "@chakra-ui/react";
-import React from "react";
 import Button from "../Button";
 
-const OtpVerificate = () => {
+type OtpVerificateProps = {
+  onClose: () => void;
+};
+
+const OtpVerificate = ({ onClose }: OtpVerificateProps) => {
   return (
     <Flex
       w={["310px", "360px"]}
@@ -36,7 +39,7 @@ const OtpVerificate = () => {
         </PinInput>
       </HStack>
       <Button mt="8">Verificar agora</Button>
-      <Button mt="2" variant="outline">
+      <Button mt="2" variant="outline" onClick={onClose}>
         Voltar
       </Button>
     </Flex>

@@ -1,6 +1,8 @@
 import theme from "@/styles/theme";
 import Base from "@/templates/Base";
 import { Box, Text } from "@chakra-ui/react";
+import { NextPageContext } from "next";
+import { getSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -81,5 +83,22 @@ const dashboard = () => {
     </Base>
   );
 };
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    };
+  }
+
+  return {
+    props: { session }
+  };
+}
 
 export default dashboard;

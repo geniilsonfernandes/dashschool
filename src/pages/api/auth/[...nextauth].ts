@@ -1,59 +1,50 @@
-import prisma from "@/services/prisma";
-import NextAuth from "next-auth";
+import { User } from "@/services/userService/user";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-export default NextAuth({
+const authOptions: NextAuthOptions = {
   // Configure um ou mais provedores de autenticação aqui
   session: {
     strategy: "jwt"
   },
-
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {},
-      async authorize(credentials, req) {
+      async authorize(credentials) {
         const { email, password } = credentials as {
           email: string;
           password: string;
         };
 
-        // Add logic here to look up the user from the credentials supplied
-        const user = await prisma.users.findUnique({
-          where: {
-            email: email
-          }
-        });
+        const user = await User.checkPassword(email, password);
 
-        if (user) {
-          // Any object returned will be saved in `user` property of the JWT
-          return {
-            id: user.id,
-            email: user.email,
-            name: user.name,
-            myCustomProperty: "lxiro"
-          };
-        } else {
-          // If you return null then an error will be displayed advising the user to check their details.
+        if (!user) {
           return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name
+        };
       }
     })
   ],
   callbacks: {
-    async jwt({ token, user }) {
-      user && (token.user = user);
-      return token;
-    },
+    async session({ session }) {
+      const user = await User.findByEmail(session.user.email);
 
-    async session({ session, token }) {
-      const id = token.sub;
-      session.user.id = id;
-      return session;
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user ? user.id : null
+        }
+      };
     }
   }
+};
 
-  // Configure outros recursos do NextAuth aqui
-});
+export default NextAuth(authOptions);

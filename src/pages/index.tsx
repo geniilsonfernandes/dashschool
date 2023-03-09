@@ -1,26 +1,37 @@
-import { Input } from "@/components/Form/Input";
-import { Flex, Button, Stack } from "@chakra-ui/react";
+import { NextPageContext } from "next";
+import { useSession, signOut, getSession } from "next-auth/react";
 
-export default function SignIn() {
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    };
+  }
+
+  return {
+    props: { session }
+  };
+}
+
+export default function index() {
+  const { data: session } = useSession();
+
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center">
-      <Flex
-        as="form"
-        width="100%"
-        maxWidth={360}
-        bg="gray.800"
-        p="8"
-        borderRadius={8}
-        flexDir="column"
-      >
-        <Stack spacing={4}>
-          <Input label="Email" name="email" type="email" />
-          <Input label="Senha" name="password" type="password" />
-        </Stack>
-        <Button type="submit" mt="6" colorScheme="facebook">
-          Entrar
-        </Button>
-      </Flex>
-    </Flex>
+    <div>
+      {session ? (
+        <>
+          <h1>Olá {session.user.name} </h1>
+
+          <button onClick={() => signOut()}>sair</button>
+        </>
+      ) : (
+        <h1>Olá visitante</h1>
+      )}
+    </div>
   );
 }

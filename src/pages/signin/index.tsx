@@ -7,19 +7,20 @@ import {
   Flex,
   Heading,
   Link as ChakraLink,
-  SlideFade,
   Stack,
-  Text,
-  useDisclosure
+  Text
 } from "@chakra-ui/react";
-
 import Link from "next/link";
 
 import { axiosInstance, Endpoints } from "@/api";
+import { useNotification } from "@/contexts/AlertMessageContext";
 import { yupResolver } from "@hookform/resolvers/yup";
+
+import { useRouter } from "next/router";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
-import { useNotification } from "@/contexts/AlertMessageContext";
+import { NextPageContext } from "next";
+import { getSession } from "next-auth/react";
 
 const schema = yup.object().shape({
   name: yup.string().required("Campo obrigatório"),
@@ -40,7 +41,7 @@ export type IFormCreateValues = {
 
 export default function SignIn() {
   const notification = useNotification();
-  const { isOpen, onToggle, onOpen } = useDisclosure();
+  const router = useRouter();
 
   const {
     control,
@@ -50,10 +51,6 @@ export default function SignIn() {
     mode: "onSubmit",
     resolver: yupResolver(schema)
   });
-
-  // const handleVerify = (otpCode: any) => {
-  //   console.log(otpCode);
-  // };
 
   const handleCreateUser = async (values: IFormCreateValues) => {
     try {
@@ -66,7 +63,9 @@ export default function SignIn() {
       notification.showAlert({
         description: "Usuário criado com sucesso",
         status: "success",
-        title: "Sucesso"
+        title: "Sucesso",
+        buttonTitle: "Faça login",
+        onConfirm: () => router.push("/login")
       });
     } catch (error: any) {
       notification.showAlert({
@@ -81,10 +80,6 @@ export default function SignIn() {
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center">
       <Box position={"relative"}>
-        <SlideFade in={isOpen} offsetY="20px">
-          {/* <OtpVerificate /> */}
-        </SlideFade>
-
         <Flex
           w={["310px", "360px"]}
           maxWidth={360}
@@ -92,9 +87,6 @@ export default function SignIn() {
           p="8"
           borderRadius={8}
           flexDir="column"
-          opacity={isOpen ? 0.5 : 1}
-          filter={isOpen ? "blur(2px)" : "none"}
-          pointerEvents={isOpen ? "none" : "auto"}
         >
           <Heading>Sign In</Heading>
           <Divider borderColor="gray.600" my="6" />
@@ -169,9 +161,7 @@ export default function SignIn() {
               {isSubmitting ? "Criando conta..." : "Criar conta"}
             </Button>
           </Flex>
-          <Button mt="2" variant="outline">
-            Verificar codigo
-          </Button>
+
           <Flex mt="8" justifyContent="center">
             <Text pr={2}> Já tem uma conta? </Text>
             <Link href="/login">
@@ -187,4 +177,21 @@ export default function SignIn() {
       </Box>
     </Flex>
   );
+}
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (session) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false
+      }
+    };
+  }
+
+  return {
+    props: { session }
+  };
 }

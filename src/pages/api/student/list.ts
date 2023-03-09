@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 interface ISuccessResponse {
   error: number;
-  students: IStudent;
+  students: IStudent[];
 }
 
 interface IErrorResponse {
@@ -11,7 +11,7 @@ interface IErrorResponse {
   errorMessage: string;
 }
 
-const allowedMethods = "POST";
+const allowedMethods = "GET";
 
 export default async function handler(
   req: NextApiRequest,
@@ -24,14 +24,9 @@ export default async function handler(
   }
 
   try {
-    const body = req.body as IStudent;
+    const students = await Student.listStudents();
 
-    const studentAlreadyExists = await Student.findStudentByEmail(body.email);
-    if (studentAlreadyExists) throw new Error("Estudante já existe");
-
-    const students = await Student.createStudent(body);
-
-    res.status(201).json({ error: 201, students });
+    res.status(200).json({ error: 200, students });
   } catch (error: any) {
     console.log(error);
 

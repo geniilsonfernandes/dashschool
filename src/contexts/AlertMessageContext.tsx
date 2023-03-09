@@ -1,6 +1,7 @@
 import AlertMessage, { AlertMessageProps } from "@/components/AlertMessage";
 import { Box, Fade, useDisclosure } from "@chakra-ui/react";
-import { createContext, useContext, useState } from "react";
+import { useRouter } from "next/router";
+import { createContext, useContext, useEffect, useState } from "react";
 
 interface NotificationProviderProps {
   children: React.ReactNode;
@@ -15,6 +16,7 @@ export const AlertMessageContext = createContext({} as AlertMessageContextData);
 export const AlertMessageProvider = ({
   children
 }: NotificationProviderProps) => {
+  const router = useRouter();
   const disclosure = useDisclosure();
   const [alertProps, setAlertProps] = useState<AlertMessageProps>({
     description: "",
@@ -42,6 +44,10 @@ export const AlertMessageProvider = ({
   function hiddenAlert() {
     disclosure.onClose();
   }
+
+  useEffect(() => {
+    disclosure.onClose();
+  }, [router.asPath]);
 
   return (
     <AlertMessageContext.Provider
