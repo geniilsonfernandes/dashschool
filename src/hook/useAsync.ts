@@ -5,7 +5,7 @@ interface IUseAsync<T, A> {
   isLoading: boolean;
   error: any;
   data: T | null;
-  execute: (args: A) => Promise<void>;
+  execute: (args?: A) => Promise<void>;
 }
 
 function useAsync<T, A>(asyncFn: AsyncFunction<T>): IUseAsync<T, A> {
@@ -13,7 +13,7 @@ function useAsync<T, A>(asyncFn: AsyncFunction<T>): IUseAsync<T, A> {
   const [error, setError] = useState<any>(null);
   const [data, setData] = useState<T | null>(null);
 
-  const execute = async (args: A) => {
+  const execute = async (args?: A) => {
     setIsLoading(true);
     try {
       const result = await asyncFn(args);
