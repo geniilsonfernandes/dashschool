@@ -7,7 +7,10 @@ export class StudentsEndpoints {
   list() {
     return `${this.baseURL}/list`;
   }
-  get() {
-    return `${this.baseURL}/get`;
+  get(id: string) {
+    return `${this.baseURL}/${id}`;
+  }
+  update(id: string) {
+    return `${this.baseURL}/${id}`;
   }
 }
