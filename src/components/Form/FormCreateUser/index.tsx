@@ -33,9 +33,15 @@ type IFormProps = {
   initialValues?: IFormValues;
   onSubmit: (values: IFormValues) => void;
   isLoading?: boolean;
+  loadingValues?: boolean;
 };
 
-const Form = ({ onSubmit, initialValues, isLoading = false }: IFormProps) => {
+const Form = ({
+  onSubmit,
+  initialValues,
+  isLoading = false,
+  loadingValues = false
+}: IFormProps) => {
   console.log(initialValues);
 
   const {
@@ -70,7 +76,7 @@ const Form = ({ onSubmit, initialValues, isLoading = false }: IFormProps) => {
   return (
     <>
       <Box flex="1" borderRadius={8} bg="gray.800" p="8">
-        <Skeleton colorScheme="blue" isLoaded={!isLoading} rounded="8px">
+        <Skeleton colorScheme="blue" isLoaded={!loadingValues} rounded="8px">
           <Heading size="lg" fontWeight="normal">
             {hasInitialValues ? "Editar usuário" : "Criar usuário"}
           </Heading>
@@ -79,7 +85,11 @@ const Form = ({ onSubmit, initialValues, isLoading = false }: IFormProps) => {
 
         <VStack spacing="8">
           <SimpleGrid minChildWidth="240px" columns={2} spacing={8} w="100%">
-            <Skeleton colorScheme="blue" isLoaded={!isLoading} rounded="8px">
+            <Skeleton
+              colorScheme="blue"
+              isLoaded={!loadingValues}
+              rounded="8px"
+            >
               <Controller
                 name="name"
                 control={control}
@@ -96,7 +106,11 @@ const Form = ({ onSubmit, initialValues, isLoading = false }: IFormProps) => {
                 )}
               />
             </Skeleton>
-            <Skeleton colorScheme="blue" isLoaded={!isLoading} rounded="8px">
+            <Skeleton
+              colorScheme="blue"
+              isLoaded={!loadingValues}
+              rounded="8px"
+            >
               <Controller
                 name="email"
                 control={control}
@@ -115,7 +129,11 @@ const Form = ({ onSubmit, initialValues, isLoading = false }: IFormProps) => {
             </Skeleton>
           </SimpleGrid>
           <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
-            <Skeleton colorScheme="blue" isLoaded={!isLoading} rounded="8px">
+            <Skeleton
+              colorScheme="blue"
+              isLoaded={!loadingValues}
+              rounded="8px"
+            >
               <Controller
                 name="password"
                 control={control}
@@ -137,14 +155,22 @@ const Form = ({ onSubmit, initialValues, isLoading = false }: IFormProps) => {
         </VStack>
         <Flex mt="8" justify="flex-end">
           <HStack spacing="4">
-            <Skeleton colorScheme="blue" isLoaded={!isLoading} rounded="8px">
+            <Skeleton
+              colorScheme="blue"
+              isLoaded={!loadingValues}
+              rounded="8px"
+            >
               <Link href="/student" passHref>
                 <Button colorScheme="whiteAlpha" disabled>
                   cancelar
                 </Button>
               </Link>
             </Skeleton>
-            <Skeleton colorScheme="blue" isLoaded={!isLoading} rounded="8px">
+            <Skeleton
+              colorScheme="blue"
+              isLoaded={!loadingValues}
+              rounded="8px"
+            >
               <Button
                 isDisabled={Object.keys(errors).length > 0}
                 isLoading={isLoading}
