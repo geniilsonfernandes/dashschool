@@ -19,16 +19,18 @@ model Students {
   name       String
   password   String
   created_at DateTime @default(now())
+  Users      Users?
 
   @@map("student")
 }
 
 model Users {
-  id         String   @id @default(uuid())
-  email      String   @unique
+  id         String    @id @default(uuid())
+  email      String    @unique
   name       String
   password   String
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  Students   Students? @relation(fields: [id], references: [id])
 
   @@map("user")
 }
