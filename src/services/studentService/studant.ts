@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import prisma from "../prisma";
 import { IStudent } from "./types";
 
@@ -54,11 +55,17 @@ export class Student {
 
   public static async updateStudentById(id: string, data: IStudent) {
     try {
+      const hashedPassword = bcrypt.hashSync(data.password, 10);
+
       const student = await prisma.students.update({
         where: {
           id
         },
-        data
+        data: {
+          email: data.email,
+          name: data.name,
+          password: hashedPassword
+        }
       });
       return student;
     } catch (error) {
