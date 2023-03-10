@@ -1,6 +1,6 @@
 import { axiosInstance, Endpoints } from "@/api";
 import Pagination from "@/components/Pagination";
-import UserRow, { UserRowProps } from "@/components/UserRow";
+import UserRow from "@/components/UserRow";
 import useAsync from "@/hook/useAsync";
 import { IStudentResponse } from "@/services";
 import Base from "@/templates/Base";
@@ -23,6 +23,10 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { RiAddLine } from "react-icons/ri";
 
+type IStudentGet = {
+  page: string;
+};
+
 const UserList = () => {
   const isDrawerSidebar = useBreakpointValue(
     {
@@ -34,7 +38,7 @@ const UserList = () => {
     }
   );
 
-  const handleListStudents = async (page?: number) => {
+  const handleListStudents = async () => {
     try {
       const reponse = await axiosInstance.get(Endpoints.student.list());
 
@@ -44,16 +48,16 @@ const UserList = () => {
     }
   };
 
-  type IStudentGet = {
-    page: string;
+  const get = useAsync<IStudentResponse[], IStudentGet>(handleListStudents);
+
+  const handlePageChange = (page: number) => {
+    get.execute({
+      page: page.toString()
+    });
   };
-  const { isLoading, execute, data } = useAsync<
-    IStudentResponse[],
-    IStudentGet
-  >(handleListStudents);
 
   useEffect(() => {
-    execute({
+    get.execute({
       page: "1"
     });
   }, []);
@@ -82,7 +86,7 @@ const UserList = () => {
             </Button>
           </Link>
         </Flex>
-        {isLoading && <p>Carregando...</p>}
+        {get.isLoading && <p>Carregando...</p>}
         <Table colorScheme="whiteAlpha">
           <Thead>
             <Tr>
@@ -95,8 +99,8 @@ const UserList = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {data?.length !== undefined &&
-              data.map((user) => (
+            {get.data?.length !== undefined &&
+              get.data.map((user) => (
                 <UserRow
                   key={user.id}
                   id={user.id}
