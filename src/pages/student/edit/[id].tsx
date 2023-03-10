@@ -38,7 +38,6 @@ const Edit = () => {
   const handleGetStudante = async () => {
     try {
       const reponse = await axiosInstance.get(Endpoints.student.get(id));
-
       setInitialValues({
         name: reponse.data.students.name,
         email: reponse.data.students.email,
@@ -50,18 +49,20 @@ const Edit = () => {
     }
   };
 
-  const { isLoading, execute } = useAsync(handleGetStudante);
+  const update = useAsync(handleEditUser);
+  const get = useAsync(handleGetStudante);
 
   useEffect(() => {
-    execute();
+    get.execute();
   }, []);
 
   return (
     <Base>
       <Form
-        onSubmit={handleEditUser}
+        onSubmit={(values) => update.execute(values)}
         initialValues={initialValues}
-        isLoading={isLoading}
+        isLoading={update.isLoading}
+        loadingValues={get.isLoading}
       />
     </Base>
   );
