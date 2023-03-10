@@ -51,4 +51,18 @@ export class Student {
       throw new Error("Não foi possível encontrar o estudante");
     }
   }
+
+  public static async updateStudentById(id: string, data: IStudent) {
+    try {
+      const student = await prisma.students.update({
+        where: {
+          id
+        },
+        data
+      });
+      return student;
+    } catch (error) {
+      throw new Error("Não foi possível atualizar o estudante");
+    }
+  }
 }

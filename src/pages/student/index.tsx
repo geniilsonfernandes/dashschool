@@ -36,8 +36,6 @@ const UserList = () => {
 
   const handleListStudents = async (page?: number) => {
     try {
-      console.log(page);
-
       const reponse = await axiosInstance.get(Endpoints.student.list());
 
       return reponse.data.students;
