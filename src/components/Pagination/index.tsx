@@ -1,7 +1,20 @@
 import { Box, Button, Stack } from "@chakra-ui/react";
+import { type } from "os";
 import React from "react";
 
-const Pagination = () => {
+type PaginationProps = {
+  totalCountOfRegisters?: number;
+  registersPerPage?: number;
+  currentPage?: number;
+  totalPages?: number;
+  onPageChange: (page: number) => void;
+};
+const Pagination = ({
+  onPageChange,
+  totalCountOfRegisters,
+  currentPage,
+  registersPerPage
+}: PaginationProps) => {
   return (
     <Stack
       direction="row"
@@ -22,6 +35,7 @@ const Pagination = () => {
             width="4"
             colorScheme="facebook"
             bg="gray.500"
+            onClick={() => onPageChange(page)}
           >
             {page}
           </Button>
