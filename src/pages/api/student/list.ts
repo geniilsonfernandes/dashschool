@@ -1,4 +1,5 @@
 import { Student, IStudent } from "@/services";
+import userTokenDecode from "@/utils/userTokenDecode";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 interface ISuccessResponse {
@@ -23,8 +24,13 @@ export default async function handler(
       .json({ error: 405, errorMessage: "Method not allowed" });
   }
 
+  const user_id = await userTokenDecode(req);
+
+  if (user_id === "")
+    return res.status(401).json({ error: 401, errorMessage: "Unauthorized" });
+
   try {
-    const students = await Student.listStudents();
+    const students = await Student.listStudents(user_id);
 
     res.status(200).json({ error: 200, students });
   } catch (error: any) {

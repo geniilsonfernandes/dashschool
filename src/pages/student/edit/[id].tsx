@@ -1,45 +1,69 @@
-import { useRouter } from "next/router";
-import React from "react";
+import { axiosInstance, Endpoints } from "@/api";
+import { useNotification } from "@/contexts/AlertMessageContext";
+import useAsync from "@/hook/useAsync";
 import Base from "@/templates/Base";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import Form, { IFormValues } from "../../../components/Form/FormCreateUser";
-import { NextPageContext } from "next";
-import { getSession } from "next-auth/react";
-
-export async function getServerSideProps(context: NextPageContext) {
-  const session = await getSession(context);
-
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false
-      }
-    };
-  }
-
-  return {
-    props: { session }
-  };
-}
 
 const Edit = () => {
+  const notification = useNotification();
+  const [initialValues, setInitialValues] = useState({} as IFormValues);
   const router = useRouter();
   const { id } = router.query as { id: string };
 
-  const handleEditUser = (values: IFormValues) => {
-    console.log(values, id);
+  const handleEditUser = async (values: IFormValues) => {
+    try {
+      await axiosInstance.put(Endpoints.student.update(id), {
+        name: values.name,
+        email: values.email,
+        password: values.password
+      });
+      notification.showAlert({
+        title: "Sucesso",
+        description: "Aluno editado com sucesso",
+        status: "success",
+        buttonTitle: "Ir para lista de alunos",
+        onConfirm: () => router.back()
+      });
+    } catch (error: any) {
+      notification.showAlert({
+        title: "Erro",
+        description: error.response.data.errorMessage,
+        status: "error"
+      });
+    }
   };
 
-  const initialValues = {
-    name: "string",
-    email: "genilson@gmail.com",
-    password: "string",
-    confirmPassword: "string"
+  const handleGetStudante = async () => {
+    try {
+      const reponse = await axiosInstance.get(Endpoints.student.get(id));
+      setInitialValues({
+        name: reponse.data.students.name,
+        email: reponse.data.students.email,
+        password: reponse.data.students.password
+      });
+      return reponse.data.students;
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const update = useAsync(handleEditUser);
+  const get = useAsync(handleGetStudante);
+
+  useEffect(() => {
+    get.execute();
+  }, []);
 
   return (
     <Base>
-      <Form onSubmit={handleEditUser} initialValues={initialValues} isLoading />
+      <Form
+        onSubmit={(values) => update.execute(values)}
+        initialValues={initialValues}
+        isLoading={update.isLoading}
+        loadingValues={get.isLoading}
+      />
     </Base>
   );
 };

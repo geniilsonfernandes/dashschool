@@ -10,3 +10,10 @@ export interface IStudentResponse {
   name: string;
   created_at: string;
 }
+
+export interface ICreateStudentPayload {
+  email: string;
+  name: string;
+  password: string;
+  user_id: string;
+}
