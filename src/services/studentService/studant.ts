@@ -1,26 +1,38 @@
 import bcrypt from "bcrypt";
 import prisma from "../prisma";
-import { IStudent } from "./types";
+import { ICreateStudentPayload, IStudent } from "./types";
 
 export class Student {
-  public static async createStudent({ email, name, password }: IStudent) {
+  public static async createStudent({
+    email,
+    name,
+    password,
+    user_id
+  }: ICreateStudentPayload) {
     try {
       const students = await prisma.students.create({
         data: {
           email,
           name,
-          password
+          password,
+          user_id
         }
       });
       return students;
     } catch (error) {
+      console.log(error);
+
       throw new Error("Não foi possível criar o estudante");
     }
   }
 
-  public static async listStudents() {
+  public static async listStudents(user_id: string) {
     try {
-      const students = await prisma.students.findMany();
+      const students = await prisma.students.findMany({
+        where: {
+          user_id
+        }
+      });
       return students;
     } catch (error) {
       throw new Error("Não foi possível listar os estudantes");
