@@ -1,2 +1,0 @@
--- AddForeignKey
-ALTER TABLE `user` ADD CONSTRAINT `user_id_fkey` FOREIGN KEY (`id`) REFERENCES `student`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;

@@ -14,23 +14,26 @@ datasource db {
 // o que é o @default(autoincrement())?
 // o que é o primary key?
 model Students {
-  id         String   @id @default(uuid())
+  id         String   @id @unique @default(uuid())
   email      String   @unique
   name       String
   password   String
   created_at DateTime @default(now())
-  Users      Users?
+  // user_email String
+
+  user_id String
+  Users   Users  @relation(fields: [user_id], references: [id])
 
   @@map("student")
 }
 
 model Users {
-  id         String    @id @default(uuid())
-  email      String    @unique
+  id         String     @id @unique @default(uuid())
+  email      String     @unique
   name       String
   password   String
-  created_at DateTime  @default(now())
-  Students   Students? @relation(fields: [id], references: [id])
+  created_at DateTime   @default(now())
+  students   Students[]
 
   @@map("user")
 }
