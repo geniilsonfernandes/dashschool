@@ -11,6 +11,11 @@ export interface IStudentResponse {
   created_at: string;
 }
 
+export interface IListStudentsPayload {
+  page: number;
+  take: number;
+  user_id: string;
+}
 export interface ICreateStudentPayload {
   email: string;
   name: string;

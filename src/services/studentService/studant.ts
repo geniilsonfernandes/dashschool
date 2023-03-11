@@ -26,14 +26,21 @@ export class Student {
     }
   }
 
-  public static async listStudents(user_id: string) {
+  public static async listStudents(user_id: string, page = 1, take = 5) {
+    const skip = (page - 1) * take;
+
+    const total = await prisma.students.count(); // total de registros na tabela
+    const totalPages = Math.ceil(total / take); // total de páginas
+
     try {
       const students = await prisma.students.findMany({
+        skip: skip,
+        take: take,
         where: {
           user_id
         }
       });
-      return students;
+      return { students, total, totalPages };
     } catch (error) {
       throw new Error("Não foi possível listar os estudantes");
     }
