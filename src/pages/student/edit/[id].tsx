@@ -44,8 +44,14 @@ const Edit = () => {
         password: reponse.data.students.password
       });
       return reponse.data.students;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      notification.showAlert({
+        title: "Erro",
+        description: error.response.data.errorMessage,
+        status: "error",
+        buttonTitle: "Ir para lista de alunos",
+        onConfirm: () => router.back()
+      });
     }
   };
 
