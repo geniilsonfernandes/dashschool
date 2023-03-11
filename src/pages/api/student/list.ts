@@ -1,10 +1,13 @@
 import { Student, IStudent } from "@/services";
 import userTokenDecode from "@/utils/userTokenDecode";
+
 import type { NextApiRequest, NextApiResponse } from "next";
 
 interface ISuccessResponse {
   error: number;
   students: IStudent[];
+  total: number;
+  totalPages: number;
 }
 
 interface IErrorResponse {
@@ -29,10 +32,24 @@ export default async function handler(
   if (user_id === "")
     return res.status(401).json({ error: 401, errorMessage: "Unauthorized" });
 
-  try {
-    const students = await Student.listStudents(user_id);
+  const { page, take } = req.query as {
+    page: string;
+    take: string;
+  };
 
-    res.status(200).json({ error: 200, students });
+  try {
+    const students = await Student.listStudents(
+      user_id,
+      Number(page),
+      Number(take)
+    );
+
+    res.status(200).json({
+      error: 200,
+      students: students.students,
+      total: students.total,
+      totalPages: students.totalPages
+    });
   } catch (error: any) {
     console.log(error);
 
