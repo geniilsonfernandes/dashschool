@@ -38,9 +38,14 @@ const UserList = () => {
     }
   );
 
-  const handleListStudents = async () => {
+  const handleListStudents = async (args: IStudentGet) => {
     try {
-      const reponse = await axiosInstance.get(Endpoints.student.list());
+      const reponse = await axiosInstance.get(Endpoints.student.list(), {
+        params: {
+          page: args.page,
+          take: 2
+        }
+      });
 
       return reponse.data.students;
     } catch (error) {
@@ -111,7 +116,7 @@ const UserList = () => {
               ))}
           </Tbody>
         </Table>
-        <Pagination />
+        <Pagination onPageChange={handlePageChange} />
       </Box>
     </Base>
   );
