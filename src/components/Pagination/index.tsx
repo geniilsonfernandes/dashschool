@@ -1,6 +1,4 @@
 import { Box, Button, Stack } from "@chakra-ui/react";
-import { type } from "os";
-import React from "react";
 
 type PaginationProps = {
   totalCountOfRegisters?: number;
@@ -9,12 +7,7 @@ type PaginationProps = {
   totalPages?: number;
   onPageChange: (page: number) => void;
 };
-const Pagination = ({
-  onPageChange,
-  totalCountOfRegisters,
-  currentPage,
-  registersPerPage
-}: PaginationProps) => {
+const Pagination = ({ onPageChange }: PaginationProps) => {
   return (
     <Stack
       direction="row"
