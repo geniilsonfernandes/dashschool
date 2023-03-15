@@ -10,6 +10,7 @@ import {
   Flex,
   Heading,
   Icon,
+  Spinner,
   Table,
   Tbody,
   Th,
@@ -91,32 +92,47 @@ const UserList = () => {
             </Button>
           </Link>
         </Flex>
-        {get.isLoading && <p>Carregando...</p>}
-        <Table colorScheme="whiteAlpha">
-          <Thead>
-            <Tr>
-              {/* <Th px="2" color="gray.300" width="1">
+        {get.isLoading ? (
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="300px"
+          >
+            <Spinner />
+          </Box>
+        ) : (
+          <Box flex={1}>
+            <Table colorScheme="whiteAlpha">
+              <Thead>
+                <Tr>
+                  {/* <Th px="2" color="gray.300" width="1">
                 <Checkbox colorScheme="facebook" />
               </Th> */}
-              <Th>Alunos</Th>
-              {isDrawerSidebar && <Th>Data de cadastro</Th>}
-              <Th></Th>
-            </Tr>
-          </Thead>
-          <Tbody>
-            {get.data?.length !== undefined &&
-              get.data.map((user) => (
-                <UserRow
-                  key={user.id}
-                  id={user.id}
-                  name={user.name}
-                  email={user.email}
-                  createdAt={user.created_at}
-                />
-              ))}
-          </Tbody>
-        </Table>
-        <Pagination onPageChange={handlePageChange} />
+                  <Th>Alunos</Th>
+                  {isDrawerSidebar && <Th>Data de cadastro</Th>}
+                  <Th></Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {get.data?.length !== undefined &&
+                  get.data.map((user) => (
+                    <UserRow
+                      key={user.id}
+                      id={user.id}
+                      name={user.name}
+                      email={user.email}
+                      createdAt={user.created_at}
+                    />
+                  ))}
+              </Tbody>
+            </Table>
+          </Box>
+        )}
+
+        <Box>
+          <Pagination onPageChange={handlePageChange} />
+        </Box>
       </Box>
     </Base>
   );

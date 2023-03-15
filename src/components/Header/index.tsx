@@ -44,7 +44,7 @@ const Header = () => {
       {!isWideVersion && (
         <Icon as={RiMenuLine} fontSize="24" onClick={onOpen} mr="4" />
       )}
-      <Logo brandName="MyDash" />
+      <Logo brandName="DashShool" />
       <Flex
         justifyContent={isWideVersion ? "space-between" : "flex-end"}
         flex="1"

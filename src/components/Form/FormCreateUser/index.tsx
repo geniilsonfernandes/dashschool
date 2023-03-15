@@ -85,7 +85,7 @@ const Form = ({
       <Box flex="1" borderRadius={8} bg="gray.800" p="8">
         <Skeleton colorScheme="blue" isLoaded={!loadingValues} rounded="8px">
           <Heading size="lg" fontWeight="normal">
-            {isEdit ? "Editar usuário" : "Criar usuário"}
+            {isEdit ? "Editar aluno" : "Criar aluno"}
           </Heading>
         </Skeleton>
         <Divider my="6" borderColor="gray.700" />
