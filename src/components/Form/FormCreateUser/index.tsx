@@ -8,6 +8,11 @@ import {
   HStack,
   SimpleGrid,
   Skeleton,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   VStack
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -16,6 +21,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useEffect } from "react";
+import { stylesConstants } from "@/styles";
 
 const schemaCrete = yup.object().shape({
   name: yup.string().trim().required("Campo obrigatório"),
@@ -90,79 +96,102 @@ const Form = ({
         </Skeleton>
         <Divider my="6" borderColor="gray.700" />
 
-        <VStack spacing="8">
-          <SimpleGrid minChildWidth="240px" columns={2} spacing={8} w="100%">
-            <Skeleton
-              colorScheme="blue"
-              isLoaded={!loadingValues}
-              rounded="8px"
-            >
-              <Controller
-                name="name"
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <Input
-                    name="name"
-                    label="Nome completo"
-                    value={value}
-                    onChange={onChange}
-                    error={errors.name ? true : false}
-                    helperText={errors.name?.message}
-                    autoComplete="off"
-                  />
-                )}
-              />
-            </Skeleton>
-            <Skeleton
-              colorScheme="blue"
-              isLoaded={!loadingValues}
-              rounded="8px"
-            >
-              <Controller
-                name="email"
-                control={control}
-                render={({ field: { value, onChange } }) => (
-                  <Input
-                    name="email"
-                    label="Email"
-                    value={value}
-                    onChange={onChange}
-                    error={errors.email ? true : false}
-                    helperText={errors.email?.message}
-                    autoComplete="off"
-                  />
-                )}
-              />
-            </Skeleton>
-          </SimpleGrid>
+        <Tabs
+          variant="solid-rounded"
+          colorScheme={stylesConstants.COLOR_SCHEME}
+        >
+          <TabList mb={4}>
+            <Tab>Dados do aluno</Tab>
+            <Tab>Curso</Tab>
+          </TabList>
 
-          {!isEdit && (
-            <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
-              <Skeleton
-                colorScheme="blue"
-                isLoaded={!loadingValues}
-                rounded="8px"
-              >
-                <Controller
-                  name="password"
-                  control={control}
-                  render={({ field: { value, onChange } }) => (
-                    <Input
-                      name="password"
-                      type="password"
-                      label="Senha"
-                      value={value}
-                      onChange={onChange}
-                      error={errors.password ? true : false}
-                      helperText={errors.password?.message}
-                      autoComplete="off"
+          <TabPanels>
+            <TabPanel>
+              <VStack spacing="8">
+                <SimpleGrid
+                  minChildWidth="240px"
+                  columns={2}
+                  spacing={8}
+                  w="100%"
+                >
+                  <Skeleton
+                    colorScheme="blue"
+                    isLoaded={!loadingValues}
+                    rounded="8px"
+                  >
+                    <Controller
+                      name="name"
+                      control={control}
+                      render={({ field: { value, onChange } }) => (
+                        <Input
+                          name="name"
+                          label="Nome completo"
+                          value={value}
+                          onChange={onChange}
+                          error={errors.name ? true : false}
+                          helperText={errors.name?.message}
+                          autoComplete="off"
+                        />
+                      )}
                     />
-                  )}
-                />
-              </Skeleton>
-            </SimpleGrid>
-          )}
-        </VStack>
+                  </Skeleton>
+                  <Skeleton
+                    colorScheme="blue"
+                    isLoaded={!loadingValues}
+                    rounded="8px"
+                  >
+                    <Controller
+                      name="email"
+                      control={control}
+                      render={({ field: { value, onChange } }) => (
+                        <Input
+                          name="email"
+                          label="Email"
+                          value={value}
+                          onChange={onChange}
+                          error={errors.email ? true : false}
+                          helperText={errors.email?.message}
+                          autoComplete="off"
+                        />
+                      )}
+                    />
+                  </Skeleton>
+                </SimpleGrid>
+
+                {!isEdit && (
+                  <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
+                    <Skeleton
+                      colorScheme="blue"
+                      isLoaded={!loadingValues}
+                      rounded="8px"
+                    >
+                      <Controller
+                        name="password"
+                        control={control}
+                        render={({ field: { value, onChange } }) => (
+                          <Input
+                            name="password"
+                            type="password"
+                            label="Senha"
+                            value={value}
+                            onChange={onChange}
+                            error={errors.password ? true : false}
+                            helperText={errors.password?.message}
+                            autoComplete="off"
+                          />
+                        )}
+                      />
+                    </Skeleton>
+                  </SimpleGrid>
+                )}
+              </VStack>
+            </TabPanel>
+            <TabPanel>
+              <p>two!</p>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+
         <Flex mt="8" justify="flex-end">
           <HStack spacing="4">
             <Skeleton
