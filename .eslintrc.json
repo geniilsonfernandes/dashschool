@@ -27,6 +27,7 @@
   "rules": {
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "prettier/prettier": ["error", { "singleQuote": false }]
+    "prettier/prettier": ["error", { "singleQuote": false }],
+    "react-hooks/exhaustive-deps": "off"
   }
 }

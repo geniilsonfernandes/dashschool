@@ -1,5 +1,5 @@
 import { NextPageContext } from "next";
-import { useSession, signOut, getSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
