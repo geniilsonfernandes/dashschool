@@ -25,9 +25,15 @@ import { getSession } from "next-auth/react";
 const schema = yup.object().shape({
   name: yup.string().required("Campo obrigatório"),
   email: yup.string().required("Campo obrigatório").email("Email inválido"),
-  password: yup.string().required("Campo obrigatório"),
+  password: yup
+    .string()
+    .trim()
+    .min(8, "senha deve ter no mínimo 8 caracteres")
+    .required("Campo obrigatório"),
   confirmPassword: yup
     .string()
+    .trim()
+    .min(8, "senha deve ter no mínimo 8 caracteres")
     .oneOf([yup.ref("password") ?? null], "As senhas precisam ser iguais")
     .required("Campo obrigatório")
 });

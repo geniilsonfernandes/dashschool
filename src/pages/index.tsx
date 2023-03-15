@@ -13,6 +13,15 @@ export async function getServerSideProps(context: NextPageContext) {
     };
   }
 
+  if (session) {
+    return {
+      redirect: {
+        destination: "/dashboard",
+        permanent: false
+      }
+    };
+  }
+
   return {
     props: { session }
   };
