@@ -28,19 +28,9 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 export default function index() {
-  const { data: session } = useSession();
-
   return (
     <div>
-      {session ? (
-        <>
-          <h1>Olá {session.user.name} </h1>
-
-          <button onClick={() => signOut()}>sair</button>
-        </>
-      ) : (
-        <h1>Olá visitante</h1>
-      )}
+      <h1>Olá visitante</h1>
     </div>
   );
 }
