@@ -30,6 +30,7 @@ const Textarea = ({
       </FormLabel>
       <InputGroup>
         <TextareaChakra
+          borderRadius="md"
           size="sm"
           resize="none"
           borderColor={error ? "red.500" : "gray.900"}
