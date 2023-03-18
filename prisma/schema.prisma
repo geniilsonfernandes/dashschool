@@ -15,19 +15,6 @@ datasource db {
 // o que é o @unique? 
 // o que é o @default(autoincrement())?
 // o que é o primary key?
-model Students {
-  id         String   @id @unique @default(uuid())
-  email      String   @unique
-  name       String
-  password   String
-  created_at DateTime @default(now())
-  // user_email String
-
-  user_id String
-  Users   Users  @relation(fields: [user_id], references: [id])
-
-  @@map("student")
-}
 
 model Users {
   id         String     @id @unique @default(uuid())
@@ -40,23 +27,39 @@ model Users {
   @@map("user")
 }
 
-model Courses {
-  id          String   @id @default(uuid())
-  name        String
-  description String
-  duration    Int
-  created_at  DateTime @default(now())
+model Students {
+  id         String   @id @unique @default(uuid())
+  email      String   @unique
+  name       String
+  password   String
+  created_at DateTime @default(now())
 
-  teacher    Teachers? @relation(fields: [teacher_id], references: [id])
-  teacher_id String?   @unique
+  user_id          String
+  Users            Users              @relation(fields: [user_id], references: [id])
+  Courses_Students Courses_Students[]
+
+  @@map("student")
+}
+
+model Courses {
+  id               String             @id @unique @default(uuid())
+  name             String
+  description      String
+  duration         Int
+  created_at       DateTime           @default(now())
+  Courses_Students Courses_Students[]
 
   @@map("courses")
 }
 
-model Teachers {
-  id      String   @id @default(uuid())
-  name    String
-  Courses Courses?
+model Courses_Students {
+  id         String   @id @unique @default(uuid())
+  created_at DateTime @default(now())
 
-  @@map("teacher")
+  student_id String
+  Students   Students @relation(fields: [student_id], references: [id])
+  courses_id String
+  Courses    Courses  @relation(fields: [courses_id], references: [id])
+
+  @@map("courses_students")
 }

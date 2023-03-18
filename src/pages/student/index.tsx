@@ -44,7 +44,7 @@ const UserList = () => {
       const reponse = await axiosInstance.get(Endpoints.student.list(), {
         params: {
           page: args.page,
-          take: 2
+          take: 100
         }
       });
 

@@ -6,7 +6,10 @@ import { useNotification } from "@/contexts/AlertMessageContext";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import FormCreateCourse from "@/components/Form/FormCreateCourse";
+import FormCreateCourse, {
+  IFormCreateCourseValues
+} from "@/components/Form/FormCreateCourse";
+import { ICreateCoursePayload } from "@/services/courseServive";
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -28,12 +31,13 @@ export async function getServerSideProps(context: NextPageContext) {
 const Create = () => {
   const notification = useNotification();
   const router = useRouter();
-  const handleCreateStudent = async (values: IFormValues) => {
+  const handleCreateStudent = async (values: IFormCreateCourseValues) => {
     try {
-      await axiosInstance.post(Endpoints.student.create(), {
+      await axiosInstance.post(Endpoints.course.create(), {
         name: values.name,
-        email: values.email,
-        password: values.password
+        description: values.description,
+        duration: values.duration,
+        students: []
       });
       notification.showAlert({
         title: "Sucesso",

@@ -53,7 +53,7 @@ const SearchStudent = () => {
       >
         <Search
           autoComplete="off"
-          label="Pesquisar aluno | Digite o nome ou email do aluno"
+          label="Pesquisar aluno para adicionar ao curso"
           name="search_aluno"
           onClickToSearch={() => handleSearchStudent()}
         />

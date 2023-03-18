@@ -8,11 +8,6 @@ import {
   HStack,
   SimpleGrid,
   Skeleton,
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
   VStack
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -20,33 +15,29 @@ import Link from "next/link";
 import SearchStudent from "@/components/SearchStudent";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { Textarea } from "../Textarea";
 
 const schemaCrete = yup.object().shape({
   name: yup.string().trim().required("Campo obrigatório"),
-  email: yup.string().required("Campo obrigatório").email("Email inválido"),
-  password: yup
-    .string()
-    .trim()
-    .min(8, "senha deve ter no mínimo 8 caracteres")
-    .required("Campo obrigatório")
+  description: yup.string().trim().required("Campo obrigatório"),
+  duration: yup.number().required("Campo obrigatório")
 });
 const schemaEdit = yup.object().shape({
   name: yup.string().trim().required("Campo obrigatório"),
   email: yup.string().required("Campo obrigatório").email("Email inválido")
 });
 
-export type IFormValues = {
+export type IFormCreateCourseValues = {
   name: string;
-  email: string;
-  password: string;
+  description: string;
+  duration: number;
 };
 
 type IFormProps = {
-  initialValues?: IFormValues;
-  onSubmit: (values: IFormValues) => void;
+  initialValues?: IFormCreateCourseValues;
+  onSubmit: (values: IFormCreateCourseValues) => void;
   isLoading?: boolean;
   loadingValues?: boolean;
 };
@@ -65,25 +56,25 @@ const FormCreateCourse = ({
     handleSubmit,
     setValue,
     formState: { errors }
-  } = useForm<IFormValues>({
+  } = useForm<IFormCreateCourseValues>({
     mode: "onSubmit",
     resolver: yupResolver(isEdit ? schemaEdit : schemaCrete),
     defaultValues: {
       name: initialValues?.name,
-      email: initialValues?.email,
-      password: initialValues?.password
+      description: initialValues?.description
     }
   });
 
-  const handleCreateUser = (values: IFormValues) => {
+  const handleCreateUser = (values: IFormCreateCourseValues) => {
+    console.log(values);
+
     onSubmit(values);
   };
 
   useEffect(() => {
     if (hasInitialValues) {
       setValue("name", initialValues?.name);
-      setValue("email", initialValues?.email);
-      setValue("password", initialValues?.password);
+      setValue("description", initialValues?.description);
     }
   }, [initialValues, setValue, hasInitialValues]);
 
@@ -97,108 +88,59 @@ const FormCreateCourse = ({
         </Skeleton>
         <Divider my="6" borderColor="gray.700" />
 
-        <Tabs variant="line">
-          <TabList mb={4}>
-            <Tab>Dados do curso</Tab>
-            <Tab>Curso</Tab>
-          </TabList>
+        <VStack spacing="8">
+          <SimpleGrid columns={1} spacing={4} w="100%">
+            <Controller
+              name="name"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  name="name"
+                  label="Nome do curso"
+                  value={value}
+                  onChange={onChange}
+                  error={errors.name ? true : false}
+                  helperText={errors.name?.message}
+                  autoComplete="off"
+                />
+              )}
+            />
 
-          <TabPanels>
-            <TabPanel>
-              <VStack spacing="8">
-                <SimpleGrid columns={1} spacing={4} w="100%">
-                  <Input name="name" label="Nome do curso" autoComplete="off" />
-                  <Textarea
-                    name="name"
-                    label="Descrição do curso"
-                    autoComplete="off"
-                  />
-                  <SearchStudent />
-                </SimpleGrid>
-              </VStack>
-            </TabPanel>
-            <TabPanel>
-              <VStack spacing="8">
-                <SimpleGrid
-                  minChildWidth="240px"
-                  columns={2}
-                  spacing={8}
-                  w="100%"
-                >
-                  <Skeleton
-                    colorScheme="blue"
-                    isLoaded={!loadingValues}
-                    rounded="8px"
-                  >
-                    <Controller
-                      name="name"
-                      control={control}
-                      render={({ field: { value, onChange } }) => (
-                        <Input
-                          name="name"
-                          label="Nome completo"
-                          value={value}
-                          onChange={onChange}
-                          error={errors.name ? true : false}
-                          helperText={errors.name?.message}
-                          autoComplete="off"
-                        />
-                      )}
-                    />
-                  </Skeleton>
-                  <Skeleton
-                    colorScheme="blue"
-                    isLoaded={!loadingValues}
-                    rounded="8px"
-                  >
-                    <Controller
-                      name="email"
-                      control={control}
-                      render={({ field: { value, onChange } }) => (
-                        <Input
-                          name="email"
-                          label="Email"
-                          value={value}
-                          onChange={onChange}
-                          error={errors.email ? true : false}
-                          helperText={errors.email?.message}
-                          autoComplete="off"
-                        />
-                      )}
-                    />
-                  </Skeleton>
-                </SimpleGrid>
+            <Controller
+              name="duration"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Input
+                  name="duration"
+                  label="Duração do curso"
+                  value={value}
+                  onChange={onChange}
+                  error={errors.name ? true : false}
+                  helperText={errors.name?.message}
+                  autoComplete="off"
+                />
+              )}
+            />
 
-                {!isEdit && (
-                  <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
-                    <Skeleton
-                      colorScheme="blue"
-                      isLoaded={!loadingValues}
-                      rounded="8px"
-                    >
-                      <Controller
-                        name="password"
-                        control={control}
-                        render={({ field: { value, onChange } }) => (
-                          <Input
-                            name="password"
-                            type="password"
-                            label="Senha"
-                            value={value}
-                            onChange={onChange}
-                            error={errors.password ? true : false}
-                            helperText={errors.password?.message}
-                            autoComplete="off"
-                          />
-                        )}
-                      />
-                    </Skeleton>
-                  </SimpleGrid>
-                )}
-              </VStack>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+            <Controller
+              name="description"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <Textarea
+                  name="description"
+                  label="Descrição do curso"
+                  autoComplete="off"
+                  onChange={onChange}
+                  value={value}
+                  error={errors.name ? true : false}
+                  helperText={errors.name?.message}
+                />
+              )}
+            />
+
+            <SearchStudent />
+          </SimpleGrid>
+        </VStack>
 
         <Flex mt="8" justify="flex-end">
           <HStack spacing="4">
@@ -207,9 +149,9 @@ const FormCreateCourse = ({
               isLoaded={!loadingValues}
               rounded="8px"
             >
-              <Link href="/student" passHref>
+              <Link href="/courses" passHref>
                 <Button colorScheme="whiteAlpha" disabled>
-                  cancelar
+                  Cancelar
                 </Button>
               </Link>
             </Skeleton>

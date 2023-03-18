@@ -40,7 +40,9 @@ const UserRow = ({ createdAt, email, id, name }: UserRowProps) => {
     <Tr>
       <Td>
         <Box>
-          <Text fontWeight="bold">{name}</Text>
+          <Text fontWeight="bold">
+            {name} {id}
+          </Text>
           <Text fontSize="small" color="gray.300">
             {email}
           </Text>

@@ -16,8 +16,7 @@ export default async function handler(
       data: {
         name: "curso de maromba",
         description: "curso de node",
-        duration: 200,
-        teacher_id: "bcab4662-a9e4-47a6-91b6-15507d16bab1"
+        duration: 200
       }
     });
 
