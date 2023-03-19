@@ -1,7 +1,7 @@
 import { axiosInstance, Endpoints } from "@/api";
 import { useNotification } from "@/contexts/AlertMessageContext";
 import useAsync from "@/hook/useAsync";
-import { IStudentResponse } from "@/services";
+import { IStudent, IStudentResponse } from "@/services";
 import {
   Box,
   Divider,
@@ -78,8 +78,6 @@ type IStudentGet = {
   filter: string;
 };
 
-export type IStudent = IStudentResponse;
-
 type SearchStudentProps = {
   onChange?: (studentList: IStudent[]) => void;
 };
@@ -108,11 +106,11 @@ const SearchStudent = ({ onChange }: SearchStudentProps) => {
       const reponse = await axiosInstance.get(Endpoints.student.list(), {
         params: {
           page: args.page,
-          take: 100,
+          take: 1000,
           filter: args.filter
         }
       });
-      setStudentList(reponse.data.students);
+      setStudentList(reponse.data.items);
       return reponse.data.students;
     } catch (error) {
       console.log(error);

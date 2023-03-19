@@ -1,6 +1,7 @@
 import { axiosInstance, Endpoints } from "@/api";
 import Pagination from "@/components/Pagination";
 import UserRow from "@/components/UserRow";
+import { useNotification } from "@/contexts/AlertMessageContext";
 import useAsync from "@/hook/useAsync";
 import { IStudentResponse } from "@/services";
 import Base from "@/templates/Base";
@@ -26,9 +27,11 @@ import { RiAddLine } from "react-icons/ri";
 
 type IStudentGet = {
   page: string;
+  take?: string;
 };
 
 const UserList = () => {
+  const notification = useNotification();
   const isDrawerSidebar = useBreakpointValue(
     {
       base: false,
@@ -44,26 +47,32 @@ const UserList = () => {
       const reponse = await axiosInstance.get(Endpoints.student.list(), {
         params: {
           page: args.page,
-          take: 100
+          take: args.take
         }
       });
 
-      return reponse.data.students;
+      return reponse.data;
     } catch (error) {
-      console.log(error);
+      notification.showAlert({
+        title: "Erro ao listar alunos",
+        description: "Ocorreu um erro ao listar os alunos",
+        status: "error"
+      });
     }
   };
 
-  const get = useAsync<IStudentResponse[], IStudentGet>(handleListStudents);
+  const { data, execute, isLoading } = useAsync<IStudentResponse, IStudentGet>(
+    handleListStudents
+  );
 
   const handlePageChange = (page: number) => {
-    get.execute({
+    execute({
       page: page.toString()
     });
   };
 
   useEffect(() => {
-    get.execute({
+    execute({
       page: "1"
     });
   }, []);
@@ -71,6 +80,8 @@ const UserList = () => {
   return (
     <Base>
       <Box
+        display="flex"
+        flexDirection="column"
         flex="1"
         borderRadius={8}
         bg="gray.800"
@@ -92,8 +103,9 @@ const UserList = () => {
             </Button>
           </Link>
         </Flex>
-        {get.isLoading ? (
+        {isLoading ? (
           <Box
+            flex={1}
             display="flex"
             justifyContent="center"
             alignItems="center"
@@ -115,8 +127,8 @@ const UserList = () => {
                 </Tr>
               </Thead>
               <Tbody>
-                {get.data?.length !== undefined &&
-                  get.data.map((user) => (
+                {data?.items &&
+                  data?.items.map((user) => (
                     <UserRow
                       key={user.id}
                       id={user.id}
@@ -131,7 +143,13 @@ const UserList = () => {
         )}
 
         <Box>
-          <Pagination onPageChange={handlePageChange} />
+          <Pagination
+            onPageChange={handlePageChange}
+            totalPages={data?.meta.totalPages}
+            currentPage={data?.meta.currentPage}
+            totalItems={data?.meta.totalItems}
+            itemsPerPage={data?.meta.itemsPerPage}
+          />
         </Box>
       </Box>
     </Base>

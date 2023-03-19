@@ -1,25 +1,13 @@
-import { Student, IStudent } from "@/services";
+import { Student } from "@/services";
 import userTokenDecode from "@/utils/userTokenDecode";
 
 import type { NextApiRequest, NextApiResponse } from "next";
-
-interface ISuccessResponse {
-  error: number;
-  students: IStudent[];
-  total: number;
-  totalPages: number;
-}
-
-interface IErrorResponse {
-  error: number;
-  errorMessage: string;
-}
 
 const allowedMethods = "GET";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ISuccessResponse | IErrorResponse>
+  res: NextApiResponse
 ) {
   if (req.method !== allowedMethods) {
     return res
@@ -39,19 +27,15 @@ export default async function handler(
   };
 
   try {
-    const students = await Student.listStudents(
-      user_id,
-      Number(page),
-      Number(take),
-      filter
-    );
-
-    res.status(200).json({
-      error: 200,
-      students: students.students,
-      total: students.total,
-      totalPages: students.totalPages
+    const students = await Student.listStudents({
+      mode: "pages",
+      page: Number(page) || 1,
+      take: Number(take) || 8,
+      filter: filter,
+      user_id
     });
+
+    res.status(200).json(students);
   } catch (error: any) {
     res.status(400).json({ error: 400, errorMessage: error.message });
   }

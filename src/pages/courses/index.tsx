@@ -8,6 +8,7 @@ import {
   Box,
   Button,
   Icon,
+  Spinner,
   Table,
   Tbody,
   Th,
@@ -42,7 +43,7 @@ const Courses = () => {
     }
   };
 
-  const { execute, data } = useAsync<
+  const { execute, data, isLoading } = useAsync<
     {
       items: IListCoursesResponse[];
     },
@@ -56,6 +57,8 @@ const Courses = () => {
   return (
     <Base>
       <Box
+        display="flex"
+        flexDirection="column"
         flex="1"
         borderRadius={8}
         bg="gray.800"
@@ -74,31 +77,42 @@ const Courses = () => {
             </Button>
           </Link>
         </Head>
-
-        <Box flex={1}>
-          <Table colorScheme="whiteAlpha">
-            <Thead>
-              <Tr>
-                <Th>Curso</Th>
-                <Th>Horas</Th>
-                {isDrawerSidebar && <Th>Alunos</Th>}
-                <Th></Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {data &&
-                data.items.map((course) => (
-                  <CourseRow
-                    key={course.id}
-                    description={course.description}
-                    duration={course.duration}
-                    name={course.name}
-                    students={course.Courses_Students.length}
-                  />
-                ))}
-            </Tbody>
-          </Table>
-        </Box>
+        {isLoading ? (
+          <Box
+            flex={1}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            height="300px"
+          >
+            <Spinner />
+          </Box>
+        ) : (
+          <Box flex={1}>
+            <Table colorScheme="whiteAlpha">
+              <Thead>
+                <Tr>
+                  <Th>Curso</Th>
+                  <Th>Horas</Th>
+                  {isDrawerSidebar && <Th>Alunos</Th>}
+                  <Th></Th>
+                </Tr>
+              </Thead>
+              <Tbody>
+                {data &&
+                  data.items.map((course) => (
+                    <CourseRow
+                      key={course.id}
+                      description={course.description}
+                      duration={course.duration}
+                      name={course.name}
+                      students={course.Courses_Students.length}
+                    />
+                  ))}
+              </Tbody>
+            </Table>
+          </Box>
+        )}
       </Box>
     </Base>
   );

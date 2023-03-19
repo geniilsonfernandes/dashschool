@@ -17,7 +17,7 @@ export type UserRowProps = {
   id: string;
   email: string;
   name: string;
-  createdAt: string;
+  createdAt: Date;
 };
 
 const UserRow = ({ createdAt, email, id, name }: UserRowProps) => {
@@ -31,7 +31,7 @@ const UserRow = ({ createdAt, email, id, name }: UserRowProps) => {
     }
   );
 
-  const data = parseISO(createdAt);
+  const data = parseISO(String(createdAt));
   const dataFormatada = format(data, "EEEE, d 'de' MMMM 'de' yyyy", {
     locale: ptBR
   });

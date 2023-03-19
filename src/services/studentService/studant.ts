@@ -1,6 +1,10 @@
-import bcrypt from "bcrypt";
 import prisma from "../prisma";
-import { ICreateStudentPayload, IStudent } from "./types";
+import {
+  ICreateStudentPayload,
+  IListStudentsPayload,
+  IStudent,
+  IStudentResponse
+} from "./types";
 
 export class Student {
   public static async createStudent({
@@ -24,41 +28,63 @@ export class Student {
     }
   }
 
-  public static async listStudents(
-    user_id: string,
-    page = 1,
-    take = 5,
-    filter: string | undefined = undefined
-  ) {
+  public static async listStudents({
+    mode = "pages",
+    page,
+    take,
+    user_id,
+    filter
+  }: IListStudentsPayload): Promise<IStudentResponse | IStudent[]> {
     const skip = (page - 1) * take;
 
-    const total = await prisma.students.count(); // total de registros na tabela
-    const totalPages = Math.ceil(total / take); // total de páginas
+    const where = () => ({
+      where: {
+        user_id: user_id,
+        ...(filter && {
+          OR: [
+            {
+              name: {
+                contains: filter
+              }
+            },
+            {
+              email: {
+                contains: filter
+              }
+            }
+          ]
+        })
+      }
+    });
 
     try {
       const students = await prisma.students.findMany({
         skip: skip,
         take: take,
-        where: {
-          user_id: user_id,
-          ...(filter && {
-            OR: [
-              {
-                name: {
-                  contains: filter
-                }
-              },
-              {
-                email: {
-                  contains: filter
-                }
-              }
-            ]
-          })
+        ...where(),
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          user_id: true,
+          created_at: true
         }
       });
+      const totalItemsCount = await prisma.students.count({
+        ...where()
+      }); // total de registros na tabela
 
-      return { students, total, totalPages };
+      const totalPages = Math.ceil(totalItemsCount / take); // total de páginas
+
+      return {
+        items: students,
+        meta: {
+          totalItems: totalItemsCount,
+          totalPages: totalPages,
+          currentPage: page,
+          itemsPerPage: take
+        }
+      };
     } catch (error) {
       throw new Error("Não foi possível listar os estudantes");
     }
@@ -92,16 +118,13 @@ export class Student {
 
   public static async updateStudentById(id: string, data: IStudent) {
     try {
-      const hashedPassword = bcrypt.hashSync(data.password, 10);
-
       const student = await prisma.students.update({
         where: {
           id
         },
         data: {
           email: data.email,
-          name: data.name,
-          password: hashedPassword
+          name: data.name
         }
       });
       return student;

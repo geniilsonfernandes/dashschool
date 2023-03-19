@@ -58,6 +58,7 @@
     "prettier": "^2.8.4",
     "prisma": "^4.11.0",
     "react-icons": "^4.7.1",
+    "react-use-pagination-hook": "^2.0.0",
     "ts-jest": "^29.0.5"
   }
 }

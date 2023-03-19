@@ -1,13 +1,29 @@
 import { Box, Button, Stack } from "@chakra-ui/react";
+import usePagination from "react-use-pagination-hook";
 
 type PaginationProps = {
-  totalCountOfRegisters?: number;
-  registersPerPage?: number;
   currentPage?: number;
   totalPages?: number;
+  totalItems?: number;
+  itemsPerPage?: number;
   onPageChange: (page: number) => void;
 };
-const Pagination = ({ onPageChange }: PaginationProps) => {
+const Pagination = ({
+  onPageChange,
+  totalPages = 0,
+  totalItems = 0,
+  itemsPerPage = 0
+}: PaginationProps) => {
+  const { pageList, setPage, currentPage } = usePagination({
+    numOfPage: 5,
+    totalPage: totalPages
+  });
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    onPageChange(page);
+  };
+
   return (
     <Stack
       direction="row"
@@ -17,18 +33,20 @@ const Pagination = ({ onPageChange }: PaginationProps) => {
       align="center"
     >
       <Box>
-        <strong>0</strong> - <strong>10</strong> de <strong>100</strong>
+        <strong>{(currentPage - 1) * itemsPerPage}</strong> -{" "}
+        <strong>{itemsPerPage * currentPage}</strong> de{" "}
+        <strong>{totalItems}</strong>
       </Box>
+
       <Stack direction="row" spacing="2">
-        {[1, 2, 3].map((page) => (
+        {pageList.map((page) => (
           <Button
             key={page}
             size="sm"
             fontSize="xs"
             width="4"
-            colorScheme="facebook"
-            bg="gray.500"
-            onClick={() => onPageChange(page)}
+            bg={currentPage === page ? "gray.500" : "gray.900"}
+            onClick={() => handlePageChange(page)}
           >
             {page}
           </Button>
