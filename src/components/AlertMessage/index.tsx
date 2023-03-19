@@ -13,6 +13,7 @@ export type AlertMessageProps = {
   description: string;
   buttonTitle?: string;
   onConfirm?: () => void;
+  onClickOutside?: () => void;
 };
 
 const AlertMessage = ({
@@ -37,7 +38,7 @@ const AlertMessage = ({
         textAlign="center"
         height="200px"
         maxW={[300, 400, 500]}
-        position="absolute"
+        position="fixed"
         zIndex={20}
         top="50%"
         left="50%"

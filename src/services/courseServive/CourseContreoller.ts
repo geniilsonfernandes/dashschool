@@ -1,4 +1,8 @@
-import { ICreateCoursePayload, ICreateCourseResponse } from "./types";
+import {
+  ICreateCoursePayload,
+  ICreateCourseResponse,
+  IListCoursesPayload
+} from "./types";
 import prisma from "../prisma";
 
 export class CourseContreoller {
@@ -6,7 +10,8 @@ export class CourseContreoller {
     name,
     description,
     duration,
-    students
+    students,
+    user_id
   }: ICreateCoursePayload): Promise<ICreateCourseResponse> {
     const createConect = (studentsList: string[]) =>
       studentsList.map((id) => ({
@@ -21,23 +26,26 @@ export class CourseContreoller {
           name: name,
           description: description,
           duration: duration,
+
           Courses_Students: {
             create: createConect(students)
-          }
+          },
+          user_id: user_id
         }
       });
 
       return course;
     } catch (error) {
-      console.log(error);
-
       throw new Error("Não foi possível criar o curso");
     }
   }
 
-  public static async listCourses() {
+  public static async listCourses({ user_id }: IListCoursesPayload) {
     try {
       const courses = await prisma.courses.findMany({
+        where: {
+          user_id: user_id
+        },
         include: {
           Courses_Students: {
             include: {
@@ -49,8 +57,6 @@ export class CourseContreoller {
 
       return courses;
     } catch (error) {
-      console.log(error);
-
       throw new Error("Não foi possível listar os cursos");
     }
   }
@@ -65,8 +71,6 @@ export class CourseContreoller {
 
       return course;
     } catch (error) {
-      console.log(error);
-
       throw new Error("Não foi possível deletar o curso");
     }
   }
@@ -82,8 +86,6 @@ export class CourseContreoller {
 
       return course;
     } catch (error) {
-      console.log(error);
-
       throw new Error("Não foi possível atualizar o curso");
     }
   }
@@ -98,8 +100,6 @@ export class CourseContreoller {
 
       return course;
     } catch (error) {
-      console.log(error);
-
       throw new Error("Não foi possível buscar o curso");
     }
   }
@@ -121,8 +121,6 @@ export class CourseContreoller {
 
       return course;
     } catch (error) {
-      console.log(error);
-
       throw new Error("Não foi possível buscar o curso");
     }
   }

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   FormControl,
+  FormHelperText,
   FormLabel,
   Input,
   InputGroup,
@@ -25,10 +26,11 @@ const Search = ({
   label,
   onClickToSearch,
   isLoading = false,
+  helperText,
   ...props
 }: Props) => {
   return (
-    <FormControl>
+    <FormControl as="form" onSubmit={onClickToSearch}>
       <FormLabel htmlFor={name} color={error ? "red.500" : "white"}>
         {label}
       </FormLabel>
@@ -58,6 +60,9 @@ const Search = ({
           )}
         </InputRightElement>
       </InputGroup>
+      <FormHelperText color={error ? "red.500" : "white"}>
+        {helperText}
+      </FormHelperText>
     </FormControl>
   );
 };

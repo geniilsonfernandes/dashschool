@@ -1,21 +1,23 @@
+import { axiosInstance, Endpoints } from "@/api";
+import CourseRow from "@/components/CourseRow";
 import Head from "@/components/Head/Head";
+import useAsync from "@/hook/useAsync";
+import { IListCoursesResponse } from "@/services/courseServive";
 import Base from "@/templates/Base";
 import {
   Box,
   Button,
-  Flex,
   Icon,
   Table,
   Tbody,
-  Td,
-  Text,
   Th,
   Thead,
   Tr,
   useBreakpointValue
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { RiAddLine, RiPencilLine } from "react-icons/ri";
+import { useEffect } from "react";
+import { RiAddLine } from "react-icons/ri";
 
 const Courses = () => {
   const isDrawerSidebar = useBreakpointValue(
@@ -27,6 +29,29 @@ const Courses = () => {
       fallback: "lg"
     }
   );
+
+  const handleListStudents = async (args: any) => {
+    try {
+      const reponse = await axiosInstance.get(Endpoints.course.list(), {});
+
+      console.log(reponse.data);
+
+      return reponse.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { execute, data } = useAsync<
+    {
+      items: IListCoursesResponse[];
+    },
+    any
+  >(handleListStudents);
+
+  useEffect(() => {
+    execute();
+  }, []);
 
   return (
     <Base>
@@ -61,32 +86,16 @@ const Courses = () => {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>
-                  <Box>
-                    <Text fontWeight="bold">mate</Text>
-                    <Text fontSize="small" color="gray.300">
-                      Lorem, ipsum dolor sit amet
-                    </Text>
-                  </Box>
-                </Td>
-                <Td>10h</Td>
-                {isDrawerSidebar && <Td>10</Td>}
-                <Td p="0">
-                  <Flex justify="flex-end">
-                    <Link href={`/student/edit/10`}>
-                      <Button
-                        size="sm"
-                        fontSize="sm"
-                        colorScheme="purple"
-                        leftIcon={<Icon as={RiPencilLine} />}
-                      >
-                        Editar
-                      </Button>
-                    </Link>
-                  </Flex>
-                </Td>
-              </Tr>
+              {data &&
+                data.items.map((course) => (
+                  <CourseRow
+                    key={course.id}
+                    description={course.description}
+                    duration={course.duration}
+                    name={course.name}
+                    students={course.Courses_Students.length}
+                  />
+                ))}
             </Tbody>
           </Table>
         </Box>

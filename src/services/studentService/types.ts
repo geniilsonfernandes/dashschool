@@ -21,4 +21,5 @@ export interface ICreateStudentPayload {
   name: string;
   password: string;
   user_id: string;
+  filter?: string;
 }

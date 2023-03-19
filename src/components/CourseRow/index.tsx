@@ -2,25 +2,30 @@ import {
   Box,
   Button,
   Flex,
-  Icon,
   Td,
   Text,
   Tr,
+  Icon,
   useBreakpointValue
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { type } from "os";
+import React from "react";
 import { RiPencilLine } from "react-icons/ri";
-import { format, parseISO } from "date-fns";
-import { ptBR } from "date-fns/locale";
 
-export type UserRowProps = {
-  id: string;
-  email: string;
+type CourseRowProps = {
   name: string;
-  createdAt: string;
+  description: string;
+  duration: number;
+  students: number;
 };
 
-const UserRow = ({ createdAt, email, id, name }: UserRowProps) => {
+const CourseRow = ({
+  description,
+  duration,
+  name,
+  students
+}: CourseRowProps) => {
   const isDrawerSidebar = useBreakpointValue(
     {
       base: false,
@@ -31,30 +36,27 @@ const UserRow = ({ createdAt, email, id, name }: UserRowProps) => {
     }
   );
 
-  const data = parseISO(createdAt);
-  const dataFormatada = format(data, "EEEE, d 'de' MMMM 'de' yyyy", {
-    locale: ptBR
-  });
-
   return (
     <Tr>
       <Td>
         <Box>
           <Text fontWeight="bold">{name}</Text>
           <Text fontSize="small" color="gray.300">
-            {email}
+            {description.substring(0, 50)}
           </Text>
         </Box>
       </Td>
-      {isDrawerSidebar && <Td>{dataFormatada}</Td>}
+      <Td>{duration} Horas</Td>
+      {isDrawerSidebar && <Td>{students}</Td>}
       <Td p="0">
         <Flex justify="flex-end">
-          <Link href={`/student/edit/${id}`}>
+          <Link href={`/student/edit/10`}>
             <Button
               size="sm"
               fontSize="sm"
               colorScheme="purple"
               leftIcon={<Icon as={RiPencilLine} />}
+              isDisabled={true}
             >
               Editar
             </Button>
@@ -65,4 +67,4 @@ const UserRow = ({ createdAt, email, id, name }: UserRowProps) => {
   );
 };
 
-export default UserRow;
+export default CourseRow;

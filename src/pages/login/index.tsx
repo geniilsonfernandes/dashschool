@@ -60,8 +60,6 @@ export default function SignIn() {
 
       router.push("/dashboard");
     } catch (error: any) {
-      console.log(error);
-
       notification.showAlert({
         title: "Erro ao fazer login",
         description: error.error,

@@ -20,13 +20,16 @@ export class Student {
       });
       return students;
     } catch (error) {
-      console.log(error);
-
       throw new Error("Não foi possível criar o estudante");
     }
   }
 
-  public static async listStudents(user_id: string, page = 1, take = 5) {
+  public static async listStudents(
+    user_id: string,
+    page = 1,
+    take = 5,
+    filter: string | undefined = undefined
+  ) {
     const skip = (page - 1) * take;
 
     const total = await prisma.students.count(); // total de registros na tabela
@@ -37,9 +40,24 @@ export class Student {
         skip: skip,
         take: take,
         where: {
-          user_id
+          user_id: user_id,
+          ...(filter && {
+            OR: [
+              {
+                name: {
+                  contains: filter
+                }
+              },
+              {
+                email: {
+                  contains: filter
+                }
+              }
+            ]
+          })
         }
       });
+
       return { students, total, totalPages };
     } catch (error) {
       throw new Error("Não foi possível listar os estudantes");

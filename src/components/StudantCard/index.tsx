@@ -1,15 +1,15 @@
 import { stylesConstants } from "@/styles";
 import { Button, Flex, Text } from "@chakra-ui/react";
-import { type } from "os";
-import React from "react";
 import { RiAddLine, RiCloseLine } from "react-icons/ri";
 
 type StudantCardProps = {
   name: string;
   email: string;
-  onAdd?: () => void;
-  onRemove?: () => void;
-  type?: "add" | "remove";
+  onAdd?: (id: string) => void;
+  onRemove?: (id: string) => void;
+  isSelected?: boolean;
+  nofill?: boolean;
+  id: string;
 };
 
 const StudantCard = ({
@@ -17,13 +17,15 @@ const StudantCard = ({
   name,
   onAdd,
   onRemove,
-  type = "add"
+  isSelected,
+  nofill = false,
+  id
 }: StudantCardProps) => {
   const handleAdd = () => {
-    onAdd && onAdd();
+    onAdd && onAdd(id);
   };
   const handleRemove = () => {
-    onRemove && onRemove();
+    onRemove && onRemove(id);
   };
 
   return (
@@ -33,31 +35,42 @@ const StudantCard = ({
       p="2"
       borderRadius="8px"
       justifyContent="space-between"
-      bg="gray.900"
+      bg={isSelected && !nofill ? "green.300" : "gray.900"}
+      _hover={{ bg: isSelected && !nofill ? "green.400" : "gray.700" }}
+      transition="all 0.2s"
+      _active={{
+        transform: "scale(0.98)"
+      }}
     >
       <Flex alignItems="center" gap={2}>
-        <Text fontWeight="normal">{name}</Text>|
-        <Text fontSize="small" color="gray.300">
+        <Text fontSize="small" fontWeight="bold">
+          {name}
+        </Text>
+        -
+        <Text fontSize="small" color="white.300">
           {email}
         </Text>
       </Flex>
       <Flex alignItems="center" gap={2}>
-        {type === "add" && (
+        {!isSelected && (
           <Button
             size="sm"
-            colorScheme={stylesConstants.COLOR_SCHEME}
+            bg="green.300"
             padding="2"
+            onClick={handleAdd}
+            _hover={{ bg: "green.400" }}
           >
             <RiAddLine />
           </Button>
         )}
-        {type === "remove" && (
+        {isSelected && (
           <Button
             size="sm"
             colorScheme={stylesConstants.COLOR_SCHEME}
             padding="2"
             bg="red.600"
-            _hover={{ bg: "red.400" }}
+            _hover={{ bg: "red.700" }}
+            onClick={handleRemove}
           >
             <RiCloseLine />
           </Button>

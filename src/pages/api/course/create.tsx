@@ -46,7 +46,8 @@ export default async function handler(
       name: body.name,
       description: body.description,
       duration: body.duration,
-      students: body.students
+      students: body.students,
+      user_id: user_id
     });
 
     res.status(201).json({ course });

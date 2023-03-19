@@ -29,7 +29,8 @@ export const AlertMessageProvider = ({
     status,
     title,
     buttonTitle,
-    onConfirm
+    onConfirm,
+    onClickOutside
   }: AlertMessageProps) {
     disclosure.onOpen();
     setAlertProps({
@@ -37,12 +38,14 @@ export const AlertMessageProvider = ({
       status,
       title,
       buttonTitle,
-      onConfirm: onConfirm ? onConfirm : hiddenAlert
+      onConfirm: onConfirm ? onConfirm : hiddenAlert,
+      onClickOutside: onClickOutside ? onClickOutside : hiddenAlert
     });
   }
 
   function hiddenAlert() {
     disclosure.onClose();
+    alertProps.onClickOutside && alertProps.onClickOutside();
   }
 
   useEffect(() => {
@@ -58,7 +61,7 @@ export const AlertMessageProvider = ({
       {disclosure.isOpen && (
         <Box
           background="rgba(0,0,0,0.5)"
-          position="absolute"
+          position="fixed"
           width="100vw"
           height={disclosure.isOpen ? "100vh" : "0"}
           zIndex={20}

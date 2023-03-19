@@ -23,6 +23,7 @@ model Users {
   password   String
   created_at DateTime   @default(now())
   students   Students[]
+  courses    Courses[]
 
   @@map("user")
 }
@@ -48,6 +49,8 @@ model Courses {
   duration         Int
   created_at       DateTime           @default(now())
   Courses_Students Courses_Students[]
+  Users            Users?             @relation(fields: [user_id], references: [id])
+  user_id          String?
 
   @@map("courses")
 }

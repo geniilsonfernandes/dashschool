@@ -51,8 +51,6 @@ export default async function handler(
 
     res.status(201).json({ error: 201, students });
   } catch (error: any) {
-    console.log(error);
-
     res.status(400).json({ error: 400, errorMessage: error.message });
   }
 }

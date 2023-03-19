@@ -1,15 +1,14 @@
-import useAsync from "@/hook/useAsync";
-import Base from "@/templates/Base";
-import Form, { IFormValues } from "../../../components/Form/FormCreateUser";
 import { axiosInstance, Endpoints } from "@/api";
-import { useNotification } from "@/contexts/AlertMessageContext";
-import { NextPageContext } from "next";
-import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import FormCreateCourse, {
   IFormCreateCourseValues
 } from "@/components/Form/FormCreateCourse";
-import { ICreateCoursePayload } from "@/services/courseServive";
+import { IStudent } from "@/components/SearchStudent";
+import { useNotification } from "@/contexts/AlertMessageContext";
+import useAsync from "@/hook/useAsync";
+import Base from "@/templates/Base";
+import { NextPageContext } from "next";
+import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -31,20 +30,30 @@ export async function getServerSideProps(context: NextPageContext) {
 const Create = () => {
   const notification = useNotification();
   const router = useRouter();
-  const handleCreateStudent = async (values: IFormCreateCourseValues) => {
+  const handleCreateCourse = async (args: {
+    value: IFormCreateCourseValues;
+    student: IStudent[];
+  }) => {
     try {
+      const { value, student } = args;
+      const createStudentList = (list: IStudent[]) => {
+        if (!list) return [];
+        return list.map((item) => item.id);
+      };
+
       await axiosInstance.post(Endpoints.course.create(), {
-        name: values.name,
-        description: values.description,
-        duration: values.duration,
-        students: []
+        name: value.name,
+        description: value.description,
+        duration: value.duration,
+        students: createStudentList(student)
       });
       notification.showAlert({
         title: "Sucesso",
-        description: "Aluno criado com sucesso",
+        description: "Curso criado com sucesso",
         status: "success",
         buttonTitle: "Ir para lista de alunos",
-        onConfirm: () => router.push("/student")
+        onConfirm: () => router.push("/courses"),
+        onClickOutside: () => router.push("/courses")
       });
     } catch (error: any) {
       notification.showAlert({
@@ -55,11 +64,14 @@ const Create = () => {
     }
   };
 
-  const { isLoading, execute } = useAsync(handleCreateStudent);
+  const { isLoading, execute } = useAsync(handleCreateCourse);
 
   return (
     <Base>
-      <FormCreateCourse onSubmit={execute} isLoading={isLoading} />
+      <FormCreateCourse
+        onSubmit={(value, student) => execute({ value, student })}
+        isLoading={isLoading}
+      />
     </Base>
   );
 };

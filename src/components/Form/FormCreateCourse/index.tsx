@@ -12,9 +12,9 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-import SearchStudent from "@/components/SearchStudent";
+import SearchStudent, { IStudent } from "@/components/SearchStudent";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { Textarea } from "../Textarea";
@@ -37,7 +37,7 @@ export type IFormCreateCourseValues = {
 
 type IFormProps = {
   initialValues?: IFormCreateCourseValues;
-  onSubmit: (values: IFormCreateCourseValues) => void;
+  onSubmit: (values: IFormCreateCourseValues, students: IStudent[]) => void;
   isLoading?: boolean;
   loadingValues?: boolean;
 };
@@ -50,6 +50,7 @@ const FormCreateCourse = ({
 }: IFormProps) => {
   const hasInitialValues = !!initialValues;
   const isEdit = hasInitialValues;
+  const [studentList, setStudentList] = useState<any>();
 
   const {
     control,
@@ -66,9 +67,14 @@ const FormCreateCourse = ({
   });
 
   const handleCreateUser = (values: IFormCreateCourseValues) => {
-    console.log(values);
-
-    onSubmit(values);
+    onSubmit(
+      {
+        name: values.name,
+        description: values.description,
+        duration: values.duration
+      },
+      studentList
+    );
   };
 
   useEffect(() => {
@@ -77,6 +83,8 @@ const FormCreateCourse = ({
       setValue("description", initialValues?.description);
     }
   }, [initialValues, setValue, hasInitialValues]);
+
+  // funçoes de busca de alunos
 
   return (
     <>
@@ -138,7 +146,7 @@ const FormCreateCourse = ({
               )}
             />
 
-            <SearchStudent />
+            <SearchStudent onChange={(values) => setStudentList(values)} />
           </SimpleGrid>
         </VStack>
 
