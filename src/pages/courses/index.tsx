@@ -24,6 +24,15 @@ import { RiAddLine } from "react-icons/ri";
 type CourseGetTypes = {
   page: string;
 };
+type CourseGetResponse = {
+  items: IListCoursesResponse[];
+  meta: {
+    currentPage: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
+};
 
 const Courses = () => {
   const isDrawerSidebar = useBreakpointValue(
@@ -51,16 +60,8 @@ const Courses = () => {
   };
 
   const { execute, data, isLoading } = useAsync<
-    {
-      items: IListCoursesResponse[];
-      meta: {
-        currentPage: number;
-        itemsPerPage: number;
-        totalItems: number;
-        totalPages: number;
-      };
-    },
-    any
+    CourseGetResponse,
+    CourseGetTypes
   >(handleListCourse);
 
   const handlePageChange = (page: number) => {

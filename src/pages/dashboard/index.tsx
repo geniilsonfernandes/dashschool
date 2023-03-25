@@ -1,3 +1,6 @@
+import { axiosInstance, Endpoints } from "@/api";
+import useAsync from "@/hook/useAsync";
+import { IListCoursesResponse } from "@/services/courseServive";
 import theme from "@/styles/theme";
 import Base from "@/templates/Base";
 import {
@@ -6,6 +9,8 @@ import {
   Flex,
   Heading,
   HStack,
+  SimpleGrid,
+  Spinner,
   Text,
   VStack
 } from "@chakra-ui/react";
@@ -13,6 +18,7 @@ import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useEffect } from "react";
 import { RiExternalLinkLine } from "react-icons/ri";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
@@ -44,45 +50,110 @@ const series = [
   }
 ];
 
-const dashboard = () => {
+type CourseGetTypes = {
+  page: string;
+};
+type CourseGetResponse = {
+  items: IListCoursesResponse[];
+  meta: {
+    currentPage: number;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+  };
+};
+
+const Dashboard = () => {
+  const handleListCourse = async (values: CourseGetTypes) => {
+    try {
+      const reponse = await axiosInstance.get(Endpoints.course.list(), {
+        params: {
+          page: values.page,
+          take: 5
+        }
+      });
+
+      return reponse.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const { execute, data, isLoading } = useAsync<
+    CourseGetResponse,
+    CourseGetTypes
+  >(handleListCourse);
+
+  useEffect(() => {
+    execute({ page: "1" });
+  }, []);
+
   return (
     <Base>
       <Box width="100%">
-        <Heading size="lg" margin="16px 0" fontWeight="normal">
-          Cursos
-        </Heading>
-        <Flex
-          gap="16px"
-          flexFlow="wrap"
-          flexDirection={{ base: "column", lg: "row" }}
-        >
-          {[1, 2, 3, 5, 6, 23, 412].map((item) => (
-            <Flex
-              width={{ base: "100%", lg: "350px" }}
-              key={item}
-              p="4"
-              bg="gray.800"
-              borderRadius={8}
-              gap="4"
-            >
-              <Avatar name="n" />
-              <Box flex="1" mr="4">
-                <Text fontSize="18px" fontWeight="bold">
-                  Curso de node
-                </Text>
-                <Text fontSize="small" color="gray.300">
-                  curso de node descrição
-                </Text>
-              </Box>
+        <Box
+          minHeight={["100px", "150px"]}
+          bg="purple.500"
+          borderRadius={8}
+        ></Box>
 
-              <Box>
-                <Link href="/">
-                  <RiExternalLinkLine size="24" />
-                </Link>
-              </Box>
-            </Flex>
-          ))}
-        </Flex>
+        <Box
+          padding={4}
+          borderStyle="solid"
+          borderWidth="1px"
+          borderColor="gray.800"
+          borderRadius="8px"
+          marginTop="8px"
+        >
+          <Flex justifyContent="space-between" alignItems="center">
+            <Heading size="lg" fontWeight="bold">
+              Cursos
+            </Heading>
+            <Link href={`/courses`}>
+              <Text fontSize="18px" fontWeight="bold" mt="8px">
+                Ver todos
+              </Text>
+            </Link>
+          </Flex>
+          <Box
+            display="grid"
+            gridTemplateColumns={["repeat(1, 1fr)", "repeat(4, 1fr)"]}
+            gap="8"
+            mt={["8px", "16px"]}
+          >
+            {data?.items &&
+              data.items.map((item) => (
+                <Flex
+                  width={{ base: "100%" }}
+                  key={item.id}
+                  p="4"
+                  bg="gray.800"
+                  borderRadius={8}
+                  gap="4"
+                >
+                  <Box flex="1">
+                    <Avatar
+                      name={item.name.substring(0, 1)}
+                      backgroundColor={theme.colors.purple[500]}
+                    />
+                    <Text fontSize="18px" fontWeight="bold" mt="8px">
+                      {item.name}
+                    </Text>
+                    <Text fontSize="small" color="gray.300">
+                      {item.description}
+                    </Text>
+                  </Box>
+
+                  <Box>
+                    <Link href={`courses/edit/${item.id}`}>
+                      <RiExternalLinkLine size="24" />
+                    </Link>
+                  </Box>
+                </Flex>
+              ))}
+          </Box>
+        </Box>
+        <Chart options={options} series={series} type="area" height={160} />
       </Box>
     </Base>
   );
@@ -105,4 +176,4 @@ export async function getServerSideProps(context: NextPageContext) {
   };
 }
 
-export default dashboard;
+export default Dashboard;
