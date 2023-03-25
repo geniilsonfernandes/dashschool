@@ -7,7 +7,7 @@ export interface ICreateUser {
   password: string;
 }
 
-export class User {
+export class UserController {
   public static async create({ email, name, password }: ICreateUser) {
     try {
       const existingUser = await this.findByEmail(email);

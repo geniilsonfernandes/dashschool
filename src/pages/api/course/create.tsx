@@ -1,19 +1,7 @@
-import {
-  CourseContreoller,
-  ICreateCourseResponse
-} from "@/services/courseServive";
+import { CourseController } from "@/services/courseServive";
 import { createErrorMessage } from "@/utils/createErrorMessage";
 import userTokenDecode from "@/utils/userTokenDecode";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-interface ISuccessResponse {
-  course: ICreateCourseResponse;
-}
-
-interface IErrorResponse {
-  error: number;
-  errorMessage: string;
-}
 
 const allowedMethods = "POST";
 
@@ -26,7 +14,7 @@ interface CustomRequest extends NextApiRequest {
 
 export default async function handler(
   req: CustomRequest,
-  res: NextApiResponse<ISuccessResponse | IErrorResponse>
+  res: NextApiResponse
 ) {
   if (req.method !== allowedMethods) {
     return res
@@ -42,7 +30,7 @@ export default async function handler(
   try {
     const body = req.body;
 
-    const course = await CourseContreoller.createCourse({
+    const course = await CourseController.createCourse({
       name: body.name,
       description: body.description,
       duration: body.duration,

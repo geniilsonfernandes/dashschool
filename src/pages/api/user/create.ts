@@ -1,21 +1,11 @@
-import { ICreateUser, User } from "@/services/userService";
+import { ICreateUser, UserController } from "@/services/userService";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-interface ISuccessResponse {
-  error: number;
-  user: any;
-}
-
-interface IErrorResponse {
-  error: number;
-  errorMessage: string;
-}
 
 const allowedMethods = "POST";
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ISuccessResponse | IErrorResponse>
+  res: NextApiResponse
 ) {
   if (req.method !== allowedMethods) {
     return res
@@ -26,13 +16,13 @@ export default async function handler(
   try {
     const body = req.body as ICreateUser;
 
-    const user = await User.create({
+    const user = await UserController.create({
       email: body.email,
       name: body.name,
       password: body.password
     });
 
-    res.status(201).json({ error: 201, user });
+    res.status(201).json({ user });
   } catch (error: any) {
     res.status(400).json({ error: 400, errorMessage: error.message });
   }

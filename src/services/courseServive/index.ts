@@ -1,2 +1,2 @@
-export * from "./CourseContreoller";
+export * from "./CourseController";
 export * from "./types";

@@ -1,4 +1,4 @@
-import { User } from "@/services/userService/user";
+import { UserController } from "@/services/userService/UserController";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -18,7 +18,7 @@ const authOptions: NextAuthOptions = {
           password: string;
         };
 
-        const user = await User.checkPassword(email, password);
+        const user = await UserController.checkPassword(email, password);
 
         if (!user) {
           return null;
@@ -34,7 +34,7 @@ const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async session({ session }) {
-      const user = await User.findByEmail(session.user.email);
+      const user = await UserController.findByEmail(session.user.email);
 
       return {
         ...session,

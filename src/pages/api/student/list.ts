@@ -1,4 +1,4 @@
-import { Student } from "@/services";
+import { StudentController } from "@/services";
 import userTokenDecode from "@/utils/userTokenDecode";
 
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -27,7 +27,7 @@ export default async function handler(
   };
 
   try {
-    const students = await Student.listStudents({
+    const students = await StudentController.listStudents({
       mode: "pages",
       page: Number(page) || 1,
       take: Number(take) || 8,

@@ -6,7 +6,7 @@ import {
 } from "./types";
 import prisma from "../prisma";
 
-export class CourseContreoller {
+export class CourseController {
   public static async createCourse({
     name,
     description,

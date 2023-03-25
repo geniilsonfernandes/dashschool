@@ -1,20 +1,9 @@
-import { Student, IStudent } from "@/services";
-import { CourseContreoller } from "@/services/courseServive";
+import { CourseController } from "@/services/courseServive";
 import type { NextApiRequest, NextApiResponse } from "next";
-
-interface ISuccessResponse {
-  error: number;
-  course: any;
-}
-
-interface IErrorResponse {
-  error: number;
-  errorMessage: string;
-}
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<ISuccessResponse | IErrorResponse>
+  res: NextApiResponse
 ) {
   if (req.method !== "GET" && req.method !== "PUT") {
     return res
@@ -26,11 +15,11 @@ export default async function handler(
 
   if (req.method === "GET") {
     try {
-      const course = await CourseContreoller.getCourse(id);
+      const course = await CourseController.getCourse(id);
 
       if (!course) throw new Error("Curso não existe");
 
-      res.status(200).json({ error: 200, course });
+      res.status(200).json({ course });
     } catch (error: any) {
       res.status(400).json({ error: 400, errorMessage: error.message });
     }
@@ -38,12 +27,12 @@ export default async function handler(
 
   if (req.method === "PUT") {
     try {
-      const course = await CourseContreoller.updateCourse({
+      const course = await CourseController.updateCourse({
         id,
         data: req.body
       });
 
-      res.status(200).json({ error: 200, course: course });
+      res.status(200).json({ course: course });
     } catch (error: any) {
       res.status(400).json({ error: 400, errorMessage: error.message });
     }

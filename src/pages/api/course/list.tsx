@@ -1,4 +1,4 @@
-import { CourseContreoller } from "@/services/courseServive";
+import { CourseController } from "@/services/courseServive";
 import userTokenDecode from "@/utils/userTokenDecode";
 
 import type { NextApiRequest, NextApiResponse } from "next";
@@ -27,7 +27,7 @@ export default async function handler(
   };
 
   try {
-    const courses = await CourseContreoller.listCourses({
+    const courses = await CourseController.listCourses({
       user_id: user_id,
       page: Number(page) || 1,
       take: Number(take) || 8

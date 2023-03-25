@@ -6,7 +6,7 @@ import {
   IStudentResponse
 } from "./types";
 
-export class Student {
+export class StudentController {
   public static async createStudent({
     email,
     name,
