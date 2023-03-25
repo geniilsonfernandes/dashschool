@@ -1,6 +1,7 @@
 import { axiosInstance, Endpoints } from "@/api";
 import CourseRow from "@/components/CourseRow";
 import Head from "@/components/Head/Head";
+import Pagination from "@/components/Pagination";
 import useAsync from "@/hook/useAsync";
 import { IListCoursesResponse } from "@/services/courseServive";
 import Base from "@/templates/Base";
@@ -20,6 +21,10 @@ import Link from "next/link";
 import { useEffect } from "react";
 import { RiAddLine } from "react-icons/ri";
 
+type CourseGetTypes = {
+  page: string;
+};
+
 const Courses = () => {
   const isDrawerSidebar = useBreakpointValue(
     {
@@ -31,11 +36,13 @@ const Courses = () => {
     }
   );
 
-  const handleListStudents = async (args: any) => {
+  const handleListCourse = async (values: CourseGetTypes) => {
     try {
-      const reponse = await axiosInstance.get(Endpoints.course.list(), {});
-
-      console.log(reponse.data);
+      const reponse = await axiosInstance.get(Endpoints.course.list(), {
+        params: {
+          page: values.page
+        }
+      });
 
       return reponse.data;
     } catch (error) {
@@ -46,12 +53,26 @@ const Courses = () => {
   const { execute, data, isLoading } = useAsync<
     {
       items: IListCoursesResponse[];
+      meta: {
+        currentPage: number;
+        itemsPerPage: number;
+        totalItems: number;
+        totalPages: number;
+      };
     },
     any
-  >(handleListStudents);
+  >(handleListCourse);
+
+  const handlePageChange = (page: number) => {
+    execute({
+      page: page.toString()
+    });
+  };
 
   useEffect(() => {
-    execute();
+    execute({
+      page: "1"
+    });
   }, []);
 
   return (
@@ -102,6 +123,7 @@ const Courses = () => {
                 {data &&
                   data.items.map((course) => (
                     <CourseRow
+                      id={course.id}
                       key={course.id}
                       description={course.description}
                       duration={course.duration}
@@ -113,6 +135,15 @@ const Courses = () => {
             </Table>
           </Box>
         )}
+        <Box>
+          <Pagination
+            onPageChange={handlePageChange}
+            totalPages={data?.meta.totalPages}
+            currentPage={data?.meta.currentPage}
+            totalItems={data?.meta.totalItems}
+            itemsPerPage={data?.meta.itemsPerPage}
+          />
+        </Box>
       </Box>
     </Base>
   );

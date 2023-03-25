@@ -34,8 +34,10 @@ const Pagination = ({
     >
       <Box>
         <strong>{(currentPage - 1) * itemsPerPage}</strong> -{" "}
-        <strong>{itemsPerPage * currentPage}</strong> de{" "}
-        <strong>{totalItems}</strong>
+        <strong>
+          {currentPage === totalPages ? totalItems : itemsPerPage * currentPage}
+        </strong>{" "}
+        de <strong>{totalItems}</strong>
       </Box>
 
       <Stack direction="row" spacing="2">

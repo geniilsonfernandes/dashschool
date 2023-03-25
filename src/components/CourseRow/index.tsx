@@ -16,6 +16,7 @@ import { RiPencilLine } from "react-icons/ri";
 type CourseRowProps = {
   name: string;
   description: string;
+  id: string;
   duration: number;
   students: number;
 };
@@ -24,7 +25,8 @@ const CourseRow = ({
   description,
   duration,
   name,
-  students
+  students,
+  id
 }: CourseRowProps) => {
   const isDrawerSidebar = useBreakpointValue(
     {
@@ -50,13 +52,12 @@ const CourseRow = ({
       {isDrawerSidebar && <Td>{students}</Td>}
       <Td p="0">
         <Flex justify="flex-end">
-          <Link href={`/student/edit/10`}>
+          <Link href={`/courses/edit/${id}`}>
             <Button
               size="sm"
               fontSize="sm"
               colorScheme="purple"
               leftIcon={<Icon as={RiPencilLine} />}
-              isDisabled={true}
             >
               Editar
             </Button>

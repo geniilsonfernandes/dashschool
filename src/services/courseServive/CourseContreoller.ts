@@ -1,7 +1,8 @@
 import {
   ICreateCoursePayload,
   ICreateCourseResponse,
-  IListCoursesPayload
+  IListCoursesPayload,
+  IUpdateCoursePayload
 } from "./types";
 import prisma from "../prisma";
 
@@ -40,8 +41,14 @@ export class CourseContreoller {
     }
   }
 
-  public static async listCourses({ user_id }: IListCoursesPayload) {
+  public static async listCourses({
+    user_id,
+    page = 1,
+    take = 8
+  }: IListCoursesPayload) {
     try {
+      const skip = (page - 1) * take;
+
       const courses = await prisma.courses.findMany({
         where: {
           user_id: user_id
@@ -52,10 +59,28 @@ export class CourseContreoller {
               Students: true
             }
           }
+        },
+        skip: skip,
+        take: take
+      });
+
+      const totalItemsCount = await prisma.courses.count({
+        where: {
+          user_id: user_id
         }
       });
 
-      return courses;
+      const totalPages = Math.ceil(totalItemsCount / take);
+
+      return {
+        items: courses,
+        meta: {
+          totalItems: totalItemsCount,
+          totalPages: totalPages,
+          currentPage: page,
+          itemsPerPage: take
+        }
+      };
     } catch (error) {
       throw new Error("Não foi possível listar os cursos");
     }
@@ -75,13 +100,41 @@ export class CourseContreoller {
     }
   }
 
-  public static async updateCourse(id: string, data: any) {
+  public static async updateCourse({ id, data }: IUpdateCoursePayload) {
     try {
+      const getConections = await prisma.courses_Students.findMany({
+        where: {
+          courses_id: id
+        }
+      });
+
+      const listToAdd = data.students.create.filter(
+        (id) => !getConections.find((conection) => conection.student_id === id)
+      );
+
+      const listToDelete = data.students.delete.filter((id) =>
+        getConections.find((conection) => conection.student_id === id)
+      );
+
       const course = await prisma.courses.update({
         where: {
           id
         },
-        data
+        data: {
+          name: data.name,
+          description: data.description,
+          duration: data.duration,
+          Courses_Students: {
+            create: listToAdd.map((id) => ({
+              Students: {
+                connect: { id }
+              }
+            })),
+            deleteMany: listToDelete.map((id) => ({
+              student_id: id
+            }))
+          }
+        }
       });
 
       return course;
@@ -95,6 +148,19 @@ export class CourseContreoller {
       const course = await prisma.courses.findUnique({
         where: {
           id
+        },
+        include: {
+          Courses_Students: {
+            include: {
+              Students: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true
+                }
+              }
+            }
+          }
         }
       });
 

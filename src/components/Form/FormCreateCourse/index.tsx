@@ -12,10 +12,13 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 
-import SearchStudent, { IStudent } from "@/components/SearchStudent";
+import SearchStudent, {
+  ControlleList,
+  InitialValuesTypes
+} from "@/components/SearchStudent";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Textarea } from "../Textarea";
 
@@ -26,7 +29,8 @@ const schemaCrete = yup.object().shape({
 });
 const schemaEdit = yup.object().shape({
   name: yup.string().trim().required("Campo obrigatório"),
-  email: yup.string().required("Campo obrigatório").email("Email inválido")
+  description: yup.string().trim().required("Campo obrigatório"),
+  duration: yup.number().required("Campo obrigatório")
 });
 
 export type IFormCreateCourseValues = {
@@ -34,10 +38,24 @@ export type IFormCreateCourseValues = {
   description: string;
   duration: number;
 };
+export type IInitialValues = {
+  name: string;
+  description: string;
+  duration: number;
+
+  studentList?: InitialValuesTypes[];
+};
+
+export type ISubmitValues = {
+  name: string;
+  description: string;
+  duration: number;
+  list: ControlleList;
+};
 
 type IFormProps = {
-  initialValues?: IFormCreateCourseValues;
-  onSubmit: (values: IFormCreateCourseValues, students: IStudent[]) => void;
+  initialValues?: IInitialValues;
+  onSubmit: (values: ISubmitValues) => void;
   isLoading?: boolean;
   loadingValues?: boolean;
 };
@@ -50,7 +68,7 @@ const FormCreateCourse = ({
 }: IFormProps) => {
   const hasInitialValues = !!initialValues;
   const isEdit = hasInitialValues;
-  const [studentList, setStudentList] = useState<any>();
+  const [list, setList] = useState<ControlleList>();
 
   const {
     control,
@@ -66,32 +84,29 @@ const FormCreateCourse = ({
     }
   });
 
-  const handleCreateUser = (values: IFormCreateCourseValues) => {
-    onSubmit(
-      {
-        name: values.name,
-        description: values.description,
-        duration: values.duration
-      },
-      studentList
-    );
+  const handleEditCourse = (values: IFormCreateCourseValues) => {
+    onSubmit({
+      name: values.name,
+      description: values.description,
+      duration: values.duration,
+      list: list as ControlleList
+    });
   };
 
   useEffect(() => {
     if (hasInitialValues) {
       setValue("name", initialValues?.name);
       setValue("description", initialValues?.description);
+      setValue("duration", initialValues?.duration);
     }
   }, [initialValues, setValue, hasInitialValues]);
-
-  // funçoes de busca de alunos
 
   return (
     <>
       <Box flex="1" borderRadius={8} bg="gray.800" p="8">
         <Skeleton colorScheme="blue" isLoaded={!loadingValues} rounded="8px">
           <Heading size="lg" fontWeight="normal">
-            {isEdit ? "Editar aluno" : "Criar curso"}
+            {isEdit ? "Editar curso" : "Criar curso"}
           </Heading>
         </Skeleton>
         <Divider my="6" borderColor="gray.700" />
@@ -146,7 +161,10 @@ const FormCreateCourse = ({
               )}
             />
 
-            <SearchStudent onChange={(values) => setStudentList(values)} />
+            <SearchStudent
+              initialValues={initialValues?.studentList}
+              onChangelist={(values) => setList(values)}
+            />
           </SimpleGrid>
         </VStack>
 
@@ -173,7 +191,7 @@ const FormCreateCourse = ({
                 isLoading={isLoading}
                 loadingText="Enviando"
                 colorScheme="facebook"
-                onClick={handleSubmit(handleCreateUser)}
+                onClick={handleSubmit(handleEditCourse)}
               >
                 {hasInitialValues ? "Salvar" : "Criar"}
               </Button>

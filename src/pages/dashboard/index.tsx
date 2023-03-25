@@ -1,9 +1,19 @@
 import theme from "@/styles/theme";
 import Base from "@/templates/Base";
-import { Box, Text } from "@chakra-ui/react";
+import {
+  Avatar,
+  Box,
+  Flex,
+  Heading,
+  HStack,
+  Text,
+  VStack
+} from "@chakra-ui/react";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
+import { RiExternalLinkLine } from "react-icons/ri";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
@@ -37,48 +47,42 @@ const series = [
 const dashboard = () => {
   return (
     <Base>
-      <Box p="8" bg="gray.800" borderRadius={8}>
-        <Text fontSize="lg" mb="4">
-          Inscrito da semana
-        </Text>
-        <Chart
-          options={{
-            ...options,
+      <Box width="100%">
+        <Heading size="lg" margin="16px 0" fontWeight="normal">
+          Cursos
+        </Heading>
+        <Flex
+          gap="16px"
+          flexFlow="wrap"
+          flexDirection={{ base: "column", lg: "row" }}
+        >
+          {[1, 2, 3, 5, 6, 23, 412].map((item) => (
+            <Flex
+              width={{ base: "100%", lg: "350px" }}
+              key={item}
+              p="4"
+              bg="gray.800"
+              borderRadius={8}
+              gap="4"
+            >
+              <Avatar name="n" />
+              <Box flex="1" mr="4">
+                <Text fontSize="18px" fontWeight="bold">
+                  Curso de node
+                </Text>
+                <Text fontSize="small" color="gray.300">
+                  curso de node descrição
+                </Text>
+              </Box>
 
-            xaxis: {
-              type: "datetime",
-              axisBorder: {
-                color: theme.colors.gray[600]
-              },
-              axisTicks: {
-                color: theme.colors.gray[600]
-              },
-              categories: Array.from({ length: 7 }, (_, i) =>
-                new Date(Date.now() + i * 24 * 60 * 60 * 1000)
-                  .toISOString()
-                  .slice(0, 10)
-              )
-            },
-            fill: {
-              opacity: 0.3,
-              type: "gradient",
-              gradient: {
-                shade: "dark",
-                opacityFrom: 0.7,
-                opacityTo: 0.3
-              }
-            }
-          }}
-          series={series}
-          type="area"
-          width={"100%"}
-          height={160}
-        />
-      </Box>
-      <Box p="8" bg="gray.800" borderRadius={8}>
-        <Text fontSize="lg" mb="4">
-          Inscrito da semana
-        </Text>
+              <Box>
+                <Link href="/">
+                  <RiExternalLinkLine size="24" />
+                </Link>
+              </Box>
+            </Flex>
+          ))}
+        </Flex>
       </Box>
     </Base>
   );

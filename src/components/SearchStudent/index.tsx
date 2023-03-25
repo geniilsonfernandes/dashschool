@@ -1,7 +1,7 @@
 import { axiosInstance, Endpoints } from "@/api";
 import { useNotification } from "@/contexts/AlertMessageContext";
 import useAsync from "@/hook/useAsync";
-import { IStudent, IStudentResponse } from "@/services";
+import { IStudentResponse } from "@/services";
 import {
   Box,
   Divider,
@@ -12,7 +12,7 @@ import {
   VStack
 } from "@chakra-ui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import Search from "../Form/Search";
@@ -78,16 +78,37 @@ type IStudentGet = {
   filter: string;
 };
 
-type SearchStudentProps = {
-  onChange?: (studentList: IStudent[]) => void;
+export type InitialValuesTypes = {
+  email: string;
+  id: string;
+  name: string;
 };
-const SearchStudent = ({ onChange }: SearchStudentProps) => {
+
+export type ControlleList = {
+  toAdd: string[];
+  toRemove: string[];
+};
+
+type SearchStudentProps = {
+  initialValues?: InitialValuesTypes[];
+  onChangelist?: (list: { toAdd: string[]; toRemove: string[] }) => void;
+};
+
+const SearchStudent = ({ initialValues, onChangelist }: SearchStudentProps) => {
   const notification = useNotification();
+
+  console.log("SearchStudent", initialValues);
   const result = useDisclosure();
-  const [studentListSelected, setStudentListSelected] = useState<IStudent[]>(
-    []
-  );
-  const [studentList, setStudentList] = useState<IStudent[]>([]);
+
+  const [controllList, setControllList] = useState<ControlleList>({
+    toAdd: [],
+    toRemove: []
+  });
+  const [studentListSelected, setStudentListSelected] = useState<
+    InitialValuesTypes[]
+  >(initialValues || []);
+
+  const [studentList, setStudentList] = useState<InitialValuesTypes[]>([]);
 
   const {
     control,
@@ -143,16 +164,52 @@ const SearchStudent = ({ onChange }: SearchStudentProps) => {
     setStudentList([]);
   };
 
+  const findStudentSelected = (id: string) => {
+    return initialValues ? initialValues.find((item) => item.id === id) : false;
+  };
+
+  // função auxiliar para atualizar a lista controllList
+  const updateControllList = (
+    id: string,
+    isAdding: boolean,
+    controllList: any
+  ) => {
+    let toAdd = [...controllList.toAdd];
+    let toRemove = [...controllList.toRemove];
+
+    if (isAdding) {
+      if (findStudentSelected(id)) {
+        toRemove = toRemove.filter((item) => item !== id);
+      } else {
+        toAdd = [...toAdd, id];
+      }
+    } else {
+      if (findStudentSelected(id)) {
+        toRemove = [...toRemove, id];
+      } else {
+        toAdd = toAdd.filter((item) => item !== id);
+      }
+    }
+
+    return { toAdd, toRemove };
+  };
+
   const handleAddStudent = (id: string) => {
     const findStudent = studentList.find((item) => item.id === id);
-    const list = [...studentListSelected, findStudent];
-    onChange && onChange(list as IStudent[]);
     setStudentListSelected((prev: any) => [...prev, findStudent]);
+
+    // atualiza a lista controllList
+    const { toAdd, toRemove } = updateControllList(id, true, controllList);
+    setControllList({ toAdd, toRemove });
   };
 
   const handleRemoveStudent = (id: string) => {
     const newStudentList = studentListSelected.filter((item) => item.id !== id);
     setStudentListSelected(newStudentList);
+
+    // atualiza a lista controllList
+    const { toAdd, toRemove } = updateControllList(id, false, controllList);
+    setControllList({ toAdd, toRemove });
   };
 
   const handleRemoveSelectedStudent = (id: string) => {
@@ -160,7 +217,21 @@ const SearchStudent = ({ onChange }: SearchStudentProps) => {
       (item) => item.id !== id
     );
     setStudentListSelected(newStudentListSelected);
+
+    // atualiza a lista controllList
+    const { toAdd, toRemove } = updateControllList(id, false, controllList);
+    setControllList({ toAdd, toRemove });
   };
+
+  useEffect(() => {
+    if (initialValues) {
+      setStudentListSelected(initialValues);
+    }
+  }, [initialValues]);
+
+  useEffect(() => {
+    onChangelist && onChangelist(controllList);
+  }, [controllList]);
 
   return (
     <Box>
@@ -222,17 +293,18 @@ const SearchStudent = ({ onChange }: SearchStudentProps) => {
       </Box>
       <Divider borderColor="gray.700" my="4" />
       <GridStudants title="Alunos neste curso" type="list">
-        {studentListSelected.map((item) => (
-          <StudantCard
-            email={item.email}
-            name={item.name}
-            key={item.id}
-            id={item.id}
-            onRemove={(id) => handleRemoveSelectedStudent(id)}
-            isSelected
-            nofill
-          />
-        ))}
+        {studentListSelected &&
+          studentListSelected.map((item) => (
+            <StudantCard
+              email={item.email}
+              name={item.name}
+              key={item.id}
+              id={item.id}
+              onRemove={(id) => handleRemoveSelectedStudent(id)}
+              isSelected
+              nofill
+            />
+          ))}
       </GridStudants>
     </Box>
   );

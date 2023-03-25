@@ -15,6 +15,8 @@ export interface ICreateCourseResponse {
 
 export interface IListCoursesPayload {
   user_id: string;
+  page: number;
+  take: number;
 }
 
 export interface IListCoursesResponse {
@@ -42,4 +44,17 @@ interface Students {
   password: string;
   created_at: string;
   user_id: string;
+}
+
+export interface IUpdateCoursePayload {
+  id: string;
+  data: {
+    name: string;
+    description: string;
+    duration: number;
+    students: {
+      delete: string[];
+      create: string[];
+    };
+  };
 }

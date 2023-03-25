@@ -42,6 +42,7 @@ const Textarea = ({
             bgColor: "gray.900"
           }}
           onChange={props.onChange}
+          {...props}
         />
       </InputGroup>
       <FormHelperText color={error ? "red.500" : "white"}>

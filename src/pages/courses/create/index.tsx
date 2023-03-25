@@ -1,6 +1,7 @@
 import { axiosInstance, Endpoints } from "@/api";
 import FormCreateCourse, {
-  IFormCreateCourseValues
+  IFormCreateCourseValues,
+  ISubmitValues
 } from "@/components/Form/FormCreateCourse";
 
 import { useNotification } from "@/contexts/AlertMessageContext";
@@ -31,22 +32,13 @@ export async function getServerSideProps(context: NextPageContext) {
 const Create = () => {
   const notification = useNotification();
   const router = useRouter();
-  const handleCreateCourse = async (args: {
-    value: IFormCreateCourseValues;
-    student: IStudent[];
-  }) => {
+  const handleCreateCourse = async (values: ISubmitValues) => {
     try {
-      const { value, student } = args;
-      const createStudentList = (list: IStudent[]) => {
-        if (!list) return [];
-        return list.map((item) => item.id);
-      };
-
       await axiosInstance.post(Endpoints.course.create(), {
-        name: value.name,
-        description: value.description,
-        duration: value.duration,
-        students: createStudentList(student)
+        name: values.name,
+        description: values.description,
+        duration: values.duration,
+        students: values.list.toAdd
       });
       notification.showAlert({
         title: "Sucesso",
@@ -65,12 +57,14 @@ const Create = () => {
     }
   };
 
-  const { isLoading, execute } = useAsync(handleCreateCourse);
+  const { isLoading, execute } = useAsync<any, ISubmitValues>(
+    handleCreateCourse
+  );
 
   return (
     <Base>
       <FormCreateCourse
-        onSubmit={(value, student) => execute({ value, student })}
+        onSubmit={(values) => execute(values)}
         isLoading={isLoading}
       />
     </Base>
