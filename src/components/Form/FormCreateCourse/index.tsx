@@ -110,63 +110,64 @@ const FormCreateCourse = ({
           </Heading>
         </Skeleton>
         <Divider my="6" borderColor="gray.700" />
+        <Skeleton colorScheme="blue" isLoaded={!loadingValues} rounded="8px">
+          <VStack spacing="8">
+            <SimpleGrid columns={1} spacing={4} w="100%">
+              <Controller
+                name="name"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Input
+                    name="name"
+                    label="Nome do curso"
+                    value={value}
+                    onChange={onChange}
+                    error={errors.name ? true : false}
+                    helperText={errors.name?.message}
+                    autoComplete="off"
+                  />
+                )}
+              />
 
-        <VStack spacing="8">
-          <SimpleGrid columns={1} spacing={4} w="100%">
-            <Controller
-              name="name"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <Input
-                  name="name"
-                  label="Nome do curso"
-                  value={value}
-                  onChange={onChange}
-                  error={errors.name ? true : false}
-                  helperText={errors.name?.message}
-                  autoComplete="off"
-                />
-              )}
-            />
+              <Controller
+                name="duration"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Input
+                    name="duration"
+                    label="Duração do curso"
+                    value={value}
+                    onChange={onChange}
+                    error={errors.name ? true : false}
+                    helperText={errors.name?.message}
+                    autoComplete="off"
+                  />
+                )}
+              />
 
-            <Controller
-              name="duration"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <Input
-                  name="duration"
-                  label="Duração do curso"
-                  value={value}
-                  onChange={onChange}
-                  error={errors.name ? true : false}
-                  helperText={errors.name?.message}
-                  autoComplete="off"
-                />
-              )}
-            />
+              <Controller
+                name="description"
+                control={control}
+                render={({ field: { value, onChange } }) => (
+                  <Textarea
+                    name="description"
+                    label="Descrição do curso"
+                    autoComplete="off"
+                    onChange={onChange}
+                    value={value}
+                    error={errors.name ? true : false}
+                    helperText={errors.name?.message}
+                  />
+                )}
+              />
 
-            <Controller
-              name="description"
-              control={control}
-              render={({ field: { value, onChange } }) => (
-                <Textarea
-                  name="description"
-                  label="Descrição do curso"
-                  autoComplete="off"
-                  onChange={onChange}
-                  value={value}
-                  error={errors.name ? true : false}
-                  helperText={errors.name?.message}
-                />
-              )}
-            />
-
-            <SearchStudent
-              initialValues={initialValues?.studentList}
-              onChangelist={(values) => setList(values)}
-            />
-          </SimpleGrid>
-        </VStack>
+              <SearchStudent
+                initialValues={initialValues?.studentList}
+                onChangelist={(values) => setList(values)}
+              />
+            </SimpleGrid>
+          </VStack>
+        </Skeleton>
 
         <Flex mt="8" justify="flex-end">
           <HStack spacing="4">

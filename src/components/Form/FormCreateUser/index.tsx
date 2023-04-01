@@ -8,11 +8,13 @@ import {
   HStack,
   SimpleGrid,
   Skeleton,
+  Spacer,
   Tab,
   TabList,
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
   VStack
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -22,6 +24,7 @@ import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { useEffect } from "react";
 import { stylesConstants } from "@/styles";
+import cutString from "@/utils/cutString";
 
 const schemaCrete = yup.object().shape({
   name: yup.string().trim().required("Campo obrigatório"),
@@ -37,10 +40,17 @@ const schemaEdit = yup.object().shape({
   email: yup.string().required("Campo obrigatório").email("Email inválido")
 });
 
+type Course = {
+  id: string;
+  name: string;
+  description: string;
+};
+
 export type IFormValues = {
   name: string;
   email: string;
   password: string;
+  courseList?: Course[];
 };
 
 type IFormProps = {
@@ -96,28 +106,24 @@ const Form = ({
         </Skeleton>
         <Divider my="6" borderColor="gray.700" />
 
-        <Tabs
-          variant="solid-rounded"
-          colorScheme={stylesConstants.COLOR_SCHEME}
-        >
-          <TabList mb={4}>
-            <Tab>Dados do aluno</Tab>
-            <Tab>Curso</Tab>
-          </TabList>
+        <Skeleton colorScheme="blue" isLoaded={!loadingValues} rounded="8px">
+          <Tabs
+            variant="solid-rounded"
+            colorScheme={stylesConstants.COLOR_SCHEME}
+          >
+            <TabList mb={4}>
+              <Tab>Dados do aluno</Tab>
+              <Tab>Cursos</Tab>
+            </TabList>
 
-          <TabPanels>
-            <TabPanel>
-              <VStack spacing="8">
-                <SimpleGrid
-                  minChildWidth="240px"
-                  columns={2}
-                  spacing={8}
-                  w="100%"
-                >
-                  <Skeleton
-                    colorScheme="blue"
-                    isLoaded={!loadingValues}
-                    rounded="8px"
+            <TabPanels>
+              <TabPanel>
+                <VStack spacing="8">
+                  <SimpleGrid
+                    minChildWidth="240px"
+                    columns={2}
+                    spacing={8}
+                    w="100%"
                   >
                     <Controller
                       name="name"
@@ -134,12 +140,7 @@ const Form = ({
                         />
                       )}
                     />
-                  </Skeleton>
-                  <Skeleton
-                    colorScheme="blue"
-                    isLoaded={!loadingValues}
-                    rounded="8px"
-                  >
+
                     <Controller
                       name="email"
                       control={control}
@@ -155,16 +156,10 @@ const Form = ({
                         />
                       )}
                     />
-                  </Skeleton>
-                </SimpleGrid>
+                  </SimpleGrid>
 
-                {!isEdit && (
-                  <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
-                    <Skeleton
-                      colorScheme="blue"
-                      isLoaded={!loadingValues}
-                      rounded="8px"
-                    >
+                  {!isEdit && (
+                    <SimpleGrid minChildWidth="240px" spacing="8" w="100%">
                       <Controller
                         name="password"
                         control={control}
@@ -181,30 +176,47 @@ const Form = ({
                           />
                         )}
                       />
-                    </Skeleton>
-                  </SimpleGrid>
-                )}
-              </VStack>
-            </TabPanel>
-            <TabPanel>
-              <p>two!</p>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
+                    </SimpleGrid>
+                  )}
+                </VStack>
+              </TabPanel>
+              <TabPanel>
+                <VStack spacing={3}>
+                  {initialValues?.courseList?.map((course) => (
+                    <Flex
+                      width="100%"
+                      key={course.id}
+                      p="4"
+                      bg="gray.900"
+                      borderRadius="8"
+                    >
+                      <Text
+                        fontSize="small"
+                        fontWeight="bold"
+                        color="white.300"
+                      >
+                        {course.name}
+                      </Text>
+                      <Spacer />
+                      <Text fontSize="small" color="white.300" opacity=".5">
+                        {cutString(course.description, 50)}
+                      </Text>
+                    </Flex>
+                  ))}
+                </VStack>
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Skeleton>
 
         <Flex mt="8" justify="flex-end">
           <HStack spacing="4">
-            <Skeleton
-              colorScheme="blue"
-              isLoaded={!loadingValues}
-              rounded="8px"
-            >
-              <Link href="/student" passHref>
-                <Button colorScheme="whiteAlpha" disabled>
-                  cancelar
-                </Button>
-              </Link>
-            </Skeleton>
+            <Link href="/student" passHref>
+              <Button colorScheme="whiteAlpha" disabled>
+                cancelar
+              </Button>
+            </Link>
+
             <Skeleton
               colorScheme="blue"
               isLoaded={!loadingValues}

@@ -139,6 +139,8 @@ export class CourseController {
 
       return course;
     } catch (error) {
+      console.log(error);
+
       throw new Error("Não foi possível atualizar o curso");
     }
   }

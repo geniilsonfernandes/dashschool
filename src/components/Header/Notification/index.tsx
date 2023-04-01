@@ -1,6 +1,6 @@
 import { HStack, Icon } from "@chakra-ui/react";
-import React from "react";
-import { RiNotificationLine, RiUserAddLine } from "react-icons/ri";
+import Link from "next/link";
+import { RiUserAddLine } from "react-icons/ri";
 
 const Notification = () => {
   return (
@@ -13,8 +13,9 @@ const Notification = () => {
       borderRightWidth={1}
       borderColor="gray.700"
     >
-      <Icon as={RiNotificationLine} fontSize="20" />
-      <Icon as={RiUserAddLine} fontSize="20" />
+      <Link href="/student/create">
+        <Icon as={RiUserAddLine} fontSize="20" />
+      </Link>
     </HStack>
   );
 };

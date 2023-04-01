@@ -29,7 +29,6 @@ export class StudentController {
   }
 
   public static async listStudents({
-    mode = "pages",
     page,
     take,
     user_id,
@@ -108,6 +107,26 @@ export class StudentController {
       const student = await prisma.students.findFirst({
         where: {
           id
+        },
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          user_id: true,
+          created_at: true,
+          Courses_Students: {
+            select: {
+              Courses: {
+                select: {
+                  id: true,
+                  name: true,
+                  description: true,
+                  duration: true,
+                  created_at: true
+                }
+              }
+            }
+          }
         }
       });
       return student;

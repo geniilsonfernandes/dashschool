@@ -39,19 +39,21 @@ model Students {
   Users            Users              @relation(fields: [user_id], references: [id])
   Courses_Students Courses_Students[]
 
+  @@index([user_id])
   @@map("student")
 }
 
 model Courses {
   id               String             @id @unique @default(uuid())
   name             String
-  description      String
+  description      String             @db.Text
   duration         Int
   created_at       DateTime           @default(now())
   Courses_Students Courses_Students[]
   Users            Users?             @relation(fields: [user_id], references: [id])
   user_id          String?
 
+  @@index([user_id])
   @@map("courses")
 }
 
@@ -64,5 +66,7 @@ model Courses_Students {
   courses_id String
   Courses    Courses  @relation(fields: [courses_id], references: [id])
 
+  @@index([student_id])
+  @@index([courses_id])
   @@map("courses_students")
 }

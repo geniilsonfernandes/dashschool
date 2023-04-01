@@ -38,10 +38,19 @@ const Edit = () => {
   const handleGetStudante = async () => {
     try {
       const reponse = await axiosInstance.get(Endpoints.student.get(id));
+      console.log(reponse.data.students);
+
       setInitialValues({
         name: reponse.data.students.name,
         email: reponse.data.students.email,
-        password: reponse.data.students.password
+        password: reponse.data.students.password,
+        courseList: reponse.data.students.Courses_Students.map(
+          (course: any) => ({
+            id: course.Courses.id,
+            name: course.Courses.name,
+            description: course.Courses.description
+          })
+        )
       });
       return reponse.data.students;
     } catch (error: any) {

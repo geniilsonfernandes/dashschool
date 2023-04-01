@@ -1,16 +1,15 @@
+import cutString from "@/utils/cutString";
 import {
   Box,
   Button,
   Flex,
+  Icon,
   Td,
   Text,
   Tr,
-  Icon,
   useBreakpointValue
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { type } from "os";
-import React from "react";
 import { RiPencilLine } from "react-icons/ri";
 
 type CourseRowProps = {
@@ -44,7 +43,7 @@ const CourseRow = ({
         <Box>
           <Text fontWeight="bold">{name}</Text>
           <Text fontSize="small" color="gray.300">
-            {description.substring(0, 50)}
+            {cutString(description, 20)}
           </Text>
         </Box>
       </Td>
