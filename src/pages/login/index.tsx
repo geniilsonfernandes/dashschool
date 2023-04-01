@@ -6,7 +6,9 @@ import {
   Flex,
   Heading,
   Link as ChakraLink,
-  Stack
+  Stack,
+  Box,
+  Text
 } from "@chakra-ui/react";
 import Link from "next/link";
 
@@ -19,6 +21,7 @@ import * as yup from "yup";
 
 import Button from "@/components/Button";
 import { NextPageContext } from "next";
+import Logo from "@/components/Header/Logo";
 
 const schema = yup.object().shape({
   email: yup.string().required("Campo obrigatório").email("Email inválido"),
@@ -69,7 +72,26 @@ export default function SignIn() {
   };
 
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center">
+    <Flex
+      w="100vw"
+      minHeight={"100vh"}
+      align="center"
+      justify="center"
+      flexDirection={["column", "column", "row"]}
+      gap="4"
+    >
+      <Box w="360px">
+        <Logo brandName="Dashschool" />
+
+        <Heading maxWidth={360} fontSize="4xl" pt={"10px"}>
+          Faça seu login na plataforma
+        </Heading>
+        <Box maxWidth={260}>
+          <Divider borderColor="gray.600" my="6" />
+          <Text>Gerencie seus cursos e alunos em uma única plataforma!</Text>
+        </Box>
+      </Box>
+
       <Flex
         w="100%"
         maxWidth={360}
@@ -78,8 +100,6 @@ export default function SignIn() {
         borderRadius={8}
         flexDir="column"
       >
-        <Heading>Login</Heading>
-        <Divider borderColor="gray.600" my="6" />
         <Flex borderRadius={8} flexDir="column">
           <Stack spacing={4}>
             <Controller

@@ -21,6 +21,7 @@ import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
+import Logo from "@/components/Header/Logo";
 
 const schema = yup.object().shape({
   name: yup.string().required("Campo obrigatório"),
@@ -84,7 +85,26 @@ export default function SignIn() {
   };
 
   return (
-    <Flex w="100vw" h="100vh" align="center" justify="center">
+    <Flex
+      w="100vw"
+      align="center"
+      justify="center"
+      flexDirection={["column", "column", "row"]}
+      minHeight="100vh"
+      gap="4"
+    >
+      <Box w="360px">
+        <Logo brandName="Dashschool" />
+
+        <Heading maxWidth={360} fontSize="4xl" pt={"10px"}>
+          Seja bem-vindo(a) à nossa plataforma de gerenciamento de cursos
+        </Heading>
+        <Box maxWidth={260}>
+          <Divider borderColor="gray.600" my="6" />
+          <Text>Por favor, preencha as informações para criar sua conta.!</Text>
+        </Box>
+      </Box>
+
       <Box position={"relative"}>
         <Flex
           w={["310px", "360px"]}
@@ -94,8 +114,6 @@ export default function SignIn() {
           borderRadius={8}
           flexDir="column"
         >
-          <Heading>Sign In</Heading>
-          <Divider borderColor="gray.600" my="6" />
           <Flex borderRadius={8} flexDir="column">
             <Stack spacing={4}>
               <Controller
