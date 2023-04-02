@@ -75,7 +75,7 @@ Algumas screenshots da sua aplicação abaixo:
   ![Screenshot 4](ui_05.png)
 
 - Busca Alunos e gerenciamento de alunos em um curso
-  ![Screenshot 5](ui_06.png)
+  ![Screenshot 5](ui_06.gif)
 
 ## Instalação e execução local
 
