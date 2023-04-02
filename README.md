@@ -1,6 +1,6 @@
 ![Banner](ui_01.png)
 
-<h2 align="center">DashSchool Gerenciador de Cursos</h1>
+<h2 align="center">DashSchool Gerenciador de Cursos | Front end | bank end</h1>
 
 <p align="center">
   <a href="#sobre-o-projeto">Sobre o projeto</a> •
