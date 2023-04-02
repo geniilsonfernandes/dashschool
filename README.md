@@ -3,6 +3,16 @@
 <h2 align="center">DashSchool Gerenciador de Cursos</h1>
 
 <p align="center">
+  <a href="#sobre-o-projeto">Sobre o projeto</a> •
+  <a href="#funcionalidades">Funcionalidades</a> •
+  <a href="#stacks-utilizadas">Stacks utilizadas</a> •
+  <a href="#screenshots">Screenshots</a> •
+  <a href="#instalação-e-execução-local">Instalação e execução local</a>
+</p>
+
+## Sobre o projeto
+
+<p align="center">
   <a href="http://localhost:3000/signin">
     Veja o projeto ao vivo
   </a>
@@ -12,14 +22,6 @@ para acessar o projeto, basta clicar no link acima e fazer o login com o usuári
 
 - Usuário: usuario: dashschool@dashschool.com,
 - senha: dashschool@dashschool.com
-
-<p align="center">
-  <a href="#sobre-o-projeto">Sobre o projeto</a> •
-  <a href="#funcionalidades">Funcionalidades</a> •
-  <a href="#stacks-utilizadas">Stacks utilizadas</a> •
-  <a href="#screenshots">Screenshots</a> •
-  <a href="#instalação-e-execução-local">Instalação e execução local</a>
-</p>
 
 <p align="center">Este é um projeto de gerenciador de cursos desenvolvido com Next.js e Prisma, usando o framework Chakra UI para estilização.</p>
 
@@ -71,6 +73,9 @@ Algumas screenshots da sua aplicação abaixo:
 
 - Busca de Cursos e Alunos e gerenciamento de alunos em um curso
   ![Screenshot 4](ui_05.png)
+
+- Busca Alunos e gerenciamento de alunos em um curso
+  ![Screenshot 5](ui_06.png)
 
 ## Instalação e execução local
 
