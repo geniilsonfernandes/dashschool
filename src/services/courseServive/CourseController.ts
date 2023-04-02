@@ -49,7 +49,6 @@ export class CourseController {
   }: IListCoursesPayload) {
     try {
       const skip = (page - 1) * take;
-      console.log(filter);
 
       const where = () => ({
         where: {

@@ -22,6 +22,7 @@ export class StudentController {
           user_id
         }
       });
+
       return students;
     } catch (error) {
       throw new Error("Não foi possível criar o estudante");
@@ -75,6 +76,23 @@ export class StudentController {
 
       const totalPages = Math.ceil(totalItemsCount / take); // total de páginas
 
+      // const users: any = [];
+
+      // for (let i = 1; i <= 100; i++) {
+      //   const name = faker.name.fullName();
+      //   const email = `${name
+      //     .split(" ")
+      //     .join(".")
+      //     .toLowerCase()}@dashschool.com.br`;
+      //   const password = faker.internet.password();
+
+      //   users.push({ email, name, password, user_id });
+      // }
+
+      // await prisma.students.createMany({
+      //   data: users
+      // });
+
       return {
         items: students,
         meta: {
@@ -85,6 +103,8 @@ export class StudentController {
         }
       };
     } catch (error) {
+      console.log(error);
+
       throw new Error("Não foi possível listar os estudantes");
     }
   }
