@@ -8,6 +8,11 @@
   </a>
 <p>
 
+para acessar o projeto, basta clicar no link acima e fazer o login com o usuário e senha abaixo:
+
+- Usuário: usuario: dashschool@dashschool.com,
+- senha: dashschool@dashschool.com
+
 <p align="center">
   <a href="#sobre-o-projeto">Sobre o projeto</a> •
   <a href="#funcionalidades">Funcionalidades</a> •
