@@ -41,6 +41,15 @@ Este projeto utiliza as seguintes stacks:
 - Next.js
 - Prisma
 - Chakra UI
+- planet-scale para banco de dados
+- api routes do next.js
+- next-auth
+
+## Rotas da api do projeto
+
+- Rotas para criação de cursos e alunos
+- Rotas para edição de cursos e alunos
+- Rotas para listagem de cursos e alunos
 
 ## Screenshots
 
@@ -54,6 +63,9 @@ Algumas screenshots da sua aplicação abaixo:
 
 - Formulário de Cadastro de Cursos e Alunos
   ![Screenshot 3](ui_04.png)
+
+- Busca de Cursos e Alunos e gerenciamento de alunos em um curso
+  ![Screenshot 4](ui_05.png)
 
 ## Instalação e execução local
 
@@ -96,4 +108,3 @@ DATABASE_SCHEMA=dash
 
 - Linkedin - [https://www.linkedin.com/in/genilson-fernandes/](https://www.linkedin.com/in/genilson-fernandes/)
 - Email - geniilsonfernandes@gmail.com
-
