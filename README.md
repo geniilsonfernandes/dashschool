@@ -2,6 +2,14 @@
 
 <h2 align="center">DashSchool Gerenciador de Cursos</h1>
 
+<p align="center">
+  <a href="#sobre-o-projeto">Sobre o projeto</a> •
+  <a href="#funcionalidades">Funcionalidades</a> •
+  <a href="#stacks-utilizadas">Stacks utilizadas</a> •
+  <a href="#screenshots">Screenshots</a> •
+  <a href="#instalação-e-execução-local">Instalação e execução local</a>
+</p>
+
 <p>
 Com uma interface de usuário intuitiva e fácil de usar, você poderá criar novos cursos, adicionar e remover alunos, visualizar a lista de alunos matriculados em um determinado
 </p>
