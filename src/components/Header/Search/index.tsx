@@ -1,24 +1,26 @@
-import React, { useState } from "react";
+import { axiosInstance, Endpoints } from "@/api";
 import {
-  Flex,
-  Input,
-  Icon,
   Box,
-  Stack,
-  Text,
+  Button,
   Center,
   Divider,
-  Button,
-  Spinner
+  Fade,
+  Flex,
+  Icon,
+  Input,
+  Spinner,
+  Stack,
+  Text
 } from "@chakra-ui/react";
-import { RiExternalLinkLine, RiSearchLine } from "react-icons/ri";
-import { axiosInstance, Endpoints } from "@/api";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { RiExternalLinkLine, RiSearchLine } from "react-icons/ri";
 
 const Search = () => {
   const [searchType, setSearchType] = useState<"student" | "course">("student");
   const [searchValue, setSearchValue] = useState("");
   const [loadding, setLoadding] = useState(false);
+  const resultEl = useRef<HTMLDivElement>(null);
   const [results, setResults] = useState<
     | {
         id: string;
@@ -71,6 +73,23 @@ const Search = () => {
       ? `/student/edit/${id}`
       : `/courses/edit/${id}`;
   };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        resultEl.current &&
+        !resultEl.current.contains(event.target as Node)
+      ) {
+        setResults(null);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
 
   return (
     <Box position="relative">
@@ -140,7 +159,7 @@ const Search = () => {
         )}
       </Flex>
 
-      {results && (
+      <Fade in={results ? true : false}>
         <Flex
           position="absolute"
           right="0"
@@ -152,6 +171,7 @@ const Search = () => {
           borderWidth="1px"
           borderStyle="solid"
           borderColor="gray.700"
+          ref={resultEl}
         >
           <Box
             fontWeight="bold"
@@ -175,7 +195,7 @@ const Search = () => {
               </Text>
             </Flex>
             <Stack spacing="2" mt="4" align="stretch">
-              {results.length === 0 && (
+              {results && results.length === 0 && (
                 <Text> Nenhum resultado encontrado </Text>
               )}
 
@@ -202,7 +222,7 @@ const Search = () => {
             </Stack>
           </Box>
         </Flex>
-      )}
+      </Fade>
     </Box>
   );
 };
