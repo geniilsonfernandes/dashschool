@@ -1,12 +1,10 @@
 import { axiosInstance, Endpoints } from "@/api";
 import FormCreateCourse, {
-  IFormCreateCourseValues,
   ISubmitValues
 } from "@/components/Form/FormCreateCourse";
 
 import { useNotification } from "@/contexts/AlertMessageContext";
 import useAsync from "@/hook/useAsync";
-import { IStudent } from "@/services";
 import Base from "@/templates/Base";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";

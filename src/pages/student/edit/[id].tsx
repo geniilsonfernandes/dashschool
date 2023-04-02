@@ -2,6 +2,8 @@ import { axiosInstance, Endpoints } from "@/api";
 import { useNotification } from "@/contexts/AlertMessageContext";
 import useAsync from "@/hook/useAsync";
 import Base from "@/templates/Base";
+import { NextPageContext } from "next";
+import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Form, { IFormValues } from "../../../components/Form/FormCreateUser";
@@ -82,5 +84,22 @@ const Edit = () => {
     </Base>
   );
 };
+
+export async function getServerSideProps(context: NextPageContext) {
+  const session = await getSession(context);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false
+      }
+    };
+  }
+
+  return {
+    props: { session }
+  };
+}
 
 export default Edit;
