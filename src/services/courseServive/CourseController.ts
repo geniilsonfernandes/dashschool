@@ -44,14 +44,22 @@ export class CourseController {
   public static async listCourses({
     user_id,
     page = 1,
-    take = 8
+    take = 8,
+    filter
   }: IListCoursesPayload) {
     try {
       const skip = (page - 1) * take;
 
       const courses = await prisma.courses.findMany({
         where: {
-          user_id: user_id
+          user_id: user_id,
+          ...(filter && {
+            AND: {
+              name: {
+                contains: filter
+              }
+            }
+          })
         },
         include: {
           Courses_Students: {

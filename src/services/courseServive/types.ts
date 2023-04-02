@@ -17,6 +17,7 @@ export interface IListCoursesPayload {
   user_id: string;
   page: number;
   take: number;
+  filter?: string;
 }
 
 export interface IListCoursesResponse {

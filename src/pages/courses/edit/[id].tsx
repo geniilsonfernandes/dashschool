@@ -4,6 +4,7 @@ import FormCreateCourse, {
 } from "@/components/Form/FormCreateCourse";
 import { useNotification } from "@/contexts/AlertMessageContext";
 import useAsync from "@/hook/useAsync";
+import usePageTitle from "@/hook/usePageTitle";
 import Base from "@/templates/Base";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
@@ -11,6 +12,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const Edit = () => {
+  usePageTitle("Editar Curso");
   const notification = useNotification();
   const [initialValues, setInitialValues] = useState<any>({});
   const router = useRouter();

@@ -2,7 +2,7 @@ import { axiosInstance, Endpoints } from "@/api";
 import FormCreateCourse, {
   ISubmitValues
 } from "@/components/Form/FormCreateCourse";
-
+import usePageTitle from "@/hook/usePageTitle";
 import { useNotification } from "@/contexts/AlertMessageContext";
 import useAsync from "@/hook/useAsync";
 import Base from "@/templates/Base";
@@ -28,6 +28,7 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 const Create = () => {
+  usePageTitle("Criar Curso");
   const notification = useNotification();
   const router = useRouter();
   const handleCreateCourse = async (values: ISubmitValues) => {

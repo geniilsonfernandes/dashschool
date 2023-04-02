@@ -22,6 +22,7 @@ import * as yup from "yup";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import Logo from "@/components/Header/Logo";
+import usePageTitle from "@/hook/usePageTitle";
 
 const schema = yup.object().shape({
   name: yup.string().required("Campo obrigatório"),
@@ -47,6 +48,7 @@ export type IFormCreateValues = {
 };
 
 export default function SignIn() {
+  usePageTitle("Criar conta");
   const notification = useNotification();
   const router = useRouter();
 

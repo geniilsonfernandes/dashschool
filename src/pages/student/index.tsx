@@ -3,6 +3,7 @@ import Pagination from "@/components/Pagination";
 import UserRow from "@/components/UserRow";
 import { useNotification } from "@/contexts/AlertMessageContext";
 import useAsync from "@/hook/useAsync";
+import usePageTitle from "@/hook/usePageTitle";
 import { IStudentResponse } from "@/services";
 import Base from "@/templates/Base";
 import {
@@ -31,6 +32,7 @@ type IStudentGet = {
 };
 
 const UserList = () => {
+  usePageTitle("Alunos");
   const notification = useNotification();
   const isDrawerSidebar = useBreakpointValue(
     {

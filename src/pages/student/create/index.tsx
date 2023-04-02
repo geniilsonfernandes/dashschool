@@ -6,6 +6,7 @@ import { useNotification } from "@/contexts/AlertMessageContext";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import usePageTitle from "@/hook/usePageTitle";
 
 export async function getServerSideProps(context: NextPageContext) {
   const session = await getSession(context);
@@ -25,6 +26,7 @@ export async function getServerSideProps(context: NextPageContext) {
 }
 
 const Create = () => {
+  usePageTitle("Criar Aluno");
   const notification = useNotification();
   const router = useRouter();
   const handleCreateStudent = async (values: IFormValues) => {

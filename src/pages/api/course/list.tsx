@@ -20,7 +20,7 @@ export default async function handler(
   if (user_id === "")
     return res.status(401).json({ error: 401, errorMessage: "Unauthorized" });
 
-  const { page, take } = req.query as {
+  const { page, take, filter } = req.query as {
     page: string;
     take: string;
     filter?: string;
@@ -30,7 +30,8 @@ export default async function handler(
     const courses = await CourseController.listCourses({
       user_id: user_id,
       page: Number(page) || 1,
-      take: Number(take) || 8
+      take: Number(take) || 8,
+      filter: String(filter)
     });
 
     res.status(200).json(courses);

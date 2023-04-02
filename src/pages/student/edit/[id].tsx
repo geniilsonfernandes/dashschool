@@ -1,6 +1,7 @@
 import { axiosInstance, Endpoints } from "@/api";
 import { useNotification } from "@/contexts/AlertMessageContext";
 import useAsync from "@/hook/useAsync";
+import usePageTitle from "@/hook/usePageTitle";
 import Base from "@/templates/Base";
 import { NextPageContext } from "next";
 import { getSession } from "next-auth/react";
@@ -9,6 +10,7 @@ import { useEffect, useState } from "react";
 import Form, { IFormValues } from "../../../components/Form/FormCreateUser";
 
 const Edit = () => {
+  usePageTitle("Editar Aluno");
   const notification = useNotification();
   const [initialValues, setInitialValues] = useState({} as IFormValues);
   const router = useRouter();

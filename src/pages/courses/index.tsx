@@ -3,6 +3,7 @@ import CourseRow from "@/components/CourseRow";
 import Head from "@/components/Head/Head";
 import Pagination from "@/components/Pagination";
 import useAsync from "@/hook/useAsync";
+import usePageTitle from "@/hook/usePageTitle";
 import { IListCoursesResponse } from "@/services/courseServive";
 import Base from "@/templates/Base";
 import {
@@ -37,6 +38,7 @@ type CourseGetResponse = {
 };
 
 const Courses = () => {
+  usePageTitle("Cursos");
   const isDrawerSidebar = useBreakpointValue(
     {
       base: false,

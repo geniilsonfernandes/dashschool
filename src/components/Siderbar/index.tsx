@@ -36,7 +36,13 @@ const Siderbar = () => {
           name: "Dashboard",
           href: "/dashboard",
           icon: <Icon as={RiDashboardLine} />
-        },
+        }
+      ]
+    },
+    {
+      id: "2",
+      title: "Cadastros",
+      links: [
         {
           name: "Alunos",
           href: "/student",

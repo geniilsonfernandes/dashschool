@@ -22,6 +22,7 @@ import * as yup from "yup";
 import Button from "@/components/Button";
 import { NextPageContext } from "next";
 import Logo from "@/components/Header/Logo";
+import usePageTitle from "@/hook/usePageTitle";
 
 const schema = yup.object().shape({
   email: yup.string().required("Campo obrigatório").email("Email inválido"),
@@ -36,6 +37,7 @@ export type IFormCreateValues = {
 };
 
 export default function SignIn() {
+  usePageTitle("Login");
   const {
     control,
     handleSubmit,

@@ -7,7 +7,7 @@ type MenuSectionProps = {
 };
 const MenuSection = ({ children, title }: MenuSectionProps) => {
   return (
-    <Stack spacing="12" align="flex-start">
+    <Stack spacing="12" align="flex-start" mb="32px">
       <Box fontWeight="bold" color="gray.400" fontSize="small">
         <Text fontWeight="bold" color="gray.400" fontSize="small">
           {title}
