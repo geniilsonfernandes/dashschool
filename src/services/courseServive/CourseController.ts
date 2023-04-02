@@ -49,18 +49,25 @@ export class CourseController {
   }: IListCoursesPayload) {
     try {
       const skip = (page - 1) * take;
+      console.log(filter);
 
-      const courses = await prisma.courses.findMany({
+      const where = () => ({
         where: {
           user_id: user_id,
           ...(filter && {
-            AND: {
-              name: {
-                contains: filter
+            OR: [
+              {
+                name: {
+                  contains: filter
+                }
               }
-            }
+            ]
           })
-        },
+        }
+      });
+
+      const courses = await prisma.courses.findMany({
+        ...where(),
         include: {
           Courses_Students: {
             include: {
@@ -73,9 +80,7 @@ export class CourseController {
       });
 
       const totalItemsCount = await prisma.courses.count({
-        where: {
-          user_id: user_id
-        }
+        ...where()
       });
 
       const totalPages = Math.ceil(totalItemsCount / take);

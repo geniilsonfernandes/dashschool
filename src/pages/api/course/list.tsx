@@ -31,7 +31,7 @@ export default async function handler(
       user_id: user_id,
       page: Number(page) || 1,
       take: Number(take) || 8,
-      filter: String(filter)
+      filter: filter
     });
 
     res.status(200).json(courses);
