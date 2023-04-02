@@ -52,6 +52,9 @@ Algumas screenshots da sua aplicação abaixo:
 - Dashboard e Cadastro de Cursos e Alunos
   ![Screenshot 2](ui_03.png)
 
+- Formulário de Cadastro de Cursos e Alunos
+  ![Screenshot 3](ui_04.png)
+
 ## Instalação e execução local
 
 Para executar este aplicativo localmente, siga estas etapas:
@@ -88,3 +91,9 @@ DATABASE_SCHEMA=dash
 ```
   yarn dev
 ```
+
+## Contato e redes sociais
+
+- Linkedin - [https://www.linkedin.com/in/genilson-fernandes/](https://www.linkedin.com/in/genilson-fernandes/)
+- Email - geniilsonfernandes@gmail.com
+
