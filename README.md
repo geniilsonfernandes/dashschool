@@ -40,6 +40,39 @@ Algumas screenshots da sua aplicação abaixo:
 - Dashboard e Cadastro de Cursos e Alunos
   ![Screenshot 2](ui_03.png)
 
-## Instalação
+## Instalação e execução local
 
 Para executar este aplicativo localmente, siga estas etapas:
+
+Claro, segue abaixo as instruções para criar um arquivo .env e executar o docker-compose:
+
+- Crie um arquivo chamado .env na raiz do seu projeto e adicione os valores das variáveis de ambiente que você precisa definir:
+
+```
+
+DATABASE_URL="mysql://root:123456@localhost:3306/dash"
+
+NEXTAUTH_SECRET=dashschool
+DATABASE_PASSWORD=123456
+SERVICE_NAME=dash
+DATABASE_SCHEMA=dash
+
+```
+
+- Execute o comando docker-compose up -d para criar o container do banco de dados( Nessesaio ter o docker instalado)
+
+```
+  docker-compose up -d
+```
+
+- Execute o comando yarn prisma migrate dev para criar as tabelas no banco de dados
+
+```
+  yarn prisma migrate dev
+```
+
+- Execute o comando yarn dev para iniciar o servidor de desenvolvimento
+
+```
+  yarn dev
+```
