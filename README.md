@@ -1,5 +1,5 @@
   
-![Bannewr](ui_01.png)
+![Banner](ui_01.png)
 <h2 align="center">DashSchool Gerenciador de Cursos</h1>
 
 Este é um projeto de gerenciador de cursos desenvolvido com Next.js e Prisma, usando o framework Chakra UI para estilização.
