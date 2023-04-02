@@ -1,5 +1,6 @@
+import { usePagination } from "@/hook/usePagination";
 import { Box, Button, Stack } from "@chakra-ui/react";
-import usePagination from "react-use-pagination-hook";
+import { useState } from "react";
 
 type PaginationProps = {
   currentPage?: number;
@@ -12,15 +13,18 @@ const Pagination = ({
   onPageChange,
   totalPages = 0,
   totalItems = 0,
-  itemsPerPage = 0
+  itemsPerPage = 0,
+  currentPage = 1
 }: PaginationProps) => {
-  const { pageList, setPage, currentPage } = usePagination({
-    numOfPage: 5,
-    totalPage: totalPages
+  const [curPage, setCurPage] = useState(currentPage);
+  const { sequence } = usePagination({
+    curPage: curPage || 1,
+    numPages: totalPages || 1,
+    numPagesAroundCurrent: 2
   });
 
   const handlePageChange = (page: number) => {
-    setPage(page);
+    setCurPage(page);
     onPageChange(page);
   };
 
@@ -41,7 +45,7 @@ const Pagination = ({
       </Box>
 
       <Stack direction="row" spacing="2">
-        {pageList.map((page) => (
+        {sequence.map((page) => (
           <Button
             key={page}
             size="sm"
