@@ -135,12 +135,13 @@ const FormCreateCourse = ({
                 render={({ field: { value, onChange } }) => (
                   <Input
                     name="duration"
-                    label="Duração do curso"
+                    label="Duração do curso (em horas)"
                     value={value}
                     onChange={onChange}
                     error={errors.name ? true : false}
                     helperText={errors.name?.message}
                     autoComplete="off"
+                    type="number"
                   />
                 )}
               />
