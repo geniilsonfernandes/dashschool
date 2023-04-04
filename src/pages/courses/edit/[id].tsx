@@ -31,7 +31,7 @@ const Edit = () => {
       });
       notification.showAlert({
         title: "Sucesso",
-        description: "Aluno editado com sucesso",
+        description: "Curso editado com sucesso",
         status: "success",
         buttonTitle: "Ir para lista de cursos",
         onConfirm: () => router.back()

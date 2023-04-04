@@ -43,7 +43,7 @@ const Create = () => {
         title: "Sucesso",
         description: "Curso criado com sucesso",
         status: "success",
-        buttonTitle: "Ir para lista de alunos",
+        buttonTitle: "Ir para lista de Cursos",
         onConfirm: () => router.push("/courses"),
         onClickOutside: () => router.push("/courses")
       });
