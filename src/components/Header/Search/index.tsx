@@ -1,4 +1,5 @@
 import { axiosInstance, Endpoints } from "@/api";
+import ResultItem from "@/components/ResultItem";
 import {
   Box,
   Button,
@@ -12,12 +13,13 @@ import {
   Stack,
   Text
 } from "@chakra-ui/react";
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { RiExternalLinkLine, RiSearchLine } from "react-icons/ri";
+import { RiSearchLine } from "react-icons/ri";
 
 const Search = () => {
-  const [searchType, setSearchType] = useState<"student" | "course">("student");
+  const [searchType, setSearchType] = useState<"student" | "courses">(
+    "student"
+  );
   const [searchValue, setSearchValue] = useState("");
   const [loadding, setLoadding] = useState(false);
   const resultEl = useRef<HTMLDivElement>(null);
@@ -29,7 +31,7 @@ const Search = () => {
     | null
   >();
 
-  const handleSearchType = (type: "student" | "course") => {
+  const handleSearchType = (type: "student" | "courses") => {
     setSearchType(type);
   };
 
@@ -43,8 +45,6 @@ const Search = () => {
 
       const { data } = await axiosInstance.get(endpoint, {
         params: {
-          page: 1,
-          take: 10,
           filter: searchValue
         }
       });
@@ -66,12 +66,6 @@ const Search = () => {
   const handleClearSearch = () => {
     setSearchValue("");
     setResults(null);
-  };
-
-  const createLink = (id: string) => {
-    return searchType === "student"
-      ? `/student/edit/${id}`
-      : `/courses/edit/${id}`;
   };
 
   useEffect(() => {
@@ -119,7 +113,7 @@ const Search = () => {
             fontSize="12px"
             color="gray.50"
             onClick={() =>
-              handleSearchType(searchType === "student" ? "course" : "student")
+              handleSearchType(searchType === "student" ? "courses" : "student")
             }
           >
             Buscar por: {searchType === "student" ? "Alunos" : "Cursos"}
@@ -200,24 +194,12 @@ const Search = () => {
               )}
 
               {results?.map((item) => (
-                <Box
+                <ResultItem
+                  name={item.name}
                   key={item.id}
-                  bg="gray.900"
-                  padding={2}
-                  borderRadius="md"
-                  width="100%"
-                  display="flex"
-                  justifyContent="space-between"
-                  _hover={{
-                    bg: "gray.700"
-                  }}
-                  cursor="pointer"
-                >
-                  <Text>{item.name}</Text>
-                  <Link href={createLink(item.id)}>
-                    <RiExternalLinkLine size="16" />
-                  </Link>
-                </Box>
+                  id={item.id}
+                  type={searchType}
+                />
               ))}
             </Stack>
           </Box>
