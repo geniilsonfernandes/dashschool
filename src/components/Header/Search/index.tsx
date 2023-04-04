@@ -16,10 +16,10 @@ import {
 import { useEffect, useRef, useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
 
+type SearchType = "student" | "courses";
+
 const Search = () => {
-  const [searchType, setSearchType] = useState<"student" | "courses">(
-    "student"
-  );
+  const [searchType, setSearchType] = useState<SearchType>("student");
   const [searchValue, setSearchValue] = useState("");
   const [loadding, setLoadding] = useState(false);
   const resultEl = useRef<HTMLDivElement>(null);
@@ -31,7 +31,7 @@ const Search = () => {
     | null
   >();
 
-  const handleSearchType = (type: "student" | "courses") => {
+  const handleSearchType = (type: SearchType) => {
     setSearchType(type);
   };
 
