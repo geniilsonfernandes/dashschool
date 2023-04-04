@@ -17,19 +17,18 @@ import { useEffect, useRef, useState } from "react";
 import { RiSearchLine } from "react-icons/ri";
 
 type SearchType = "student" | "courses";
+type ResultType = {
+  id: string;
+  name: string;
+};
 
 const Search = () => {
+  const resultEl = useRef<HTMLDivElement>(null);
   const [searchType, setSearchType] = useState<SearchType>("student");
   const [searchValue, setSearchValue] = useState("");
   const [loadding, setLoadding] = useState(false);
-  const resultEl = useRef<HTMLDivElement>(null);
-  const [results, setResults] = useState<
-    | {
-        id: string;
-        name: string;
-      }[]
-    | null
-  >();
+  const [results, setResults] = useState<ResultType[] | null>();
+  const [error, setError] = useState<string | null>();
 
   const handleSearchType = (type: SearchType) => {
     setSearchType(type);
@@ -37,6 +36,7 @@ const Search = () => {
 
   const handleSearch = async () => {
     try {
+      setError(null);
       setLoadding(true);
       const endpoint =
         searchType === "student"
@@ -49,15 +49,9 @@ const Search = () => {
         }
       });
 
-      const mappingResults = data.items.map((item: any) => ({
-        id: item.id,
-        name: item.name
-      }));
-
-      setResults(mappingResults);
-      setLoadding(false);
+      setResults(data.items);
     } catch (error) {
-      console.log(error);
+      setError("Erro ao buscar");
     } finally {
       setLoadding(false);
     }
@@ -152,6 +146,19 @@ const Search = () => {
           />
         )}
       </Flex>
+
+      {error && (
+        <Text
+          color="red.500"
+          fontSize="small"
+          fontWeight="bold"
+          position="absolute"
+          left="0"
+          mt={2}
+        >
+          {error}
+        </Text>
+      )}
 
       <Fade in={results ? true : false}>
         <Flex
