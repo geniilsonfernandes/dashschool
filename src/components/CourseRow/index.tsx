@@ -55,7 +55,8 @@ const CourseRow = ({
             <Button
               size="sm"
               fontSize="sm"
-              colorScheme="purple"
+              borderRadius="full"
+              colorScheme="green"
               leftIcon={<Icon as={RiPencilLine} />}
             >
               Editar

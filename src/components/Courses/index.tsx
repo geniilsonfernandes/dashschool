@@ -46,14 +46,7 @@ const Courses = () => {
   }, []);
 
   return (
-    <Box
-      padding={4}
-      borderStyle="solid"
-      borderWidth="1px"
-      borderColor="gray.800"
-      borderRadius="8px"
-      marginTop="8px"
-    >
+    <Box borderRadius="8px" marginTop="16px">
       <Flex justifyContent="space-between" alignItems="center">
         <Heading size="lg" fontWeight="bold">
           Cursos
@@ -66,12 +59,8 @@ const Courses = () => {
       </Flex>
       <Box
         display="grid"
-        gridTemplateColumns={[
-          "repeat(1, 1fr)",
-          "repeat(1, 1fr)",
-          "repeat(4, 1fr)"
-        ]}
-        gap="8"
+        gridTemplateColumns="repeat(1, 1fr)"
+        gap="4"
         mt={["8px", "16px"]}
       >
         {isLoading &&
@@ -94,7 +83,7 @@ const Courses = () => {
               width={{ base: "100%" }}
               key={item.id}
               p="4"
-              bg="gray.800"
+              background="gray.700"
               borderRadius={8}
               gap="4"
             >
@@ -107,7 +96,7 @@ const Courses = () => {
                   {item.name}
                 </Text>
                 <Text fontSize="small" color="gray.300">
-                  {cutString(item.description, 20)}
+                  {cutString(item.description, 60)}
                 </Text>
               </Box>
 

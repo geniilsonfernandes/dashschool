@@ -87,7 +87,6 @@ const Courses = () => {
         flexDirection="column"
         flex="1"
         borderRadius={8}
-        bg="gray.800"
         p={["4", "8"]}
         minHeight="80vh"
       >
@@ -96,7 +95,8 @@ const Courses = () => {
             <Button
               size="sm"
               fontSize="sm"
-              colorScheme="facebook"
+              borderRadius="full"
+              colorScheme="green"
               leftIcon={<Icon as={RiAddLine} />}
             >
               Cria novo curso

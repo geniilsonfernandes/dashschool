@@ -88,7 +88,14 @@ const Siderbar = () => {
     );
   }
   return (
-    <Box as="aside" w="64" mr="8">
+    <Box
+      as="aside"
+      w="64"
+      mr="8"
+      background="gray.700"
+      padding={["6", "8"]}
+      borderRadius="xl"
+    >
       {menus.map((menu) => (
         <MenuSection key={menu.id} title={menu.title}>
           {menu.links.map((link) => (
