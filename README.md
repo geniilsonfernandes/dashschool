@@ -121,33 +121,32 @@
     - Crie um arquivo chamado .env na raiz do seu projeto e adicione os valores das variáveis de ambiente que você
     precisa definir:
 
-    <code>
-
+    ```
     DATABASE_URL="mysql://root:123456@localhost:3306/dash"
 
     NEXTAUTH_SECRET=dashschool
     DATABASE_PASSWORD=123456
     SERVICE_NAME=dash
     DATABASE_SCHEMA=dash
-    </code>
+    ```
 
     - Execute o comando docker-compose up -d para criar o container do banco de dados( Nessesaio ter o docker instalado)
 
-    <code>
+    ```
     docker-compose up -d
-  </code>
+    ```
 
     - Execute o comando yarn prisma migrate dev para criar as tabelas no banco de dados
 
-    <code>
+    ```
     yarn prisma migrate dev
-  </code>
+    ```
 
     - Execute o comando yarn dev para iniciar o servidor de desenvolvimento
 
-    <code>
+    ```
     yarn dev
-  </code>
+    ```
 
     <h2 align="center">Contato e redes sociais</h2>
 
