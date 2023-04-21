@@ -10,7 +10,7 @@
     <a href="#instalação-e-execução-local">Instalação e execução local</a>
   </p>
 
-  <h2 align="center">Sobre o projeto</h2>
+  <h2 align="center" id="#sobre-o-projeto">Sobre o projeto</h2>
 
   <p align="center">
     <a href="http://localhost:3000/signin">
@@ -37,7 +37,7 @@
     visualizar a lista de alunos matriculados em um determinado
   </p>
 
-  <h2 align="center">Funcionalidades</h2>
+  <h2 align="center" id="#funcionalidades">Funcionalidades</h2>
 
   <b>Com este aplicativo, você pode:</b>
   <ul>
@@ -49,7 +49,7 @@
     <li>Listar todos os cursos</li>
     <li>Ver detalhes de um curso, incluindo a lista de alunos matriculados</li>
   </ul>
-  <h2 align="center">Stacks utilizadas</h2>
+  <h2 align="center" id="#stacks-utilizadas">Stacks utilizadas</h2>
 
   <b>Este projeto utiliza as seguintes stacks:</b>
 
@@ -67,7 +67,7 @@
     <li>Rotas para edição de cursos e alunos</li>
     <li>Rotas para listagem de cursos e alunos</li>
   </ul>
-  <h2 align="center">Screenshots</h2>
+  <h2 align="center" id="#screenshots">Screenshots</h2>
 
   <b>Algumas screenshots da sua aplicação abaixo:</b>
 
