@@ -39,36 +39,37 @@
 
   <h2 align="center">Funcionalidades</h2>
 
-  Com este aplicativo, você pode:
-
-  - Criar um curso e adicionar alunos
-  - Editar um curso e adicionar/remover alunos
-  - Excluir um curso e todos os alunos matriculados
-  - Adicionar um aluno a um curso
-  - Remover um aluno de um curso
-  - Listar todos os cursos
-  - Ver detalhes de um curso, incluindo a lista de alunos matriculados
-
+  <b>Com este aplicativo, você pode:</b>
+  <ul>
+    <li>Criar um curso e adicionar alunos</li>
+    <li>Editar um curso e adicionar/remover alunos</li>
+    <li>Excluir um curso e todos os alunos matriculados</li>
+    <li>Adicionar um aluno a um curso</li>
+    <li>Remover um aluno de um curso</li>
+    <li>Listar todos os cursos</li>
+    <li>Ver detalhes de um curso, incluindo a lista de alunos matriculados</li>
+  </ul>
   <h2 align="center">Stacks utilizadas</h2>
 
-  Este projeto utiliza as seguintes stacks:
+  <b>Este projeto utiliza as seguintes stacks:</b>
 
-  - Next.js
-  - Prisma
-  - Chakra UI
-  - planet-scale para banco de dados
-  - api routes do next.js
-  - next-auth
-
+  <ul>
+    <li>Next.js</li>
+    <li>Prisma</li>
+    <li>Chakra UI</li>
+    <li>planet-scale para banco de dados</li>
+    <li>api routes do next.js</li>
+    <li>next-auth</li>
+  </ul>
   <h2 align="center">Rotas da api do projeto</h2>
-
-  - Rotas para criação de cursos e alunos
-  - Rotas para edição de cursos e alunos
-  - Rotas para listagem de cursos e alunos
-
+  <ul>
+    <li>Rotas para criação de cursos e alunos</li>
+    <li>Rotas para edição de cursos e alunos</li>
+    <li>Rotas para listagem de cursos e alunos</li>
+  </ul>
   <h2 align="center">Screenshots</h2>
 
-  Algumas screenshots da sua aplicação abaixo:
+  <b>Algumas screenshots da sua aplicação abaixo:</b>
 
   - Login e Cadastro de Usuário
   ![Screenshot 1](ui_02.png)
