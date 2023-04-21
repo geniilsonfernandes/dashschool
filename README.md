@@ -71,35 +71,46 @@
 
   <b>Algumas screenshots da sua aplicação abaixo:</b>
 
-  <div>
-    <b id="photo">
+  <div id="photo">
+    <b>
       Login e Cadastro de Usuário
     </b>
-    <img src="ui_02.png" width="400px">
-    <b id="photo">
-      Dashboard e Cadastro de Cursos e Alunos
-    </b>
+    <br />
+    <img src="ui_02.png">
   </div>
 
+  <div id="photo">
+    <b>
+      Dashboard e Cadastro de Cursos e Alunos
+    </b>
+    <br />
+    <img src="ui_03.png">
+  </div>
 
-  <img src="ui_03.png" width="400px">
-  <img src="ui_04.png" width="400px">
-  <img src="ui_05.png" width="400px">
-  <img src="ui_06.gif" width="400px">
-  -
-  ![Screenshot 1](ui_02.png)
+  <div id="photo">
+    <b>
+      Formulário de Cadastro de Cursos e Alunos
+    </b>
+    <br />
+    <img src="ui_04.png">
+  </div>
 
-  - Dashboard e Cadastro de Cursos e Alunos
-  ![Screenshot 2](ui_03.png)
+  <div id="photo">
+    <b>
+      Busca de Cursos e Alunos e gerenciamento de alunos em um curso
+    </b>
+    <br />
+    <img src="ui_05.png">
+  </div>
 
-  - Formulário de Cadastro de Cursos e Alunos
-  ![Screenshot 3](ui_04.png)
+  <div id="photo">
+    <b>
+      Busca Alunos e gerenciamento de alunos em um curso
+    </b>
+    <br />
+    <img src="ui_06.gif">
+  </div>
 
-  - Busca de Cursos e Alunos e gerenciamento de alunos em um curso
-  ![Screenshot 4](ui_05.png)
-
-  - Busca Alunos e gerenciamento de alunos em um curso
-  ![Screenshot 5](ui_06.gif)
 
   <h2 align="center"> Instalação e execução local
 
@@ -110,7 +121,7 @@
     - Crie um arquivo chamado .env na raiz do seu projeto e adicione os valores das variáveis de ambiente que você
     precisa definir:
 
-    ```
+    <code>
 
     DATABASE_URL="mysql://root:123456@localhost:3306/dash"
 
@@ -118,28 +129,34 @@
     DATABASE_PASSWORD=123456
     SERVICE_NAME=dash
     DATABASE_SCHEMA=dash
-
-    ```
+    </code>
 
     - Execute o comando docker-compose up -d para criar o container do banco de dados( Nessesaio ter o docker instalado)
 
-    ```
+    <code>
     docker-compose up -d
-    ```
+  </code>
 
     - Execute o comando yarn prisma migrate dev para criar as tabelas no banco de dados
 
-    ```
+    <code>
     yarn prisma migrate dev
-    ```
+  </code>
 
     - Execute o comando yarn dev para iniciar o servidor de desenvolvimento
 
-    ```
+    <code>
     yarn dev
-    ```
+  </code>
 
-    ## Contato e redes sociais
+    <h2 align="center">Contato e redes sociais</h2>
 
-    - Linkedin - [https://www.linkedin.com/in/genilson-fernandes/](https://www.linkedin.com/in/genilson-fernandes/)
-    - Email - geniilsonfernandes@gmail.com
+    <ul>
+      <li>
+        <a href="https://www.linkedin.com/in/genilson-fernandes">Linkedin</a>
+      </li>
+      <li>
+        Email - geniilsonfernandes@gmail.com
+      </li>
+
+    </ul>
