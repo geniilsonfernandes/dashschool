@@ -1,4 +1,4 @@
-![Banner](ui_01.png)
+<img src="ui_01.png">
 
 <h2 align="center">DashSchool Gerenciador de Cursos | Front end | Back end</h1>
 
