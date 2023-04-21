@@ -29,7 +29,7 @@ para acessar o projeto, basta clicar no link acima e fazer o login com o usuári
 Com uma interface de usuário intuitiva e fácil de usar, você poderá criar novos cursos, adicionar e remover alunos, visualizar a lista de alunos matriculados em um determinado
 </p>
 
-## Funcionalidades
+<h3>Funcionalidades</h3>
 
 Com este aplicativo, você pode:
 
@@ -41,7 +41,7 @@ Com este aplicativo, você pode:
 - Listar todos os cursos
 - Ver detalhes de um curso, incluindo a lista de alunos matriculados
 
-## Stacks utilizadas
+<h3>Stacks utilizadas</h3>
 
 Este projeto utiliza as seguintes stacks:
 
@@ -52,13 +52,13 @@ Este projeto utiliza as seguintes stacks:
 - api routes do next.js
 - next-auth
 
-## Rotas da api do projeto
+<h3>Rotas da api do projeto</h3>
 
 - Rotas para criação de cursos e alunos
 - Rotas para edição de cursos e alunos
 - Rotas para listagem de cursos e alunos
 
-## Screenshots
+<h3>Screenshots</h3>
 
 Algumas screenshots da sua aplicação abaixo:
 
@@ -77,7 +77,7 @@ Algumas screenshots da sua aplicação abaixo:
 - Busca Alunos e gerenciamento de alunos em um curso
   ![Screenshot 5](ui_06.gif)
 
-## Instalação e execução local
+<h3> Instalação e execução local
 
 Para executar este aplicativo localmente, siga estas etapas:
 
