@@ -25,7 +25,7 @@ para acessar o projeto, basta clicar no link acima e fazer o login com o usuári
 
 <p align="center">Este é um projeto de gerenciador de cursos desenvolvido com Next.js e Prisma, usando o framework Chakra UI para estilização.</p>
 
-<p>
+<p align="center">
 Com uma interface de usuário intuitiva e fácil de usar, você poderá criar novos cursos, adicionar e remover alunos, visualizar a lista de alunos matriculados em um determinado
 </p>
 
