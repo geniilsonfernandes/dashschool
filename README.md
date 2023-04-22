@@ -111,50 +111,48 @@
     <img src="ui_06.gif">
   </div>
 
-
   <h2 align="center"> Instalação e execução local </h2>
 
-    Para executar este aplicativo localmente, siga estas etapas:
+  Para executar este aplicativo localmente, siga estas etapas:
 
-    Claro, segue abaixo as instruções para criar um arquivo .env e executar o docker-compose:
+  Claro, segue abaixo as instruções para criar um arquivo .env e executar o docker-compose:
 
-    - Crie um arquivo chamado .env na raiz do seu projeto e adicione os valores das variáveis de ambiente que você
-    precisa definir:
+  - Crie um arquivo chamado .env na raiz do seu projeto e adicione os valores das variáveis de ambiente que você
+  precisa definir:
 
-    ```
-    DATABASE_URL="mysql://root:123456@localhost:3306/dash"
+  ```
+  DATABASE_URL="mysql://root:123456@localhost:3306/dash"
 
-    NEXTAUTH_SECRET=dashschool
-    DATABASE_PASSWORD=123456
-    SERVICE_NAME=dash
-    DATABASE_SCHEMA=dash
-    ```
+  NEXTAUTH_SECRET=dashschool
+  DATABASE_PASSWORD=123456
+  SERVICE_NAME=dash
+  DATABASE_SCHEMA=dash
+  ```
 
-    - Execute o comando docker-compose up -d para criar o container do banco de dados( Nessesaio ter o docker instalado)
+  - Execute o comando docker-compose up -d para criar o container do banco de dados( Nessesaio ter o docker instalado)
 
-    ```
-    docker-compose up -d
-    ```
+  ```
+  docker-compose up -d
+  ```
 
-    - Execute o comando yarn prisma migrate dev para criar as tabelas no banco de dados
+  - Execute o comando yarn prisma migrate dev para criar as tabelas no banco de dados
 
-    ```
-    yarn prisma migrate dev
-    ```
+  ```
+  yarn prisma migrate dev
+  ```
 
-    - Execute o comando yarn dev para iniciar o servidor de desenvolvimento
+  - Execute o comando yarn dev para iniciar o servidor de desenvolvimento
 
-    ```
-    yarn dev
-    ```
+  ```
+  yarn dev
+  ```
 
-    <h2 align="center">Contato e redes sociais</h2>
-
-    <ul>
-      <li>
-        <a href="https://www.linkedin.com/in/genilson-fernandes">Linkedin</a>
-      </li>
-      <li>
-        Email - geniilsonfernandes@gmail.com
-      </li>
-    </ul>
+<h2 align="center">Contato e redes sociais</h2>
+  <ul>
+    <li>
+      <a href="https://www.linkedin.com/in/genilson-fernandes">Linkedin</a>
+    </li>
+    <li>
+      Email - geniilsonfernandes@gmail.com
+    </li>
+  </ul>
