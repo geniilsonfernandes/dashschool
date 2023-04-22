@@ -3,10 +3,10 @@
 <h2 align="center">DashSchool Gerenciador de Cursos | Front end | Back end</h1>
 
   <p align="center">
-    <a href="#sobre-o-projeto">Sobre o projeto</a> •
-    <a href="#funcionalidades">Funcionalidades</a> •
-    <a href="#stacks-utilizadas">Stacks utilizadas</a> •
-    <a href="#screenshots">Screenshots</a> •
+    <a href="#sobre-o-projeto">Sobre o projeto</a>
+    <a href="#funcionalidades">Funcionalidades</a>
+    <a href="#stacks-utilizadas">Stacks utilizadas</a>
+    <a href="#screenshots">Screenshots</a>
     <a href="#instalação-e-execução-local">Instalação e execução local</a>
   </p>
 
@@ -112,7 +112,7 @@
   </div>
 
 
-  <h2 align="center"> Instalação e execução local
+  <h2 align="center"> Instalação e execução local </h2>
 
     Para executar este aplicativo localmente, siga estas etapas:
 
@@ -157,5 +157,4 @@
       <li>
         Email - geniilsonfernandes@gmail.com
       </li>
-
     </ul>
