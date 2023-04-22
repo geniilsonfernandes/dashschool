@@ -22,7 +22,7 @@
 
   <ul>
     <li>
-      Usuário: usuario: dashschool@dashschool.com,
+      Usuário: dashschool@dashschool.com,
     </li>
     <li>
       senha: dashschool@dashschool.com
