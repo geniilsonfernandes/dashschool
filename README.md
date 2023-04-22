@@ -2,7 +2,7 @@
 
 <h2 align="center">DashSchool Gerenciador de Cursos | Front end | Back end</h1>
 
-  <p align="center">
+  <p align="center" id="menu">
     <a href="#sobre-o-projeto">Sobre o projeto</a>
     <a href="#funcionalidades">Funcionalidades</a>
     <a href="#stacks-utilizadas">Stacks utilizadas</a>
