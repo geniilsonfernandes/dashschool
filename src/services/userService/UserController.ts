@@ -32,16 +32,12 @@ export class UserController {
   }
 
   public static async findByEmail(email: string) {
-    try {
-      const user = await prisma.users.findFirst({
-        where: {
-          email
-        }
-      });
-      return user;
-    } catch (error) {
-      throw new Error("Não foi possível encontrar o usuário");
-    }
+    const user = await prisma.users.findFirst({
+      where: {
+        email
+      }
+    });
+    return user;
   }
 
   public static async findById(id: string) {
