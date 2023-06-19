@@ -13,7 +13,7 @@
   <h2 align="center" id="sobre-o-projeto">Sobre o projeto</h2>
 
   <p align="center">
-    <a href="http://localhost:3000/signin">
+    <a href="https://dashschool.vercel.app/login">
       Veja o projeto ao vivo
     </a>
   <p>
