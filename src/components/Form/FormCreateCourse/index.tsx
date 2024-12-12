@@ -202,7 +202,7 @@ const FormCreateCourse = ({
                     onChange={onChange}
                     value={value}
                     error={errors.description ? true : false}
-                    helperText={errors.duradescriptiontion?.message}
+                    helperText={errors.description?.message}
                   />
                 )}
               />
