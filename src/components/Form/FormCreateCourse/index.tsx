@@ -1,4 +1,5 @@
 import { Input } from "@/components/Form/Input";
+
 import {
   Box,
   Button,
@@ -10,37 +11,53 @@ import {
   Skeleton,
   VStack
 } from "@chakra-ui/react";
+
 import Link from "next/link";
 
 import SearchStudent, {
   ControlleList,
   InitialValuesTypes
 } from "@/components/SearchStudent";
+
 import { yupResolver } from "@hookform/resolvers/yup";
+
 import { useEffect, useState } from "react";
+
 import { Controller, useForm } from "react-hook-form";
+
 import * as yup from "yup";
+
 import { Textarea } from "../Textarea";
 
 const schemaCrete = yup.object().shape({
   name: yup.string().trim().required("Campo obrigatório"),
+
   description: yup.string().trim().required("Campo obrigatório"),
+
   duration: yup.number().required("Campo obrigatório")
 });
+
 const schemaEdit = yup.object().shape({
   name: yup.string().trim().required("Campo obrigatório"),
+
   description: yup.string().trim().required("Campo obrigatório"),
+
   duration: yup.number().required("Campo obrigatório")
 });
 
 export type IFormCreateCourseValues = {
   name: string;
+
   description: string;
+
   duration: number;
 };
+
 export type IInitialValues = {
   name: string;
+
   description: string;
+
   duration: number;
 
   studentList?: InitialValuesTypes[];
@@ -48,47 +65,69 @@ export type IInitialValues = {
 
 export type ISubmitValues = {
   name: string;
+
   description: string;
+
   duration: number;
+
   list: ControlleList;
 };
 
 type IFormProps = {
   initialValues?: IInitialValues;
+
   onSubmit: (values: ISubmitValues) => void;
+
   isLoading?: boolean;
+
   loadingValues?: boolean;
 };
 
 const FormCreateCourse = ({
   onSubmit,
+
   initialValues,
+
   isLoading = false,
+
   loadingValues = false
 }: IFormProps) => {
   const hasInitialValues = !!initialValues;
+
   const isEdit = hasInitialValues;
+
   const [list, setList] = useState<ControlleList>();
 
   const {
     control,
+
     handleSubmit,
+
     setValue,
+
     formState: { errors }
   } = useForm<IFormCreateCourseValues>({
     mode: "onSubmit",
+
     resolver: yupResolver(isEdit ? schemaEdit : schemaCrete),
+
     defaultValues: {
       name: initialValues?.name,
+
       description: initialValues?.description
     }
   });
 
   const handleEditCourse = (values: IFormCreateCourseValues) => {
+    console.log({ values }, "handleEditCourse");
+
     onSubmit({
       name: values.name,
+
       description: values.description,
+
       duration: values.duration,
+
       list: list as ControlleList
     });
   };
@@ -96,10 +135,14 @@ const FormCreateCourse = ({
   useEffect(() => {
     if (hasInitialValues) {
       setValue("name", initialValues?.name);
+
       setValue("description", initialValues?.description);
+
       setValue("duration", initialValues?.duration);
     }
   }, [initialValues, setValue, hasInitialValues]);
+
+  console.log(errors);
 
   return (
     <>
@@ -109,7 +152,9 @@ const FormCreateCourse = ({
             {isEdit ? "Editar curso" : "Criar curso"}
           </Heading>
         </Skeleton>
+
         <Divider my="6" borderColor="gray.700" />
+
         <Skeleton colorScheme="blue" isLoaded={!loadingValues} rounded="8px">
           <VStack spacing="8">
             <SimpleGrid columns={1} spacing={4} w="100%">
@@ -138,8 +183,8 @@ const FormCreateCourse = ({
                     label="Duração do curso (em horas)"
                     value={value}
                     onChange={onChange}
-                    error={errors.name ? true : false}
-                    helperText={errors.name?.message}
+                    error={errors.duration ? true : false}
+                    helperText={errors.duration?.message}
                     autoComplete="off"
                     type="number"
                   />
@@ -156,8 +201,8 @@ const FormCreateCourse = ({
                     autoComplete="off"
                     onChange={onChange}
                     value={value}
-                    error={errors.name ? true : false}
-                    helperText={errors.name?.message}
+                    error={errors.description ? true : false}
+                    helperText={errors.duradescriptiontion?.message}
                   />
                 )}
               />
@@ -183,6 +228,7 @@ const FormCreateCourse = ({
                 </Button>
               </Link>
             </Skeleton>
+
             <Skeleton
               colorScheme="blue"
               isLoaded={!loadingValues}
